@@ -9,14 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
     "@types/styled-components": "^5.1.34",
+    "antd": "^5.25.0",
     "axios": "^1.8.4",
+    "babel-plugin-styled-components": "^2.1.4",
     "clsx": "^2.1.1",
+    "cookies-next": "^4.1.0",
     "dotenv": "^16.5.0",
-    "next": "14.2.4",
+    "formik": "^2.4.6",
+    "next": "^13.2.4",
+    "next-cookies": "^2.0.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "styled-components": "^6.1.17"
+    "react-redux": "^9.2.0",
+    "redux": "^5.0.1",
+    "redux-persist": "^6.0.0",
+    "styled-components": "^6.1.17",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

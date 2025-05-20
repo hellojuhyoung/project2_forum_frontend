@@ -8,14 +8,4 @@ namespace Shared {
     };
     success: boolean;
   }
-
-  export interface AxiosRequestConfig {
-    method: string;
-    url: string;
-    headers: {
-      Authorization: string;
-      "Content-Type": string;
-    };
-    data: string;
-  }
 }

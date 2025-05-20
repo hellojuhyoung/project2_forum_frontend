@@ -1,0 +1,16 @@
+/posts post method (create post)
+{
+    "title": "test1title",
+    "content": "test1content",
+    "thumbnail": "test1thumbnail",
+    "contentImage": "test1contentImage",
+    "userid" : "2",
+    "categoryid": "1"
+}
+
+/users post method (create user)
+{
+    "username": "test1username",
+    "password": "test1password",
+    "email": "test1email@sample.com"
+}
