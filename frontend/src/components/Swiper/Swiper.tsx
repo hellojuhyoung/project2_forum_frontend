@@ -1,18 +1,18 @@
-import { SwiperStyled } from "./styled";
-import SmallFeed from "../SmallFeed/SmallFeed";
-
-// from swiper module
-import { SwiperSlide, useSwiper } from "swiper/react";
+import { useState } from "react";
+import { SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
+import { SwiperStyled } from "./styled";
+import MainFeed from "../MainFeed/MainFeed";
+
 interface Post {
   id: number;
   title: string;
-  content: string;
   thumbnail: string;
-  contentImage?: string;
+  user: { username: string };
+  createdAt: string;
 }
 
 interface SlideFeedProps {
@@ -20,14 +20,15 @@ interface SlideFeedProps {
 }
 
 const SlideFeed: React.FC<SlideFeedProps> = ({ slides }) => {
-  const swiper = useSwiper();
+  const [swiperInstance, setSwiperInstance] = useState<any>(null);
 
   return (
     <>
       <SwiperStyled
-        onClick={() => swiper.slideNext()}
+        onSwiper={setSwiperInstance} // capture swiper instance here
+        onClick={() => swiperInstance?.slideNext()} // safely call slideNext if instance exists
         modules={[Navigation]}
-        navigation={true} // Enable navigation
+        navigation={true}
         spaceBetween={30}
         slidesPerView={4}
         loop={false}
@@ -35,7 +36,7 @@ const SlideFeed: React.FC<SlideFeedProps> = ({ slides }) => {
       >
         {slides.map((slide: Post, index: number) => (
           <SwiperSlide key={index}>
-            <SmallFeed post={slide} />
+            <MainFeed post={slide} isMostRecentSection />
           </SwiperSlide>
         ))}
       </SwiperStyled>

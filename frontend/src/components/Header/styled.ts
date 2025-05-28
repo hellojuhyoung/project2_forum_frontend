@@ -2,12 +2,10 @@ import { styled } from "styled-components";
 
 export const HeaderStyled = styled.div`
   &.header-container {
-    position: fixed;
-    left: 0;
-    top: 0;
     width: 100%;
     height: 80px;
-    background-color: gray;
+    background-color: ${({ theme }) => theme.colors.primaryDark};
+    color: ${({ theme }) => theme.colors.textLight};
 
     .header {
       display: flex;
@@ -22,10 +20,10 @@ export const HeaderStyled = styled.div`
       ul {
         display: flex;
         list-style: none;
+        padding: 0;
+        margin: 0;
       }
 
-      /* having li + li would only affect the ones without the first 'li' tag */
-      /* styles are affected which are preceded by another 'li' tag */
       li + li {
         margin-left: 50px;
       }

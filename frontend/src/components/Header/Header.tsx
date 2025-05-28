@@ -33,6 +33,11 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
   const id = authentication.id;
   const username = authentication.username;
 
+  // function directs user to home
+  async function directToHome() {
+    router.push("/");
+  }
+
   // function directs user to the login page
   async function directToLogin() {
     router.push("/auth/login");
@@ -45,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
 
   // function directs user to create new post
   async function directToCreatePost() {
-    router.push("posts/create");
+    router.push("/posts/create");
   }
 
   // function directs user to user posts
@@ -56,7 +61,13 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
     });
   }
 
-  //
+  //function directs user to account page
+  async function directToAccount() {
+    router.push({
+      pathname: "/profile/account",
+      query: { username: username },
+    });
+  }
   // need to add user profile page
   //
 
@@ -78,9 +89,9 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
     {
       key: "1",
       label: (
-        <a rel="noopener noreferrer" href="https://www.antgroup.com">
+        <div onClick={directToAccount} style={{ cursor: "pointer" }}>
           account
-        </a>
+        </div>
       ),
     },
     {
@@ -99,7 +110,9 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
       {isLoggedIn ? (
         <>
           <header className="header">
-            <div>where logo is placed</div>
+            <div onClick={directToHome} style={{ cursor: "pointer" }}>
+              where logo is placed
+            </div>
 
             <nav className="navigation-bar">
               <ul>
@@ -109,12 +122,12 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                 <li onClick={direcToUsersPosts} style={{ cursor: "pointer" }}>
                   my posts
                 </li>
-                <li>hello {username}</li>
+                <li>welcome {username}</li>
                 <li>
                   <Dropdown menu={{ items }}>
                     <a onClick={(e) => e.preventDefault()}>
                       <Space>
-                        Profile
+                        profile
                         <DownOutlined />
                       </Space>
                     </a>
@@ -127,7 +140,9 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
       ) : (
         <>
           <header className="header">
-            <div>where logo is placed</div>
+            <div onClick={directToHome} style={{ cursor: "pointer" }}>
+              where logo is placed
+            </div>
 
             <nav className="navigation-bar">
               <ul>

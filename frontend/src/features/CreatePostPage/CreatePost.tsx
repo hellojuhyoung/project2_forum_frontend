@@ -4,148 +4,174 @@ import clsx from "clsx";
 // axios request api url localhost:5001
 import { instance } from "@/utils/apis/axios";
 
-// import formik and their components
-import { Form, Formik, Field } from "formik";
+import React, { useState, useEffect, useRef } from "react";
 
-// import antd styled components
-import { Button, Input } from "antd";
-
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { Formik, Form, Field, useField } from "formik";
+import { Input, Form as AntForm, Radio, Button } from "antd";
+import * as Yup from "yup";
 import { RootState } from "@/redux/store";
 
-interface PostValues {
-  title: string;
-  content: string;
-  thumbnail: string;
-  contentImage: string;
-  userid: number | null;
-  categoryid: number | null;
-}
+// toast editor
+// *** toast editor is not compatible with react version 18
+import dynamic from "next/dynamic";
 
-const initialValues: PostValues = {
-  title: "",
-  content: "",
-  thumbnail: "",
-  contentImage: "",
-  userid: null,
-  categoryid: null,
-};
+const ToastEditor = dynamic(() => import("@/components/Editor/ToastEditor"), {
+  ssr: false,
+});
+//
+import { ImagesFromText } from "@/utils/ToastEditor/EditorContent";
 
 const CreatePostPage: React.FC = () => {
+  // aquire id from the redux store
   const authentication = useSelector(
     (state: RootState) => state.authentication
   );
-  console.log(authentication);
+
   const id = authentication.id;
 
-  console.log("this is create post id", id);
+  // console.log("this is redux store", id);
+
+  interface PostValues {
+    title: string;
+    category: string;
+    content: string;
+    images: string[];
+  }
+
+  const initialValues: PostValues = {
+    title: "",
+    category: "",
+    content: "",
+    images: [],
+  };
+
+  const validationSchema = Yup.object({
+    title: Yup.string().required("Title is required"),
+    category: Yup.string().required("Please select a category"),
+    content: Yup.string().required("Content is required"),
+  });
+
+  // fetch categories from the backend
+  type Category = {
+    id: number;
+    label: string;
+  };
+
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const response: any = await instance.get("/categories");
+
+        // console.log(response);
+        setCategories(response);
+      } catch (error) {
+        console.error("error fetching categories", error);
+      }
+    };
+
+    getCategories();
+  }, []);
+
+  // editor variable declaration
+  const editorRef = useRef<any>(null);
+
   const handleSubmit = async (values: PostValues) => {
+    // separating editor text and editor images
+    const { text, images } = ImagesFromText(values.content);
+
     try {
-      const createPostInfo = {
+      const createPost = {
         title: values.title,
-        content: values.content,
-        thumbnail: values.thumbnail,
-        contentImage: values.contentImage,
+        content: text,
+        images: images,
         userid: id,
-        categoryid: values.categoryid,
+        categoryid: parseInt(values.category, 10),
       };
 
-      const response = await instance.post("/posts/create", createPostInfo);
-
-      console.log("response from create post", response);
+      const response = await instance.post("/posts/create", createPost);
+      console.log("post created", response);
     } catch (error) {
-      console.error("error in creating a post", error);
+      console.error("error creating post", error);
     }
   };
+
+  // const handleSubmit = async (values: typeof initialValues) => {
+  //   console.log("form values on submit", values);
+
+  //   const { text, images } = ImagesFromText(values.content);
+
+  //   console.log("text from editor", text);
+  //   console.log("images from editor", images);
+  // };
 
   return (
     <>
       <CreatePostStyled className={clsx("create-post-container")}>
-        <Formik<PostValues>
+        <Formik
           initialValues={initialValues}
+          validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting, handleChange }) => {
-            return (
-              <>
-                <Form>
-                  {/* create post title input */}
-                  <div className="title-container">
-                    <Field
-                      type="text"
-                      id="title"
-                      name="title"
-                      placeholder="title"
-                      as={Input}
-                      onChange={(event: string) => {
-                        handleChange(event);
-                      }}
-                    />
-                  </div>
-                  {/* create post content input */}
-                  <div className="content-container">
-                    <Field
-                      type="text"
-                      id="content"
-                      name="content"
-                      placeholder="content"
-                      as={Input}
-                      onChange={(event: string) => {
-                        handleChange(event);
-                      }}
-                    />
-                  </div>
-                  {/* create post thumbnail input */}
-                  <div className="thumbnail-container">
-                    <Field
-                      type="text"
-                      id="thumbnail"
-                      name="thumbnail"
-                      placeholder="thumbnail"
-                      as={Input}
-                      onChange={(event: string) => {
-                        handleChange(event);
-                      }}
-                    />
-                  </div>
-                  {/* create post content image input */}
-                  <div className="content-image-container">
-                    <Field
-                      type="text"
-                      id="contentImage"
-                      name="contentImage"
-                      placeholder="content image"
-                      as={Input}
-                      onChange={(event: string) => {
-                        handleChange(event);
-                      }}
-                    />
-                  </div>
+          {({ values, setFieldValue, errors, touched, handleChange }) => (
+            <div className="post-input-container">
+              <Form>
+                {/* gives off 'title' beside the input box and with the required */}
+                {/* it adds the red asterisk */}
+                <div className="title-container">
+                  <label htmlFor="title">Title</label>
+                  <Input
+                    id="title"
+                    name="title"
+                    value={values.title}
+                    onChange={handleChange}
+                    placeholder="enter post title"
+                  />
+                  {errors.title && touched.title && (
+                    <div style={{ color: "red" }}>{errors.title}</div>
+                  )}
+                </div>
 
-                  {/* create post content categoryid input */}
-                  <div className="categoryid-container">
-                    <Field
-                      type="text"
-                      id="categoryid"
-                      name="categoryid"
-                      placeholder="categoryid"
-                      as={Input}
-                      onChange={(event: string) => {
-                        handleChange(event);
-                      }}
-                    />
-                  </div>
+                <div className="category-container">
+                  <label htmlFor="category">Category</label>
+                  <Radio.Group
+                    name="category"
+                    onChange={(e) => setFieldValue("category", e.target.value)}
+                    value={values.category}
+                  >
+                    {categories.map((cat) => (
+                      <Radio key={cat.id} value={cat.id.toString()}>
+                        {cat.label}
+                      </Radio>
+                    ))}
+                  </Radio.Group>
+                  {errors.category && touched.category && (
+                    <div style={{ color: "red" }}>{errors.category}</div>
+                  )}
+                </div>
 
-                  {/* ////////////////////////// */}
-                  <div className="submit-button-container">
-                    <Button htmlType="submit" disabled={isSubmitting}>
-                      submit
-                    </Button>
-                  </div>
-                </Form>
-              </>
-            );
-          }}
+                <div className="content-container">
+                  <label htmlFor="content">Content</label>
+                  <ToastEditor
+                    initialValue={values.content}
+                    ref={editorRef}
+                    onChange={(markdown) => {
+                      setFieldValue("content", markdown);
+                    }}
+                  />
+                  {errors.content && touched.content && (
+                    <div style={{ color: "red" }}>{errors.content}</div>
+                  )}
+                </div>
+
+                <div className="button-container">
+                  <Button htmlType="submit">Submit Post</Button>
+                </div>
+              </Form>
+            </div>
+          )}
         </Formik>
       </CreatePostStyled>
     </>

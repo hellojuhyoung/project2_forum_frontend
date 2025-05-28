@@ -1,12 +1,14 @@
 import { styled } from "styled-components";
 
 export const MarginsStyled = styled.div`
-  &.margins-container {
-    padding-top: 80px;
-    padding-bottom: 100px;
-  }
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 
-  .main {
-    min-height: calc(100vh - 180px);
+  main {
+    flex: 1;
+    padding: 20px 0;
+    max-width: 1280px;
+    margin: 0 auto;
   }
 `;

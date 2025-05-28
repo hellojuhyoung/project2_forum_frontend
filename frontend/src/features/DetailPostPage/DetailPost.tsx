@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
 import { DetailPostStyled } from "./styled";
 
 // axios request api url localhost:5001
 import { instance } from "@/utils/apis/axios";
+
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Post from "../PostPage/Post";
+
+import DetailFeed from "@/components/DetailFeed/DetailFeed";
+import { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
 
 // once you pass on props from the parent components
 // must declare in the child function as props and would need to
@@ -17,13 +21,18 @@ const DetailPostPage = () => {
   const { postid } = router.query;
   const [data, setData] = useState<{
     id: number;
+    user: { username: string };
+    createdAt: string;
+    category: { label: string };
     title: string;
     content: string;
-    thumbnail: string;
-    contentImage: string;
-    userid: number;
-    categoryid: number;
+    images: { postImage: string }[];
   } | null>(null);
+
+  const authentication = useSelector(
+    (state: RootState) => state.authentication
+  );
+  const username = authentication.username;
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -33,7 +42,7 @@ const DetailPostPage = () => {
         const response: any = await instance.get(`/posts/${postid}`);
         const post = response.post;
 
-        console.log("this is response post", post);
+        // console.log("this is response post", post);
         setData(post);
       } catch (error) {
         console.error("error in getting a post", error);
@@ -47,20 +56,11 @@ const DetailPostPage = () => {
 
   return (
     <>
-      <div>
-        {/* {data?.map((value: any, index: any) => (
-          <div>
-            <div key={index}>{value}</div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        ))} */}
-        <div>{data?.title}</div>
-        <div>{data?.content}</div>
-        <div>{data?.thumbnail}</div>
-        <div>{data?.contentImage}</div>
-      </div>
+      <DetailPostStyled>
+        <div>
+          {data && <DetailFeed post={data} currentUsername={username} />}
+        </div>
+      </DetailPostStyled>
     </>
   );
 };

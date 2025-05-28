@@ -1,109 +1,215 @@
-// axios request api url localhost:5001
+import { CreatePostStyled } from "../CreatePostPage/styled";
+import clsx from "clsx";
+
 import { instance } from "@/utils/apis/axios";
 
-import { useEffect, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+
+import { useSelector } from "react-redux";
+import { Formik, Form } from "formik";
+import { Input, Radio, Button } from "antd";
+import * as Yup from "yup";
+import { RootState } from "@/redux/store";
+
+import dynamic from "next/dynamic";
+
+const ToastEditor = dynamic(() => import("@/components/Editor/ToastEditor"), {
+  ssr: false,
+});
+
+import {
+  ImagesFromText,
+  convertImageUrlsToBase64,
+  cleanContent,
+} from "@/utils/ToastEditor/EditorContent";
 import { useRouter } from "next/router";
 
-const EditPostPage = () => {
+const EditPostPage: React.FC = () => {
   const router = useRouter();
   const { postid } = router.query;
 
-  const [data, setData] = useState<{
-    id?: number;
-    title?: string;
-    content?: string;
-    thumbnail?: string;
-    contentImage?: string;
-    userid?: number;
-    categoryid?: number;
-  } | null>(null);
+  const authentication = useSelector(
+    (state: RootState) => state.authentication
+  );
+  const id = authentication.id;
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  type PostValues = {
+    title: string;
+    category: string;
+    content: string; // markdown content (text + image markdown)
+    images: string[]; // image paths extracted from content
+  };
+
+  const [initialValues, setInitialValues] = useState<PostValues>({
+    title: "",
+    category: "",
+    content: "",
+    images: [],
+  });
+
+  const [categories, setCategories] = useState<{ id: number; label: string }[]>(
+    []
+  );
+
+  const editorRef = useRef<any>(null);
 
   useEffect(() => {
-    if (!router.isReady) return;
+    // Fetch categories once
+    const getCategories = async () => {
+      try {
+        const response: any = await instance.get("/categories");
+        setCategories(response);
+      } catch (error) {
+        console.error("error fetching categories", error);
+      }
+    };
+    getCategories();
+  }, []);
 
-    const editPost = async () => {
+  useEffect(() => {
+    if (!router.isReady || !postid || !API_URL) return;
+
+    const fetchPost = async () => {
       try {
         const response: any = await instance.get(`/posts/${postid}`);
         const post = response.post;
 
-        setData(post);
+        if (post) {
+          const editorContent = await convertImageUrlsToBase64(
+            post.content || "",
+            post.images?.map((img: any) => img.postImage) || [],
+            API_URL
+          );
+
+          setInitialValues({
+            title: post.title || "",
+            category: post.categoryid ? post.categoryid.toString() : "",
+            content: editorContent,
+            images: post.images?.map((img: any) => img.postImage) || [],
+          });
+        }
       } catch (error) {
-        console.error("error in getting a post in edit post", error);
+        console.error("error fetching post for edit", error);
       }
     };
 
-    editPost();
-  }, [router.isReady, postid]);
+    fetchPost();
+  }, [router.isReady, postid, API_URL]);
 
-  const handleChange = (event: any) => {
-    const { value, name } = event.target;
-    setData({
-      ...data,
-      [name]: value,
-    });
-  };
+  const validationSchema = Yup.object({
+    title: Yup.string().required("Title is required"),
+    category: Yup.string().required("Please select a category"),
+    content: Yup.string().required("Content is required"),
+  });
 
-  const handleSave = async () => {
+  const handleUpdate = async (values: PostValues) => {
+    // Parse content markdown to separate text and images
+    const { text, images } = ImagesFromText(values.content);
+    const cleanedContent = cleanContent(text);
+
     try {
-      const response: any = await instance.put(`/posts/update/${postid}`, {
-        data,
-      });
+      const updatePost = {
+        title: values.title,
+        content: cleanedContent, // text without image markdown
+        images: images, // array of image paths like '/uploads/abc.jpg'
+        userid: id,
+        categoryid: parseInt(values.category, 10),
+      };
+      console.log("Images to update:", updatePost.images);
 
-      console.log(response);
-      console.log(response.result, response.message);
+      console.log("handleupdate", updatePost);
+      console.log("Submitting post with values:", values);
+
+      const response = await instance.put(
+        `/posts/update/${postid}`,
+        updatePost
+      );
+
+      console.log("post updated", response);
+      router.push(`/posts/detail?postid=${postid}`);
     } catch (error) {
-      console.error("error updating the post", error);
-    }
-    console.log("handle save", data);
-  };
-
-  const handleDelete = async () => {
-    try {
-      const response = await instance.delete(`/posts/${postid}`);
-
-      console.log(response);
-    } catch (error) {
-      console.error("error in deleting the post", error);
+      console.error("error updating post", error);
     }
   };
 
   return (
     <>
-      <div>button clicked</div>
-      <div className="edit-container">
-        <input
-          type="text"
-          className="title"
-          name="title"
-          value={data?.title || ""}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          className="content"
-          name="content"
-          value={data?.content || ""}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          className="thumbnail"
-          name="thumbnail"
-          value={data?.thumbnail || ""}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          className="contentImage"
-          name="contentImage"
-          value={data?.contentImage || ""}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="submit-button-container">
-        <button onClick={handleSave}>save</button>
-        <button onClick={handleDelete}>delete</button>
-      </div>
+      {initialValues && (
+        <CreatePostStyled className={clsx("edit-post-container")}>
+          <Formik
+            initialValues={initialValues}
+            enableReinitialize
+            validationSchema={validationSchema}
+            onSubmit={handleUpdate}
+          >
+            {({ values, setFieldValue, errors, touched, handleChange }) => (
+              <div className="post-input-container">
+                <Form>
+                  {/* title input */}
+                  <div className="title-container">
+                    <label htmlFor="title">Title</label>
+                    <Input
+                      id="title"
+                      name="title"
+                      value={values.title}
+                      // onChange={handleChange}
+                      onChange={(e) => setFieldValue("title", e.target.value)}
+                      placeholder="Enter post title"
+                    />
+                    {errors.title && touched.title && (
+                      <div style={{ color: "red" }}>{errors.title}</div>
+                    )}
+                  </div>
+
+                  {/* category radio */}
+                  <div className="category-container">
+                    <label htmlFor="category">Category</label>
+                    <Radio.Group
+                      name="category"
+                      onChange={(e) =>
+                        setFieldValue("category", e.target.value)
+                      }
+                      value={values.category}
+                    >
+                      {categories.map((cat) => (
+                        <Radio key={cat.id} value={cat.id.toString()}>
+                          {cat.label}
+                        </Radio>
+                      ))}
+                    </Radio.Group>
+                    {errors.category && touched.category && (
+                      <div style={{ color: "red" }}>{errors.category}</div>
+                    )}
+                  </div>
+
+                  {/* content editor */}
+                  <div className="content-container">
+                    <label htmlFor="content">Content</label>
+                    <ToastEditor
+                      key={initialValues.content}
+                      ref={editorRef}
+                      initialValue={initialValues.content}
+                      onChange={(markdown) =>
+                        setFieldValue("content", markdown)
+                      }
+                    />
+                    {errors.content && touched.content && (
+                      <div style={{ color: "red" }}>{errors.content}</div>
+                    )}
+                  </div>
+
+                  {/* submit button */}
+                  <div className="button-container">
+                    <Button htmlType="submit">Update Post</Button>
+                  </div>
+                </Form>
+              </div>
+            )}
+          </Formik>
+        </CreatePostStyled>
+      )}
     </>
   );
 };

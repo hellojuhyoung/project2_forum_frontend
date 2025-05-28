@@ -2,16 +2,20 @@ import { useRouter } from "next/router";
 import { UserPostsStyled } from "./styled";
 import { instance } from "@/utils/apis/axios";
 import { useEffect, useState } from "react";
+import MainFeed from "@/components/MainFeed/MainFeed";
+import clsx from "clsx";
 
 const UserPostsPage = () => {
   const router = useRouter();
   const { userid } = router.query;
   const [posts, setPosts] = useState([]);
 
-  const userPosts = async () => {
+  const userPaginatedPosts = async () => {
     try {
       const response: any = await instance.get(`/users/getPosts/${userid}`);
       const posts = response.postByUser;
+
+      console.log(response);
       setPosts(posts);
     } catch (error) {
       console.error("error in getting user posts", error);
@@ -19,31 +23,15 @@ const UserPostsPage = () => {
   };
 
   useEffect(() => {
-    userPosts();
-  }, [posts]);
+    userPaginatedPosts();
+  }, [userid]);
 
   return (
     <>
-      <UserPostsStyled>
+      <UserPostsStyled className={clsx("users-posts-container")}>
         <div className="user-posts">
-          {posts.map((post: any, index: any) => {
-            return (
-              <div
-                key={post.id}
-                className="user-post"
-                onClick={() => {
-                  router.push({
-                    pathname: `/posts/user/detail`,
-                    query: { postid: post.id },
-                  });
-                }}
-              >
-                <div>{post.title}</div>
-                <div>{post.content}</div>
-                <div>{post.thumbnail}</div>
-                <div>{post.contentImage}</div>
-              </div>
-            );
+          {posts.map((post: any, index: number) => {
+            return <MainFeed key={index} post={post} />;
           })}
         </div>
       </UserPostsStyled>

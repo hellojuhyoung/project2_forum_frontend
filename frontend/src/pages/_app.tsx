@@ -8,6 +8,8 @@ import { setUser } from "@/redux/redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { instance } from "@/utils/apis/axios";
 import Margins from "@/components/Margins/Margins";
+import { ThemeProvider } from "styled-components";
+import { theme } from "@/styles/theme";
 
 function AppInitializer() {
   const dispatch = useDispatch();
@@ -53,9 +55,11 @@ export default function App({ Component, pageProps }: AppProps) {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <AppInitializer />
-        <Margins>
-          <Component {...pageProps} />
-        </Margins>
+        <ThemeProvider theme={theme}>
+          <Margins>
+            <Component {...pageProps} />
+          </Margins>
+        </ThemeProvider>
       </PersistGate>
     </Provider>
   );

@@ -1,9 +1,16 @@
-import { MainStyled } from "./styled";
+import {
+  MainStyled,
+  Container,
+  MostRecentFeed,
+  MainFeedGrid,
+  PaginationStyled,
+  Section,
+} from "./styled";
 
 import clsx from "clsx";
 
 // import skeleton structures from component
-import SmallFeed from "@/components/SmallFeed/SmallFeed";
+import MainFeed from "@/components/MainFeed/MainFeed";
 import SlideFeed from "@/components/Swiper/Swiper";
 
 // axios request api url localhost:5001
@@ -45,7 +52,7 @@ export default function Main() {
       try {
         const response: any = await instance.get("/posts/recent");
         const mostRecent_posts = response.posts;
-        // console.log(response)
+        // console.log(response);
         // console.log(mostRecent_posts);
         setRecentPost(mostRecent_posts);
       } catch (error) {
@@ -56,6 +63,7 @@ export default function Main() {
     const getPaginatedPosts = async () => {
       try {
         const response: any = await instance.get(`/posts?page=${currentPage}`);
+        console.log(response);
         setPosts(response.posts);
         setTotalPages(response.totalPages);
         // console.log(response);
@@ -69,41 +77,73 @@ export default function Main() {
     getPaginatedPosts();
   }, [router.isReady, token, currentPage]);
 
+  const renderPageNumbers = () => {
+    let startPage = Math.max(1, currentPage - 2);
+    let endPage = Math.min(totalPages, startPage + 4);
+
+    if (endPage - startPage < 4) {
+      startPage = Math.max(1, endPage - 4);
+    }
+
+    const pages = [];
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(
+        <span
+          key={i}
+          className={`page-number${i === currentPage ? " active" : ""}`}
+          onClick={() => setCurrentPage(i)}
+        >
+          {i}
+        </span>
+      );
+    }
+    return pages;
+  };
+
   return (
     <>
       <MainStyled className={clsx("main-container")}>
-        {token ? <></> : <></>}
+        <Container>
+          {token ? <></> : <></>}
 
-        <div className="most-recent-feed">
-          <SlideFeed slides={recentPost} />
-        </div>
-        <div className="most-liked-feed"></div>
+          <Section>
+            <h2>📌 Most Recent</h2>
+            <MostRecentFeed>
+              <SlideFeed slides={recentPost} />
+            </MostRecentFeed>
+          </Section>
 
-        <div className="main-feed">
-          {posts.map((post: any, index: number) => {
-            return <SmallFeed key={index} post={post} />;
-          })}
+          <Section>
+            <h2>📂 Main Feed</h2>
+            <MainFeedGrid>
+              {posts.map((post: any, index: number) => (
+                <MainFeed key={index} post={post} />
+              ))}
+            </MainFeedGrid>
+          </Section>
 
-          <div className="pagination">
+          <PaginationStyled>
             <button
+              className="arrow"
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
             >
-              Previous
+              &lt;
             </button>
-            <span>
-              {currentPage} / {totalPages}
-            </span>
+
+            {renderPageNumbers()}
+
             <button
+              className="arrow"
               onClick={() =>
                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))
               }
               disabled={currentPage === totalPages}
             >
-              Next
+              &gt;
             </button>
-          </div>
-        </div>
+          </PaginationStyled>
+        </Container>
       </MainStyled>
     </>
   );
