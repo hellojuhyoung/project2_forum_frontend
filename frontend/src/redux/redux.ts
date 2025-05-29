@@ -2,14 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CookieValueTypes } from "cookies-next";
 
 interface reduxState {
-  id: number | undefined;
-  username: string;
-  token: CookieValueTypes | undefined;
+  id: number | null | undefined;
+  username: string | null;
+  token: CookieValueTypes | null | undefined;
 }
 
 const initialState: reduxState = {
   id: undefined,
-  username: "",
+  username: null,
   token: undefined,
 };
 
@@ -23,9 +23,9 @@ const authenticationSlices = createSlice({
       state.token = action.payload.token;
     },
     clearUser: (state) => {
-      state.id = undefined;
-      state.username = "";
-      state.token = undefined;
+      state.id = null;
+      state.username = null;
+      state.token = null;
     },
   },
 });

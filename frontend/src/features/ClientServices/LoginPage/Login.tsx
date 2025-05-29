@@ -35,7 +35,8 @@ export default function LoginPage() {
 
   // must add withCredentials to be true when sending the
   // axios request... this is to secure the token transfer
-  const handleLogin = async () => {
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     try {
       const response: any = await instance.post(
         "/auth/login",
@@ -67,43 +68,46 @@ export default function LoginPage() {
   };
 
   const handleLogout = async () => {
-    const token = deleteCookie("token");
+    deleteCookie("token");
+    dispatch(setUser({ id: null, username: null, token: null }));
+    notification.success({
+      message: "You have been logged out.",
+      placement: "topRight",
+    });
     router.push("/");
-    return token;
   };
 
-  const handleKeyDown = (enter: any) => {
-    if (enter.key === "Enter") {
-      handleLogin();
+  const handleKeyDown = (enter: React.KeyboardEvent<HTMLInputElement>) => {
+    if (enter.key === "Enter" && !token) {
+      handleLogin(enter as any);
     }
   };
   return (
     <>
       <LoginStyled className={clsx("login-container")}>
         <div className="input-container">
-          <Input
-            type="text"
-            placeholder="username"
-            className="input-username"
-            onChange={(event) => setUsername(event.target.value)}
-          />
-          <Input.Password
-            placeholder="password"
-            className="input-password"
-            onChange={(event) => setPassword(event.target.value)}
-            // if the client presses the 'enter' key login is activated
-            onKeyDown={(keydown) => handleKeyDown(keydown)}
-          />
           {token ? (
             <button className="button-logout" onClick={handleLogout}>
               Logout
             </button>
           ) : (
-            <>
-              <button className="button-login" onClick={handleLogin}>
+            <form onSubmit={handleLogin}>
+              <Input
+                type="text"
+                placeholder="username"
+                className="input-username"
+                onChange={(event) => setUsername(event.target.value)}
+              />
+              <Input.Password
+                placeholder="password"
+                className="input-password"
+                onChange={(event) => setPassword(event.target.value)}
+                onKeyDown={handleKeyDown}
+              />
+              <button type="submit" className="button-login">
                 Login
               </button>
-            </>
+            </form>
           )}
         </div>
       </LoginStyled>

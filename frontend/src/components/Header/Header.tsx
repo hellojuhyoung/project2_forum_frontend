@@ -15,6 +15,7 @@ import { clearUser } from "@/redux/redux";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { RootState } from "@/redux/store";
+// import Image from "next/image";
 
 interface HeaderProps {
   isLoggedIn: boolean;
@@ -61,11 +62,11 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
     });
   }
 
-  //function directs user to account page
-  async function directToAccount() {
+  //function directs user to profile page
+  async function directToProfile() {
     router.push({
-      pathname: "/profile/account",
-      query: { username: username },
+      pathname: "/account/profile",
+      query: { userid: id },
     });
   }
   // need to add user profile page
@@ -75,9 +76,6 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
   const handleLogout = async () => {
     deleteCookie("token");
     dispatch(clearUser());
-    // router.push("/").then(() => {
-    //   router.reload();
-    // });
     notification.error({
       message: "you are logged out",
     });
@@ -89,8 +87,8 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
     {
       key: "1",
       label: (
-        <div onClick={directToAccount} style={{ cursor: "pointer" }}>
-          account
+        <div onClick={directToProfile} style={{ cursor: "pointer" }}>
+          profile
         </div>
       ),
     },
@@ -111,7 +109,18 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
         <>
           <header className="header">
             <div onClick={directToHome} style={{ cursor: "pointer" }}>
-              where logo is placed
+              {/* <Image
+                src="/forum_logo.png"
+                alt="Forum Logo"
+                width={60}
+                height={50}
+                fetchPriority="auto"
+              /> */}
+              <img
+                src="/forum_logo.png"
+                alt="Forum Logo"
+                style={{ width: "60px", height: "50px" }} // Set width and height using style
+              />
             </div>
 
             <nav className="navigation-bar">
@@ -127,7 +136,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                   <Dropdown menu={{ items }}>
                     <a onClick={(e) => e.preventDefault()}>
                       <Space>
-                        profile
+                        account
                         <DownOutlined />
                       </Space>
                     </a>
@@ -141,7 +150,18 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
         <>
           <header className="header">
             <div onClick={directToHome} style={{ cursor: "pointer" }}>
-              where logo is placed
+              {/* <Image
+                src="/forum_logo.png"
+                alt="Forum Logo"
+                width={60}
+                height={50}
+                fetchPriority="auto"
+              /> */}
+              <img
+                src="/forum_logo.png"
+                alt="Forum Logo"
+                style={{ width: "60px", height: "50px" }} // Set width and height using style
+              />
             </div>
 
             <nav className="navigation-bar">

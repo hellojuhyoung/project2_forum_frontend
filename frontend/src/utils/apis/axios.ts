@@ -10,9 +10,6 @@ import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
-  headers: {
-    "Content-Type": "application/json; charset=utf-8",
-  },
   withCredentials: true,
 });
 
@@ -42,6 +39,12 @@ instance.interceptors.request.use(
       // 토큰 사용시 헤더에 토큰 추가
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    // You could conditionally set it for non-FormData requests if you need it
+    // if (!(config.data instanceof FormData)) {
+    //   config.headers["Content-Type"] = "application/json; charset=utf-8";
+    // }
+
     // console.log({
     //   headers: config.headers,
     //   method: config.method,

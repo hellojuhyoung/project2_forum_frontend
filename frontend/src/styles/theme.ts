@@ -22,6 +22,7 @@ export const theme: DefaultTheme = {
   colors: {
     primary: "#0070f3",
     primaryDark: "#004a99",
+    primaryHover: "#007bff",
     secondary: "#ff4081",
     text: "#333",
     textLight: "#eee",
