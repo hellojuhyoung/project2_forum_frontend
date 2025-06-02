@@ -142,6 +142,12 @@ const ProfilePage = () => {
       </div>
       {/* Example for an "Edit Profile" button */}
       {/* <button className="edit-button">Edit Profile</button> */}
+      <button
+        className="edit-button"
+        onClick={() => router.push(`/account/update`)}
+      >
+        Edit Profile
+      </button>
     </ProfileStyled>
   );
 };

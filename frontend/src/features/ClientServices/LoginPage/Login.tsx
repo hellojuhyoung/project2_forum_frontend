@@ -11,6 +11,9 @@ import { useState, useEffect } from "react";
 // styling libraries
 import { Input, notification } from "antd";
 
+// social login buttons
+import SocialLoginButtons from "./SocialLoginButtons";
+
 import { CookieValueTypes, deleteCookie, getCookie } from "cookies-next";
 
 import { RootState } from "@/redux/store";
@@ -59,7 +62,9 @@ export default function LoginPage() {
       );
 
       notification.success({
-        message: "you are logged in",
+        message: "Login Successful",
+        description: "You have been successfully authenticated.",
+        placement: "topRight",
       });
       router.push("/");
     } catch (error) {
@@ -70,8 +75,9 @@ export default function LoginPage() {
   const handleLogout = async () => {
     deleteCookie("token");
     dispatch(setUser({ id: null, username: null, token: null }));
-    notification.success({
-      message: "You have been logged out.",
+    notification.info({
+      message: "Logout Successful",
+      description: "You have been successfully logged out.",
       placement: "topRight",
     });
     router.push("/");
@@ -108,6 +114,12 @@ export default function LoginPage() {
                 Login
               </button>
             </form>
+          )}
+
+          {!token && (
+            <>
+              <SocialLoginButtons />
+            </>
           )}
         </div>
       </LoginStyled>

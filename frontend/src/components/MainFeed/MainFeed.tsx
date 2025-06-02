@@ -17,9 +17,14 @@ interface Post {
 interface MainFeedProps {
   post: Post;
   isMostRecentSection?: boolean;
+  isMostLikedSection?: boolean;
 }
 
-const MainFeed: React.FC<MainFeedProps> = ({ post, isMostRecentSection }) => {
+const MainFeed: React.FC<MainFeedProps> = ({
+  post,
+  isMostRecentSection,
+  isMostLikedSection,
+}) => {
   const router = useRouter();
   const [likeCount, setLikeCount] = useState(0);
 
@@ -54,6 +59,7 @@ const MainFeed: React.FC<MainFeedProps> = ({ post, isMostRecentSection }) => {
       <MainFeedStyled
         onClick={directToPost}
         $isMostRecentSection={isMostRecentSection}
+        $isMostLikedSection={isMostLikedSection}
       >
         <div className="main-thumbnail">
           <img

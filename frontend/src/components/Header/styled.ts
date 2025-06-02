@@ -1,4 +1,6 @@
 import { styled } from "styled-components";
+import { Image } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 
 export const HeaderStyled = styled.div`
   &.header-container {
@@ -22,6 +24,12 @@ export const HeaderStyled = styled.div`
         list-style: none;
         padding: 0;
         margin: 0;
+        align-items: center;
+      }
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       li + li {
@@ -29,4 +37,20 @@ export const HeaderStyled = styled.div`
       }
     }
   }
+`;
+
+// Styled component for the actual profile picture image
+export const StyledAvatarImage = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+`;
+
+// Styled component for the fallback user icon
+export const StyledUserIcon = styled(UserOutlined)`
+  font-size: 24px; /* Adjust size as needed */
+  color: #1890ff; /* Ant Design primary blue, or your theme color */
+  margin-right: 8px;
 `;

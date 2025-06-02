@@ -10,9 +10,16 @@ import { instance } from "@/utils/apis/axios";
 import Margins from "@/components/Margins/Margins";
 import { ThemeProvider } from "styled-components";
 import { theme } from "@/styles/theme";
+import "../i18n";
+import { useRouter } from "next/router";
+
+// no need to add the i18n tag in the rendering section
+// the file itself i18n.ts hooks i18next into React's
+// context system when the i18n.init() method is called
 
 function AppInitializer() {
   const dispatch = useDispatch();
+  const router = useRouter();
   // const authentication = useSelector(
   //   (state: RootState) => state.authentication
   // );
@@ -31,13 +38,13 @@ function AppInitializer() {
             },
           });
 
-          console.log("Profile response:", response);
+          // console.log("Profile response:", response);
 
           dispatch(
             setUser({
               id: response.id,
               username: response.username,
-              token,
+              token: token,
             })
           );
         } catch (error) {
@@ -45,7 +52,7 @@ function AppInitializer() {
         }
       })();
     }
-  }, [dispatch]);
+  }, [dispatch, router]);
 
   return null;
 }

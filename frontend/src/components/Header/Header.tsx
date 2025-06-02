@@ -1,9 +1,9 @@
 import clsx from "clsx";
-import { HeaderStyled } from "./styled";
+import { HeaderStyled, StyledAvatarImage, StyledUserIcon } from "./styled";
 
 // antd dropdown menu for profile option
-import React from "react";
-import { DownOutlined } from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Dropdown, notification, Space } from "antd";
 
@@ -15,6 +15,7 @@ import { clearUser } from "@/redux/redux";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { RootState } from "@/redux/store";
+import { instance } from "@/utils/apis/axios";
 // import Image from "next/image";
 
 interface HeaderProps {
@@ -33,6 +34,25 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
   // import variables from redux store
   const id = authentication.id;
   const username = authentication.username;
+
+  const [profilePicture, setProfilePicture] = useState<string | null>(null);
+  const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      const fetchProfilePicture = async () => {
+        try {
+          const response: any = await instance.get(`/users/${id}`);
+          setProfilePicture(response.user.profilePicture);
+          // console.log(response.user.profilePicture);
+        } catch (error) {
+          console.error("error fetching profile picture", error);
+          setProfilePicture(null);
+        }
+      };
+      fetchProfilePicture();
+    }
+  }, [id]);
 
   // function directs user to home
   async function directToHome() {
@@ -136,7 +156,22 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                   <Dropdown menu={{ items }}>
                     <a onClick={(e) => e.preventDefault()}>
                       <Space>
-                        account
+                        {profilePicture ? (
+                          <StyledAvatarImage
+                            src={`${BACKEND_BASE_URL}${profilePicture}`}
+                            alt="User Profile"
+                            onError={(
+                              e: React.SyntheticEvent<HTMLImageElement, Event>
+                            ) => {
+                              (e.target as HTMLImageElement).src =
+                                "/no-image.jpg";
+                              e.currentTarget.onerror = null;
+                            }}
+                          />
+                        ) : (
+                          // Use the StyledUserIcon component
+                          <StyledUserIcon />
+                        )}
                         <DownOutlined />
                       </Space>
                     </a>

@@ -44,7 +44,7 @@ export const DetailFeedStyled = styled.div`
 
     .detail-createdAt {
       margin-left: 20px;
-      color: ${({ theme }) => theme.colors.textLight};
+      color: ${({ theme }) => theme.colors.textSecondary};
     }
   }
 

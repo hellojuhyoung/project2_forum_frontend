@@ -26,19 +26,19 @@ export const theme: DefaultTheme = {
     secondary: "#ff4081",
     text: "#333",
     textLight: "#eee",
-    textPrimary: "#212121", // new
-    textSecondary: "#757575", // new
-    textBody: "#4f4f4f", // new
+    textPrimary: "#212121",
+    textSecondary: "#757575",
+    textBody: "#4f4f4f",
     border: "#ddd",
     background: "#fff",
     backgroundLight: "#ffffff",
     footerBackground: "#222",
-    accentBackground: "#f5f5f5", // new
-    success: "#28a745", // new
-    successDark: "#1e7e34", // new
-    danger: "#dc3545", // new
-    dangerDark: "#a71d2a", // new
-    dangerHover: "#c82333", // optional new
+    accentBackground: "#f5f5f5",
+    success: "#28a745",
+    successDark: "#1e7e34",
+    danger: "#dc3545",
+    dangerDark: "#a71d2a",
+    dangerHover: "#c82333",
   },
   borderRadius: {
     sm: "4px",

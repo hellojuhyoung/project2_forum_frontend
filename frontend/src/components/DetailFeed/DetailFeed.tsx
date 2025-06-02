@@ -4,6 +4,7 @@ import { instance } from "@/utils/apis/axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { notification } from "antd";
 
 // for the localhost url import from the .env file
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -20,7 +21,7 @@ interface Post {
 
 interface DetailFeedProps {
   post: Post;
-  currentUsername: string | undefined;
+  currentUsername: string | null;
 }
 
 const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
@@ -54,8 +55,8 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
           instance.get(`/likes/check`, { params }),
         ]);
 
-        console.log("this is frontend countData", countData);
-        console.log("this is frontend checkData", checkData);
+        // console.log("this is frontend countData", countData);
+        // console.log("this is frontend checkData", checkData);
         setLikeCount(countData.counts);
         setIsLiked(checkData.liked);
       } catch (err: any) {
@@ -104,10 +105,18 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
 
     try {
       await instance.delete(`/posts/${post.id}`);
-      alert("Post deleted successfully");
+      notification.success({
+        message: "Success",
+        description: "Post successfully deleted.",
+        placement: "topRight",
+      });
       router.push("/");
     } catch (error) {
-      alert("Failed to delete post");
+      notification.error({
+        message: "Deletion Failed",
+        description: "There was an error deleting the post. Please try again.",
+        placement: "topRight",
+      });
       console.error(error);
     }
   };

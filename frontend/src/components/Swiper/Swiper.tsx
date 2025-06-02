@@ -36,7 +36,7 @@ const SlideFeed: React.FC<SlideFeedProps> = ({ slides }) => {
       >
         {slides.map((slide: Post, index: number) => (
           <SwiperSlide key={index}>
-            <MainFeed post={slide} isMostRecentSection />
+            <MainFeed post={slide} isMostRecentSection isMostLikedSection />
           </SwiperSlide>
         ))}
       </SwiperStyled>

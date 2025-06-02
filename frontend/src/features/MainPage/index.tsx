@@ -5,6 +5,7 @@ import {
   MainFeedGrid,
   PaginationStyled,
   Section,
+  MostLikedFeed,
 } from "./styled";
 
 import clsx from "clsx";
@@ -35,10 +36,11 @@ export default function Main() {
   const id = authentication.id;
   const token = authentication.token;
 
-  console.log(id, token);
+  // console.log(id, token);
 
   // this is to retrieve most recent posts and display
   const [recentPost, setRecentPost] = useState([]);
+  const [likedPost, setLikedPost] = useState([]);
 
   // this is to retrieve all the posts and display them on the main feed
   const [posts, setPosts] = useState([]);
@@ -60,10 +62,21 @@ export default function Main() {
       }
     };
 
+    const getLikedPosts = async () => {
+      try {
+        const response: any = await instance.get("/posts/mostLiked");
+        const mostLiked_posts = response.posts;
+        // console.log(response);
+        setLikedPost(mostLiked_posts);
+      } catch (error) {
+        console.error("error fetching most liked posts", error);
+      }
+    };
+
     const getPaginatedPosts = async () => {
       try {
         const response: any = await instance.get(`/posts?page=${currentPage}`);
-        console.log(response);
+        // console.log(response);
         setPosts(response.posts);
         setTotalPages(response.totalPages);
         // console.log(response);
@@ -74,6 +87,7 @@ export default function Main() {
     };
 
     getRecentPosts();
+    getLikedPosts();
     getPaginatedPosts();
   }, [router.isReady, token, currentPage]);
 
@@ -111,6 +125,13 @@ export default function Main() {
             <MostRecentFeed>
               <SlideFeed slides={recentPost} />
             </MostRecentFeed>
+          </Section>
+
+          <Section>
+            <h2>👍 Most Liked</h2>
+            <MostLikedFeed>
+              <SlideFeed slides={likedPost} />
+            </MostLikedFeed>
           </Section>
 
           <Section>

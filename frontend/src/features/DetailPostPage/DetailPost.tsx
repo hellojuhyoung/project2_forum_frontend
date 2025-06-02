@@ -52,7 +52,7 @@ const DetailPostPage = () => {
     getPost();
   }, [router.isReady, postid]);
 
-  console.log("this is data before return", data, typeof data);
+  // console.log("this is data before return", data, typeof data);
 
   return (
     <>

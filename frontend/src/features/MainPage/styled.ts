@@ -18,6 +18,12 @@ export const MostRecentFeed = styled.div`
   width: 100%;
 `;
 
+export const MostLikedFeed = styled.div`
+  display: flex;
+  overflow-x: hidden;
+  width: 100%;
+`;
+
 export const MainFeedGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4 columns */

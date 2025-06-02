@@ -7,7 +7,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { useSelector } from "react-redux";
 import { Formik, Form } from "formik";
-import { Input, Radio, Button } from "antd";
+import { Input, Radio, Button, notification } from "antd";
 import * as Yup from "yup";
 import { RootState } from "@/redux/store";
 
@@ -128,8 +128,19 @@ const EditPostPage: React.FC = () => {
       );
 
       console.log("post updated", response);
+
+      notification.success({
+        message: "Success",
+        description: "Post successfully updated.",
+        placement: "topRight",
+      });
       router.push(`/posts/detail?postid=${postid}`);
     } catch (error) {
+      notification.error({
+        message: "Update Failed",
+        description: "Unable to update your post. Please try again.",
+        placement: "topRight",
+      });
       console.error("error updating post", error);
     }
   };

@@ -16,6 +16,14 @@ export const LoginStyled = styled.div`
       flex-direction: column;
       gap: ${({ theme }) => theme.spacing.md};
 
+      form {
+        display: flex; // Make the form a flex container
+        flex-direction: column; // Stack its children (inputs, button) vertically
+        gap: ${({ theme }) =>
+          theme.spacing
+            .md}; // <-- This creates the gap between each input and the button
+      }
+
       // Style for username input
       input {
         padding: ${({ theme }) => theme.spacing.sm};
@@ -64,7 +72,7 @@ export const LoginStyled = styled.div`
       }
 
       .button-logout {
-        background-color: ${({ theme }) => theme.colors.secondary};
+        background-color: ${({ theme }) => theme.colors.danger};
         &:hover {
           opacity: 0.8;
         }

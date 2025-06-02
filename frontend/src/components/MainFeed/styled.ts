@@ -7,20 +7,24 @@ import styled from "styled-components";
 // DOM element that isn't a standard HTML attribute (like 'className', 'id', 'src', ...)
 // it warns you because it might be unintended or could lead to invalid HTML.
 
-const MainFeedStyled = styled.div<{ $isMostRecentSection?: boolean }>`
+export const MainFeedStyled = styled.div<{
+  $isMostRecentSection?: boolean;
+  $isMostLikedSection?: boolean;
+}>`
   cursor: pointer;
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  padding: 16px;
-  margin: 8px;
+  padding: ${({ theme }) => theme.spacing.md};
+  margin: ${({ theme }) => theme.spacing.sm};
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   background-color: ${({ theme }) => theme.colors.backgroundLight};
   transition: box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  height: ${({ $isMostRecentSection }) =>
-    $isMostRecentSection ? "380px" : "300px"};
+  gap: ${({ theme }) => theme.spacing.sm};
+
+  height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+    $isMostRecentSection || $isMostLikedSection ? "380px" : "300px"};
 
   &:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -28,60 +32,60 @@ const MainFeedStyled = styled.div<{ $isMostRecentSection?: boolean }>`
 
   .main-thumbnail {
     width: 100%;
-    border-radius: 8px;
+    border-radius: ${({ theme }) => theme.borderRadius.md};
     overflow: hidden;
   }
 
   .main-thumbnail img {
     object-fit: contain;
     width: 100%;
-    height: ${({ $isMostRecentSection }) =>
-      $isMostRecentSection ? "220px" : "160px"};
-    border-radius: 6px;
+    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+      $isMostRecentSection || $isMostLikedSection ? "220px" : "160px"};
+    border-radius: ${({ theme }) => theme.borderRadius.sm};
   }
 
   .main-title {
     font-size: ${({ theme }) => theme.fontSizes.md};
-    font-weight: bold;
-    margin: 12px 0;
+    font-weight: ${({ theme }) => theme.fontWeights.bold};
+    margin: ${({ theme }) => theme.spacing.sm} 0;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.4;
-    height: calc(1.4em * 2); /* Make space for exactly 2 lines */
+    height: calc(1.4em * 2);
   }
 
   .main-citation-and-likes {
-    display: flex; /* Make it a flex container */
-    justify-content: space-between; /* Push citation to left, likes to right */
-    align-items: center; /* Vertically align items */
-    font-size: 13px;
-    color: #777;
-    margin-top: auto; /* Pushes this section to the bottom of the card */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    color: ${({ theme }) => theme.colors.textSecondary};
+    margin-top: auto;
   }
 
   .main-citation {
-    font-size: 13px;
-    color: #777;
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    color: ${({ theme }) => theme.colors.textSecondary};
   }
 
   .like-display-section {
     display: flex;
     align-items: center;
-    gap: 4px; /* Slightly reduced gap for a more compact look */
-    font-size: 12px; /* Match font size with main-citation for alignment */
-    color: #777; /* Match color with main-citation */
+    gap: ${({ theme }) => theme.spacing.xs};
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    color: ${({ theme }) => theme.colors.textSecondary};
   }
 
   .like-display-section .heart-icon {
-    font-size: 0.9rem; /* Smaller heart icon size */
-    line-height: 1; /* Helps with vertical alignment */
+    font-size: 0.9rem;
+    line-height: 1;
   }
 
   .like-display-section .like-count {
-    font-weight: 500;
+    font-weight: ${({ theme }) => theme.fontWeights.medium};
   }
 `;
 
