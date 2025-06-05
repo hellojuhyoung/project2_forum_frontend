@@ -1,5 +1,3 @@
-// frontend/pages/account/styled.ts (add this below ProfileStyled)
-
 import styled from "styled-components";
 
 export const EditProfileStyled = styled.div`
@@ -41,6 +39,54 @@ export const EditProfileStyled = styled.div`
     object-fit: cover;
     border: 2px solid ${({ theme }) => theme.colors.border};
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .username-compact-group {
+    width: 100%;
+
+    .ant-input {
+      flex-grow: 1;
+    }
+    .validate-username-button {
+      width: 100px;
+      height: 40px;
+      font-size: 16px;
+      background-color: ${({ theme }) => theme.colors.buttonDefault};
+      color: ${({ theme }) => theme.colors.text};
+      border-color: ${({ theme }) => theme.colors.borderColor};
+
+      &:hover {
+        background-color: ${({ theme }) => theme.colors.buttonDefaultHover};
+        color: ${({ theme }) => theme.colors.text};
+        border-color: ${({ theme }) => theme.colors.borderColorHover};
+      }
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(${({ theme }) => theme.colors.primary}, 0.2);
+      }
+      &:disabled {
+        background-color: ${({ theme }) => theme.colors.disabledBackground};
+        color: ${({ theme }) => theme.colors.disabledText};
+        border-color: ${({ theme }) => theme.colors.disabledBorder};
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .username-validation-message {
+    font-size: 12px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    font-weight: 500;
+    min-height: 15px;
+
+    &.available {
+      color: ${({ theme }) => theme.colors.success};
+    }
+
+    &.taken {
+      color: ${({ theme }) => theme.colors.danger};
+    }
   }
 
   .ant-btn {

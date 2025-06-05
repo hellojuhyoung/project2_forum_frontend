@@ -19,6 +19,7 @@ import { CookieValueTypes, deleteCookie, getCookie } from "cookies-next";
 import { RootState } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/redux/redux";
+import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -110,6 +111,7 @@ export default function LoginPage() {
                 onChange={(event) => setPassword(event.target.value)}
                 onKeyDown={handleKeyDown}
               />
+
               <button type="submit" className="button-login">
                 Login
               </button>
@@ -119,6 +121,22 @@ export default function LoginPage() {
           {!token && (
             <>
               <SocialLoginButtons />
+              <div className="recovery-links-container">
+                {/* Forgot Username (Left Side) */}
+                <Link
+                  href="/auth/forgot/username"
+                  className="auth-utility-link"
+                >
+                  Forgot Username?
+                </Link>
+                {/* Forgot Password (Right Side) */}
+                <Link
+                  href="/auth/forgot/password"
+                  className="auth-utility-link"
+                >
+                  Forgot password?
+                </Link>
+              </div>
             </>
           )}
         </div>

@@ -4,7 +4,7 @@ import React from "react";
 import {
   SocialButtonsContainer,
   GoogleButton,
-  KakaoButton, // Now imported
+  KakaoButton,
   NaverButton, // Now imported
 } from "./SocialButtons.styled";
 
@@ -14,15 +14,11 @@ const SocialLoginButtons: React.FC = () => {
   };
 
   const handleKakaoLogin = () => {
-    // Replace with your actual Kakao OAuth initiation URL
-    alert("Kakao Login coming soon!");
-    // window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/kakao`;
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/kakao`;
   };
 
   const handleNaverLogin = () => {
-    // Replace with your actual Naver OAuth initiation URL
-    alert("Naver Login coming soon!");
-    // window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/naver`;
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/naver`;
   };
 
   return (
@@ -36,7 +32,7 @@ const SocialLoginButtons: React.FC = () => {
       </KakaoButton>
 
       <NaverButton onClick={handleNaverLogin}>
-        <img src="/naver-logo.svg" alt="Naver" />
+        <img src="/naver-logo.png" alt="Naver" />
       </NaverButton>
     </SocialButtonsContainer>
   );

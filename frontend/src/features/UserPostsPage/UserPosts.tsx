@@ -15,7 +15,7 @@ const UserPostsPage = () => {
       const response: any = await instance.get(`/users/getPosts/${userid}`);
       const posts = response.postByUser;
 
-      console.log(response);
+      // console.log(response);
       setPosts(posts);
     } catch (error) {
       console.error("error in getting user posts", error);

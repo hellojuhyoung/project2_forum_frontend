@@ -1,9 +1,17 @@
 import { EditProfileStyled } from "./styled";
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { instance } from "@/utils/apis/axios";
-import { notification, Input, Button, Form, Select, DatePicker } from "antd"; // Import Ant Design components
+import {
+  notification,
+  Input,
+  Button,
+  Form,
+  Select,
+  DatePicker,
+  Space,
+} from "antd"; // Import Ant Design components
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import moment, { Moment } from "moment"; // For DatePicker value handling
@@ -49,6 +57,16 @@ const UpdateProfilePage = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   // State to hold the preview URL for the selected image
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+
+  const [isCheckingUsername, setIsCheckingUsername] = useState<boolean>(false);
+  const [usernameAvailable, setUsernameAvailable] = useState<boolean | null>(
+    null
+  ); // true: available, false: taken, null: not checked yet
+  const [usernameValidationMessage, setUsernameValidationMessage] = useState<
+    string | null
+  >(null);
+
+  const hasNotifiedTempUserRef = useRef(false);
 
   // Get your backend's base URL
   const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -148,6 +166,14 @@ const UpdateProfilePage = () => {
             : null,
         });
 
+        if (!isInitialCompletion) {
+          setUsernameAvailable(true);
+          setUsernameValidationMessage("This is your current username.");
+        } else {
+          setUsernameAvailable(null);
+          setUsernameValidationMessage(null);
+        }
+
         if (fetchedUser.profilePicture) {
           setImagePreviewUrl(
             `${BACKEND_BASE_URL}${fetchedUser.profilePicture}`
@@ -163,9 +189,9 @@ const UpdateProfilePage = () => {
     };
 
     fetchOrCreateUserProfile();
-    if (isInitialCompletion) {
-      router.replace("/account/update", undefined, { shallow: true });
-    }
+    // if (isInitialCompletion) {
+    //   router.replace("/account/update", undefined, { shallow: true });
+    // }
   }, [
     router.isReady,
     isInitialCompletion,
@@ -179,6 +205,23 @@ const UpdateProfilePage = () => {
     BACKEND_BASE_URL,
     dispatch,
   ]);
+
+  useEffect(() => {
+    if (
+      isInitialCompletion &&
+      initialUserData &&
+      !hasNotifiedTempUserRef.current
+    ) {
+      notification.info({
+        message: "Temporary Username Detected",
+        description: `You are currently logged in with a temporary username: "${initialUserData.username}". Please choose a unique username to personalize your profile!`,
+        duration: 0,
+        placement: "topRight",
+        key: "temporary-username-notification",
+      });
+      hasNotifiedTempUserRef.current = true;
+    }
+  }, [isInitialCompletion, initialUserData]);
 
   // Handle file selection
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -199,6 +242,52 @@ const UpdateProfilePage = () => {
       );
     }
   };
+  // validate username
+  const validateUsername = async (username: string) => {
+    // Clear previous validation status when user types or initiates check
+    setUsernameAvailable(null);
+    setUsernameValidationMessage(null);
+
+    // Basic client-side validation before hitting the backend
+    if (!username) {
+      setUsernameAvailable(false);
+      setUsernameValidationMessage("Username cannot be empty.");
+      return;
+    }
+    if (username.length < 4) {
+      setUsernameAvailable(false);
+      setUsernameValidationMessage("Username must be at least 4 characters.");
+      return;
+    }
+
+    if (!isInitialCompletion && username === initialUserData?.username) {
+      setUsernameAvailable(true);
+      setUsernameValidationMessage("This is your current username.");
+      return; // No need to check backend
+    }
+
+    setIsCheckingUsername(true);
+
+    try {
+      const response: any = await instance.get(
+        `/users/validate-username?username=${username}`
+      );
+      const isAvailable = response.isAvailable; // Using response.isAvailable as per your fix
+      setUsernameAvailable(isAvailable);
+      setUsernameValidationMessage(
+        isAvailable ? "Username is available!" : "Username is already taken."
+      );
+    } catch (error: any) {
+      console.error("Error checking username availability:", error);
+      setUsernameAvailable(false);
+      const errorMessage =
+        error.response?.data?.message ||
+        "Error checking username. Please try again.";
+      setUsernameValidationMessage(errorMessage);
+    } finally {
+      setIsCheckingUsername(false);
+    }
+  };
 
   // Handle form submission
   const onFinish = async (values: any) => {
@@ -216,6 +305,19 @@ const UpdateProfilePage = () => {
 
     setIsSubmitting(true);
     try {
+      const usernameHasChanged = initialUserData?.username !== values.username;
+      const requiresValidation = isInitialCompletion || usernameHasChanged;
+
+      if (requiresValidation && usernameAvailable !== true) {
+        notification.error({
+          message: "Profile Update Failed",
+          description: "Please validate your username to ensure it's unique.",
+          placement: "topRight",
+        });
+        setIsSubmitting(false); // Stop submission if validation failed
+        return;
+      }
+
       const formData = new FormData();
 
       // Append all form values
@@ -240,9 +342,8 @@ const UpdateProfilePage = () => {
         formData.append("clearProfilePicture", "true");
       }
 
-      // Send PUT request (remains the same endpoint)
       const response: any = await instance.put(
-        `/users/update/${userIdForUpdate}`, // MODIFIED: Use userIdForUpdate
+        `/users/update/${userIdForUpdate}`,
         formData,
         {
           headers: {
@@ -267,6 +368,9 @@ const UpdateProfilePage = () => {
             token: currentToken || "",
           })
         );
+
+        setUsernameAvailable(true);
+        setUsernameValidationMessage("This is your current username.");
 
         if (isInitialCompletion) {
           router.push("/");
@@ -345,15 +449,22 @@ const UpdateProfilePage = () => {
             onFinish={onFinish}
             layout="vertical"
             initialValues={formInitialValues}
+            onValuesChange={(changedValues, allValues) => {
+              if (
+                changedValues.username !== undefined &&
+                changedValues.username !== null
+              ) {
+                // Reset validation if username is being typed
+                if (usernameAvailable !== null) {
+                  // Only reset if it was already validated
+                  setUsernameAvailable(null);
+                  setUsernameValidationMessage(null);
+                }
+              }
+            }}
           >
-            {/* Profile Picture Section (remains largely the same, removed style prop for label) */}
             <div style={{ marginBottom: "24px" }}>
-              <label
-                htmlFor="profile-picture-input"
-                // Removed inline styles, rely on your styled-components
-              >
-                Profile Picture
-              </label>
+              <label htmlFor="profile-picture-input">Profile Picture</label>
               <div className="profile-picture-upload-section">
                 {imagePreviewUrl && (
                   <img
@@ -401,8 +512,73 @@ const UpdateProfilePage = () => {
                 { required: true, message: "Please input your username!" },
               ]}
             >
-              <Input disabled={!isInitialCompletion} />
+              {isInitialCompletion ? (
+                // Editable username with validation for initial completion
+                <Space.Compact style={{ width: "100%" }}>
+                  <Input
+                    placeholder="Username (required, min 4 chars)"
+                    // Ant Design Form.Item handles value/onChange automatically
+                    onBlur={(e) => {
+                      // Trigger Ant Design form validation for username
+                      form
+                        .validateFields(["username"])
+                        .then(() => {
+                          // If Ant Design's local rules pass, then check backend
+                          validateUsername(e.target.value);
+                        })
+                        .catch(() => {
+                          // If Ant Design local rules fail, reset backend validation messages
+                          setUsernameAvailable(false);
+                          setUsernameValidationMessage(
+                            "Please fix local username errors."
+                          );
+                        });
+                    }}
+                  />
+                  <Button
+                    type="default"
+                    onClick={() => {
+                      form
+                        .validateFields(["username"])
+                        .then(() => {
+                          validateUsername(form.getFieldValue("username"));
+                        })
+                        .catch(() => {
+                          setUsernameAvailable(false);
+                          setUsernameValidationMessage(
+                            "Please fix local username errors."
+                          );
+                        });
+                    }}
+                    loading={isCheckingUsername}
+                    disabled={
+                      !form.getFieldValue("username") ||
+                      isCheckingUsername ||
+                      form.getFieldError("username").length > 0 || // Check Ant Design's errors
+                      usernameAvailable === true // Disable if already validated as available
+                    }
+                    style={{ width: "100px" }} // Fixed width for the button
+                  >
+                    Validate
+                  </Button>
+                </Space.Compact>
+              ) : (
+                // Disabled username for regular edit mode
+                <Input disabled={true} />
+              )}
             </Form.Item>
+            {/* Display username validation message only if initial completion or if username was changed and needs re-validation */}
+            {(isInitialCompletion ||
+              initialUserData?.username !== form.getFieldValue("username")) &&
+              usernameValidationMessage && (
+                <div
+                  className={`username-validation-message ${
+                    usernameAvailable === true ? "available" : "taken"
+                  }`}
+                >
+                  {usernameValidationMessage}
+                </div>
+              )}
 
             <Form.Item
               label="Email"

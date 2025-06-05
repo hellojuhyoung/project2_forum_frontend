@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
-export const LoginStyled = styled.div`
-  &.login-container {
+export const ForgotUsernameStyled = styled.div`
+  &.find-username-container {
+    /* Changed class name to be specific to FindUsername */
     width: 100%;
     max-width: 400px;
     margin: 80px auto;
@@ -16,48 +17,26 @@ export const LoginStyled = styled.div`
       flex-direction: column;
       gap: ${({ theme }) => theme.spacing.md};
 
-      .recovery-links-container {
-        display: flex; /* Enables flexbox for horizontal alignment */
-        justify-content: space-between; /* Pushes "Forgot Username?" to the left, "Forgot password?" to the right */
-        align-items: center; /* Vertically aligns items in the middle */
-        width: 100%; /* Ensures the container takes full width */
-        margin-top: ${({ theme }) =>
-          theme.spacing.md}; /* Space above the links, adjust as needed */
+      .page-title {
+        text-align: center;
         margin-bottom: ${({ theme }) =>
-          theme.spacing.sm}; /* Space below the links, adjust as needed */
+          theme.spacing.md}; /* Corresponds to 24px if md=24px */
+        color: #333; // Or use ${({ theme }) => theme.colors.textPrimary};
       }
 
-      /* This ensures both links (with className="auth-utility-link") look the same */
-      .auth-utility-link {
-        background: none;
-        border: none;
-        padding: 0;
-        font-size: ${({ theme }) =>
-          theme.fontSizes.sm}; /* Applies your desired font size */
-        cursor: pointer;
-
-        /* Styles for the actual <a> tag that Next.js Link component renders */
-        color: ${({ theme }) =>
-          theme.colors.primary}; /* Applies your desired color */
-        text-decoration: none; /* No underline by default */
-        transition: text-decoration 0.3s, color 0.3s;
-
-        &:hover {
-          text-decoration: underline; /* Underline on hover */
-          color: ${({ theme }) =>
-            theme.colors.primaryDark}; /* Darker color on hover */
-        }
+      .page-description {
+        text-align: center;
+        margin-bottom: ${({ theme }) =>
+          theme.spacing.md}; /* Corresponds to 24px */
       }
 
       form {
-        display: flex; // Make the form a flex container
-        flex-direction: column; // Stack its children (inputs, button) vertically
-        gap: ${({ theme }) =>
-          theme.spacing
-            .md}; // <-- This creates the gap between each input and the button
+        display: flex;
+        flex-direction: column;
+        gap: ${({ theme }) => theme.spacing.md};
       }
 
-      // Style for username input
+      // Styles for regular Ant Design Input
       input {
         padding: ${({ theme }) => theme.spacing.sm};
         font-size: ${({ theme }) => theme.fontSizes.md};
@@ -69,7 +48,7 @@ export const LoginStyled = styled.div`
         }
       }
 
-      // Override styles for password input
+      // Styles for Ant Design Input.Password wrapper (also affects Input if Ant Design uses it similarly)
       .ant-input-affix-wrapper {
         padding: 0;
         border: 1px solid ${({ theme }) => theme.colors.border};
@@ -101,13 +80,6 @@ export const LoginStyled = styled.div`
 
         &:hover {
           background-color: ${({ theme }) => theme.colors.primaryDark};
-        }
-      }
-
-      .button-logout {
-        background-color: ${({ theme }) => theme.colors.danger};
-        &:hover {
-          opacity: 0.8;
         }
       }
     }

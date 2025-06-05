@@ -15,6 +15,7 @@ import {
   Radio,
   DatePicker,
   Select,
+  Space,
 } from "antd";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -110,11 +111,83 @@ const SignupPage: React.FC = () => {
     }
   };
 
+  //
+  //
+  const [isCheckingUsername, setIsCheckingUsername] = useState<boolean>(false);
+  const [usernameAvailable, setUsernameAvailable] = useState<boolean | null>(
+    null
+  ); // true: available, false: taken, null: not checked yet
+  const [usernameValidationMessage, setUsernameValidationMessage] = useState<
+    string | null
+  >(null);
+
+  const validateUsername = async (
+    username: string,
+    setFieldTouched: (
+      field: string,
+      touched: boolean,
+      shouldValidate?: boolean
+    ) => void
+  ) => {
+    setUsernameAvailable(null);
+    setUsernameValidationMessage(null);
+
+    // Basic client-side validation before hitting the backend
+    if (!username) {
+      setUsernameAvailable(false);
+      setUsernameValidationMessage("Username cannot be empty.");
+      return;
+    }
+    if (username.length < 4) {
+      setUsernameAvailable(false);
+      setUsernameValidationMessage("Username must be at least 4 characters.");
+      return;
+    }
+
+    setIsCheckingUsername(true);
+    setFieldTouched("username", true); // Mark username field as touched for Yup
+
+    try {
+      // Calling the backend endpoint you've set up
+      const response: any = await instance.get(
+        `/users/validate-username?username=${username}`
+      );
+      // console.log("this is validate username", response);
+      const isAvailable = response.isAvailable;
+      setUsernameAvailable(isAvailable);
+      setUsernameValidationMessage(
+        isAvailable ? "Username is available!" : "Username is already taken."
+      );
+    } catch (error: any) {
+      console.error("Error checking username availability:", error);
+      setUsernameAvailable(false);
+      const errorMessage =
+        error.response?.data?.message ||
+        "Error checking username. Please try again.";
+      setUsernameValidationMessage(errorMessage);
+    } finally {
+      setIsCheckingUsername(false);
+    }
+  };
+
   const handleSubmit = async (
     values: SignupValues,
     { setSubmitting, resetForm }: FormikHelpers<SignupValues>
   ) => {
+    console.log("set submitting called", values.username);
+    setSubmitting(true);
+
     try {
+      if (usernameAvailable !== true) {
+        notification.error({
+          message: "Signup Failed",
+          description: "Please validate your username to ensure it's unique.",
+          placement: "topRight",
+        });
+        setSubmitting(false); // Stop submission if validation failed
+        return;
+      }
+
       const formData = new FormData();
 
       console.log(
@@ -151,9 +224,9 @@ const SignupPage: React.FC = () => {
           }`
         );
       }
-      const response = await instance.post("/users/signup", formData);
+      const response: any = await instance.post("/users/signup", formData);
 
-      console.log("response from signup", response.data);
+      // console.log("response from signup", response.data);
 
       notification.success({
         message: "Signup Successful",
@@ -164,6 +237,8 @@ const SignupPage: React.FC = () => {
       resetForm();
       setProfilePictureFile(null);
       setProfilePicturePreview(null);
+      setUsernameAvailable(null);
+      setUsernameValidationMessage(null);
 
       router.push("/auth/login");
     } catch (error: any) {
@@ -206,19 +281,48 @@ const SignupPage: React.FC = () => {
               <Form>
                 {/* Username */}
                 <div className="form-field-container">
-                  <Field
-                    type="text"
-                    id="username"
-                    name="username"
-                    placeholder="Username (required, min 4 chars)"
-                    as={Input}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      handleChange(e);
-                      validateField("username");
-                      setFieldTouched("username", true, false);
-                    }}
-                    onBlur={handleBlur}
-                  />
+                  <Space.Compact>
+                    <Field
+                      type="text"
+                      id="username"
+                      name="username"
+                      placeholder="Username (required, min 4 chars)"
+                      as={Input}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        handleChange(e);
+                        // Reset backend validation status when user types
+                        setUsernameAvailable(null);
+                        setUsernameValidationMessage(null);
+                      }}
+                      onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
+                        handleBlur(e);
+                        validateField("username"); // Validate against Yup's rules first
+                        // Optional: Trigger backend check on blur if Yup passes and username is not empty
+                        // if (!errors.username && e.target.value) {
+                        //   checkUsernameAvailability(e.target.value, setFieldTouched);
+                        // }
+                      }}
+                      // Adjust width to make space for the button
+                      style={{ width: "calc(100% - 100px)" }}
+                    />
+                    <Button
+                      type="default"
+                      onClick={() =>
+                        validateUsername(values.username, setFieldTouched)
+                      }
+                      loading={isCheckingUsername}
+                      // Disable button if username is empty, checking, Yup validation fails, or already validated as available
+                      disabled={
+                        !values.username ||
+                        isCheckingUsername ||
+                        (touched.username && errors.username !== undefined) ||
+                        usernameAvailable === true
+                      }
+                      style={{ width: "100px" }} // Fixed width for the button
+                    >
+                      Validate
+                    </Button>
+                  </Space.Compact>
                   <ErrorMessage
                     name="username"
                     component="div"
@@ -226,6 +330,18 @@ const SignupPage: React.FC = () => {
                       <div className="error-message">{error}</div>
                     )}
                   />
+                  {/* Display backend validation message */}
+                  {usernameValidationMessage && (
+                    <div
+                      style={{
+                        color: usernameAvailable === true ? "green" : "red",
+                        marginTop: "5px",
+                        fontSize: "0.85em",
+                      }}
+                    >
+                      {usernameValidationMessage}
+                    </div>
+                  )}
                 </div>
 
                 {/* Password */}

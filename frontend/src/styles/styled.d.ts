@@ -40,6 +40,14 @@ declare module "styled-components" {
       danger: string;
       dangerDark: string;
       dangerHover?: string; // optional
+
+      buttonDefault: string;
+      buttonDefaultHover: string;
+      borderColor: string;
+      borderColorHover: string;
+      disabledBackground: string;
+      disabledText: string;
+      disabledBorder: string;
     };
     borderRadius: {
       sm: string;

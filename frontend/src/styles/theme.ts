@@ -39,6 +39,14 @@ export const theme: DefaultTheme = {
     danger: "#dc3545",
     dangerDark: "#a71d2a",
     dangerHover: "#c82333",
+
+    buttonDefault: "#f0f2f5",
+    buttonDefaultHover: "#e6e8eb",
+    borderColor: "#d9d9d9",
+    borderColorHover: "#4096ff",
+    disabledBackground: "#f5f5f5",
+    disabledText: "rgba(0, 0, 0, 0.25)",
+    disabledBorder: "#d9d9d9",
   },
   borderRadius: {
     sm: "4px",

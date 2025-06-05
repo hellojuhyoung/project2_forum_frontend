@@ -50,6 +50,48 @@ export const SignupStyled = styled.div`
     }
   }
 
+  .ant-space-compact {
+    /* Target the Space.Compact component */
+    display: flex; // Ensure input and button are flex items
+    width: 100%; // Make sure the compact group takes full width
+
+    .ant-input {
+      flex-grow: 1; // Allow input to take remaining space
+      /* Ant Design Space.Compact usually handles border radius for compact items */
+      /* You might not need explicit border-radius: 0; here if Space.Compact does it */
+    }
+    .ant-btn {
+      width: 100px; // Fixed width for the validate button as set in TSX
+      height: 40px; // Match input height
+      font-size: 16px; // Match input font size
+      /* Ant Design Space.Compact usually handles border radius for compact items */
+      /* You might not need explicit border-radius: 0; here if Space.Compact does it */
+      // Adjust colors for a 'default' Ant Design button or secondary action
+      background-color: ${({ theme }) =>
+        theme.colors.buttonDefault}; // Assuming a default button color
+      color: ${({ theme }) =>
+        theme.colors.text}; // Assuming text color for default button
+      border-color: ${({ theme }) =>
+        theme.colors.borderColor}; // Assuming a border color
+
+      &:hover {
+        background-color: ${({ theme }) => theme.colors.buttonDefaultHover};
+        color: ${({ theme }) => theme.colors.text};
+        border-color: ${({ theme }) => theme.colors.borderColorHover};
+      }
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(${({ theme }) => theme.colors.primary}, 0.2); // Focus ring
+      }
+      &:disabled {
+        background-color: ${({ theme }) => theme.colors.disabledBackground};
+        color: ${({ theme }) => theme.colors.disabledText};
+        border-color: ${({ theme }) => theme.colors.disabledBorder};
+        cursor: not-allowed;
+      }
+    }
+  }
+
   .form-label {
     font-size: 14px;
     color: ${({ theme }) => theme.colors.textSecondary};
@@ -92,6 +134,21 @@ export const SignupStyled = styled.div`
     color: ${({ theme }) => theme.colors.danger};
     font-size: 12px;
     margin-top: 4px;
+  }
+
+  .username-validation-message {
+    font-size: 12px;
+    margin-top: 5px;
+    font-weight: 500;
+    min-height: 15px;
+
+    &.available {
+      color: ${({ theme }) => theme.colors.success};
+    }
+
+    &.taken {
+      color: ${({ theme }) => theme.colors.danger};
+    }
   }
 
   .submit-button-container {
