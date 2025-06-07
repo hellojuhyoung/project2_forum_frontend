@@ -5,7 +5,7 @@ import {
   SocialButtonsContainer,
   GoogleButton,
   KakaoButton,
-  NaverButton, // Now imported
+  NaverButton,
 } from "./SocialButtons.styled";
 
 const SocialLoginButtons: React.FC = () => {

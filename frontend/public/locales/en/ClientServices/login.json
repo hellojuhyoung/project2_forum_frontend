@@ -1,0 +1,8 @@
+{
+  "username_placeholder": "Username",
+  "password_placeholder": "Password",
+  "login_button": "Login",
+  "logout_button": "Logout",
+  "forgot_username_link": "Forgot Username?",
+  "forgot_password_link": "Forgot password?"
+}

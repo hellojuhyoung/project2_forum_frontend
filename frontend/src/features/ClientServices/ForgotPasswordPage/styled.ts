@@ -14,8 +14,55 @@ export const ForgotPasswordStyled = styled.div`
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
       width: 100%;
-      max-width: 400px; /* Max width for the form box to keep it tidy */
       text-align: center; /* Center text content inside the box */
+
+      input {
+        padding: ${({ theme }) => theme.spacing.sm};
+        font-size: ${({ theme }) => theme.fontSizes.md};
+        border: 1px solid ${({ theme }) => theme.colors.border};
+        border-radius: ${({ theme }) => theme.borderRadius.sm};
+        outline: none;
+        transition: border-color 0.3s, box-shadow 0.3s;
+
+        &:focus {
+          border-color: ${({ theme }) => theme.colors.primary};
+          box-shadow: 0 0 0 2px rgba(0, 100, 255, 0.2); // Generic blue focus glow
+        }
+        &::placeholder {
+          font-size: ${({ theme }) => theme.fontSizes.md};
+          color: ${({ theme }) => theme.colors.textSecondary};
+          opacity: 1;
+        }
+      }
+
+      // Styles for Ant Design Input.Password and Inputs with prefixes/suffixes
+      .ant-input-affix-wrapper {
+        padding: ${({ theme }) =>
+          theme.spacing.sm}; // Apply padding to the wrapper
+        border: 1px solid ${({ theme }) => theme.colors.border};
+        border-radius: ${({ theme }) => theme.borderRadius.sm};
+        transition: border-color 0.3s, box-shadow 0.3s;
+
+        &:focus-within {
+          border-color: ${({ theme }) => theme.colors.primary};
+          box-shadow: 0 0 0 2px rgba(0, 100, 255, 0.2); // Generic blue focus glow
+        }
+
+        // The actual input element *inside* the wrapper
+        input {
+          border: none !important; // Remove its individual border
+          outline: none;
+          box-shadow: none !important;
+          padding: 0; // Remove its internal padding (wrapper has it)
+          font-size: ${({ theme }) =>
+            theme.fontSizes.md}; // Ensure font size consistency
+          &::placeholder {
+            font-size: ${({ theme }) => theme.fontSizes.md};
+            color: ${({ theme }) => theme.colors.textSecondary};
+            opacity: 1;
+          }
+        }
+      }
 
       /* Styles for the Forgot Password? Title */
       .page-title {

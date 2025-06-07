@@ -1,0 +1,8 @@
+{
+  "username_placeholder": "사용자 이름",
+  "password_placeholder": "비밀번호",
+  "login_button": "로그인",
+  "logout_button": "로그아웃",
+  "forgot_username_link": "사용자 이름 찾기",
+  "forgot_password_link": "비밀번호 찾기"
+}

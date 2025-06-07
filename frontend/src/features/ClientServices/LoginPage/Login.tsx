@@ -20,8 +20,9 @@ import { RootState } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/redux/redux";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
-export default function LoginPage() {
+const LoginPage: React.FC = () => {
   const router = useRouter();
 
   const [username, setUsername] = useState("");
@@ -89,31 +90,36 @@ export default function LoginPage() {
       handleLogin(enter as any);
     }
   };
+
+  // this is for rendering different .json file from
+  // /public/locales/ either /ko or /en depending on the language option
+  const { t } = useTranslation("ClientServices.login");
+
   return (
     <>
       <LoginStyled className={clsx("login-container")}>
         <div className="input-container">
           {token ? (
             <button className="button-logout" onClick={handleLogout}>
-              Logout
+              {t("logout_button")}
             </button>
           ) : (
             <form onSubmit={handleLogin}>
               <Input
                 type="text"
-                placeholder="username"
+                placeholder={t("username_placeholder")}
                 className="input-username"
                 onChange={(event) => setUsername(event.target.value)}
               />
               <Input.Password
-                placeholder="password"
+                placeholder={t("password_placeholder")}
                 className="input-password"
                 onChange={(event) => setPassword(event.target.value)}
                 onKeyDown={handleKeyDown}
               />
 
               <button type="submit" className="button-login">
-                Login
+                {t("login_button")}
               </button>
             </form>
           )}
@@ -127,14 +133,14 @@ export default function LoginPage() {
                   href="/auth/forgot/username"
                   className="auth-utility-link"
                 >
-                  Forgot Username?
+                  {t("forgot_username_link")}
                 </Link>
                 {/* Forgot Password (Right Side) */}
                 <Link
                   href="/auth/forgot/password"
                   className="auth-utility-link"
                 >
-                  Forgot password?
+                  {t("forgot_password_link")}
                 </Link>
               </div>
             </>
@@ -143,4 +149,6 @@ export default function LoginPage() {
       </LoginStyled>
     </>
   );
-}
+};
+
+export default LoginPage;

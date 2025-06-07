@@ -52,7 +52,7 @@ const ResetPasswordPage: React.FC = () => {
           description: "Password reset token is missing or invalid.",
           placement: "topRight",
         });
-        // router.push("/auth/forgot/password");
+        router.push("/auth/forgot/password");
       }
       setLoadingToken(false);
     }
@@ -76,8 +76,6 @@ const ResetPasswordPage: React.FC = () => {
     }
 
     try {
-      // Backend endpoint to reset the password
-      // Make sure this matches your backend's POST /api/auth/reset-password endpoint
       const response: any = await instance.post("/auth/reset-password", {
         token: passwordToken,
         newPassword: values.newPassword,

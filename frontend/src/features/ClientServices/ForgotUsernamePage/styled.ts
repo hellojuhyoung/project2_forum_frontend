@@ -17,6 +17,53 @@ export const ForgotUsernameStyled = styled.div`
       flex-direction: column;
       gap: ${({ theme }) => theme.spacing.md};
 
+      input {
+        padding: ${({ theme }) => theme.spacing.sm};
+        font-size: ${({ theme }) => theme.fontSizes.md};
+        border: 1px solid ${({ theme }) => theme.colors.border};
+        border-radius: ${({ theme }) => theme.borderRadius.sm};
+        outline: none;
+        transition: border-color 0.3s, box-shadow 0.3s;
+
+        &:focus {
+          border-color: ${({ theme }) => theme.colors.primary};
+          box-shadow: 0 0 0 2px rgba(0, 100, 255, 0.2);
+        }
+        &::placeholder {
+          font-size: ${({ theme }) => theme.fontSizes.md};
+          color: ${({ theme }) => theme.colors.textSecondary};
+          opacity: 1;
+        }
+      }
+
+      // Styles for Ant Design Input.Password and Inputs with prefixes/suffixes
+      .ant-input-affix-wrapper {
+        padding: ${({ theme }) =>
+          theme.spacing.sm}; // Apply padding to the wrapper
+        border: 1px solid ${({ theme }) => theme.colors.border};
+        border-radius: ${({ theme }) => theme.borderRadius.sm};
+        transition: border-color 0.3s, box-shadow 0.3s;
+
+        &:focus-within {
+          border-color: ${({ theme }) => theme.colors.primary};
+          box-shadow: 0 0 0 2px rgba(0, 100, 255, 0.2);
+        }
+
+        input {
+          // The actual input element *inside* the wrapper
+          border: none !important;
+          outline: none;
+          box-shadow: none !important;
+          padding: 0; // Remove its internal padding (wrapper has it)
+          font-size: ${({ theme }) => theme.fontSizes.md};
+          &::placeholder {
+            font-size: ${({ theme }) => theme.fontSizes.md};
+            color: ${({ theme }) => theme.colors.textSecondary};
+            opacity: 1;
+          }
+        }
+      }
+
       .page-title {
         text-align: center;
         margin-bottom: ${({ theme }) =>
@@ -49,23 +96,6 @@ export const ForgotUsernameStyled = styled.div`
       }
 
       // Styles for Ant Design Input.Password wrapper (also affects Input if Ant Design uses it similarly)
-      .ant-input-affix-wrapper {
-        padding: 0;
-        border: 1px solid ${({ theme }) => theme.colors.border};
-        border-radius: ${({ theme }) => theme.borderRadius.sm};
-        transition: border-color 0.3s;
-
-        &:focus-within {
-          border-color: ${({ theme }) => theme.colors.primary};
-          box-shadow: none;
-        }
-
-        input {
-          border: none !important;
-          outline: none;
-          box-shadow: none !important;
-        }
-      }
 
       button {
         margin-top: ${({ theme }) => theme.spacing.sm};
