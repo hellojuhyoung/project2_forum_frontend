@@ -4,5 +4,12 @@
   "login_button": "Login",
   "logout_button": "Logout",
   "forgot_username_link": "Forgot Username?",
-  "forgot_password_link": "Forgot password?"
+  "forgot_password_link": "Forgot password?",
+
+  "login_success_message": "Login Successful",
+  "login_success_description": "You have been successfully authenticated.",
+  "logout_success_message": "Logout Successful",
+  "logout_success_description": "You have been successfully logged out.",
+  "login_error_message": "Login Failed",
+  "login_error_description_generic": "An error occurred during login. Please try again."
 }

@@ -1,0 +1,60 @@
+{
+  "loading_profile_message": "프로필 로딩 중...",
+  "failed_to_load_profile_error_update": "프로필 데이터를 로드하지 못했습니다.",
+  "error_prefix": "오류",
+  "back_to_profile_button": "프로필로 돌아가기",
+  "no_profile_data_available_message": "프로필 데이터를 사용할 수 없습니다.",
+
+  "temp_username_detected_message": "임시 사용자 이름 감지됨",
+  "temp_username_detected_description": "현재 임시 사용자 이름 \"{{username}}\"으로 로그인되어 있습니다. 프로필을 개인화하려면 고유한 사용자 이름을 선택해주세요!",
+
+  "complete_profile_title": "프로필 완성하기",
+  "edit_profile_title": "프로필 편집",
+
+  "profile_picture_label": "프로필 사진",
+  "profile_preview_alt_text": "프로필 미리보기",
+  "change_image_button": "이미지 변경",
+  "upload_image_button": "이미지 업로드",
+  "remove_image_button": "이미지 제거",
+
+  "username_label": "사용자 이름",
+  "username_placeholder": "사용자 이름 (필수, 최소 4자)",
+  "validate_username_button": "확인",
+
+  "email_label": "이메일",
+  "full_name_label": "전체 이름",
+  "gender_label": "성별",
+  "select_gender_placeholder": "성별을 선택하세요",
+  "gender_male_option": "남성",
+  "gender_female_option": "여성",
+  "phone_number_label": "전화번호",
+  "date_of_birth_label": "생년월일",
+  "occupation_label": "직업",
+  "preferred_language_label": "선호 언어",
+
+  "complete_profile_button": "프로필 완성",
+  "update_profile_button": "프로필 업데이트",
+  "cancel_button": "취소",
+
+  "username_required_validation": "사용자 이름을 입력해주세요!",
+  "email_required_validation": "이메일을 입력해주세요!",
+  "email_invalid_validation": "유효한 이메일 주소가 아닙니다!",
+
+  "error_message_general": "오류",
+  "profile_update_failed_message": "프로필 업데이트 실패",
+  "profile_updated_message": "프로필 업데이트됨",
+  "update_failed_message": "업데이트 실패",
+
+  "username_cannot_be_empty": "사용자 이름은 비워둘 수 없습니다.",
+  "username_min_length_backend_error": "사용자 이름은 최소 4자 이상이어야 합니다.",
+  "username_is_current": "현재 사용자 이름입니다.",
+  "username_is_available": "사용자 이름이 사용 가능합니다!",
+  "username_is_already_taken": "사용자 이름이 이미 사용 중입니다.",
+  "error_checking_username": "사용자 이름 확인 중 오류가 발생했습니다. 다시 시도해주세요.",
+  "fix_local_username_errors": "로컬 사용자 이름 오류를 수정해주세요.",
+  "user_id_not_found_for_update": "업데이트할 사용자 ID를 찾을 수 없습니다.",
+  "username_validation_required_update_error": "사용자 이름이 고유한지 확인해주세요.",
+  "profile_updated_success_description": "프로필이 성공적으로 업데이트되었습니다!",
+  "something_went_wrong_generic": "문제가 발생했습니다.",
+  "update_unexpected_error": "업데이트 중 오류가 발생했습니다."
+}

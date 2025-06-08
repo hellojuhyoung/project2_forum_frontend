@@ -20,8 +20,25 @@ import {
 import { useRouter } from "next/router";
 import { useState } from "react";
 import moment from "moment"; // Import moment for date handling if needed for display/parsing
+import { useTranslation } from "react-i18next";
 
 const { Option } = Select; // Destructure Option for Select component
+
+const backendMessageMap: { [key: string]: string } = {
+  // Username Validation Messages from Backend
+  "Username cannot be empty.": "username_cannot_be_empty",
+  "Username must be at least 4 characters.":
+    "username_min_length_backend_error", // This is redundant with Yup, but if backend sends it.
+  "Username is available!": "username_is_available",
+  "Username is already taken.": "username_is_already_taken",
+  "Error checking username. Please try again.": "error_checking_username",
+
+  // General Error Messages
+  "An unexpected error occurred during signup.": "signup_unexpected_error",
+  // Add other specific backend messages you might encounter here
+  "Please validate your username to ensure it's unique.":
+    "username_validation_required_notification", // From handleSubmit logic
+};
 
 // --- Interfaces ---
 interface SignupValues {
@@ -48,39 +65,41 @@ const initialValues: SignupValues = {
   preferredLanguage: "english",
 };
 
-// --- Validation Schema (Yup) ---
-const validationSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(4, "Username must be at least 4 characters")
-    .required("Username is required"),
-
-  password: Yup.string()
-    .min(8, "Password must be at least 8 characters")
-    .max(16, "Password must be at most 16 characters")
-    .required("Password is required"),
-
-  email: Yup.string()
-    .email("Please enter a valid email address")
-    .required("Email is required"),
-
-  fullName: Yup.string()
-    .max(50, "Full Name must be at most 50 characters")
-    .notRequired(),
-  gender: Yup.string().notRequired(),
-  phoneNumber: Yup.string()
-    .matches(/^\+?[0-9\s-()]{7,20}$/, "Invalid phone number format")
-    .min(7, "Phone number too short")
-    .max(20, "Phone number too long")
-    .notRequired(),
-  dateOfBirth: Yup.string().notRequired(),
-  occupation: Yup.string()
-    .max(100, "Occupation must be at most 100 characters")
-    .notRequired(),
-  preferredLanguage: Yup.string().notRequired(),
-});
-
 const SignupPage: React.FC = () => {
+  const { t } = useTranslation("ClientServices.signup");
   const router = useRouter();
+  const validationSchema = Yup.object().shape({
+    username: Yup.string()
+      .min(4, t("username_min_length_validation"))
+      .required(t("username_required_validation")),
+
+    password: Yup.string()
+      .min(8, t("password_min_length_validation"))
+      .max(16, t("password_max_length_validation"))
+      .required(t("password_required_validation")),
+
+    email: Yup.string()
+      .email(t("email_invalid_validation"))
+      .required(t("email_required_validation")),
+
+    fullName: Yup.string()
+      .max(50, t("full_name_max_length_validation"))
+      .notRequired(),
+    gender: Yup.string().notRequired(),
+    phoneNumber: Yup.string()
+      .matches(
+        /^\+?[0-9\s-()]{7,20}$/,
+        t("phone_number_invalid_format_validation")
+      )
+      .min(7, t("phone_number_too_short_validation"))
+      .max(20, t("phone_number_too_long_validation"))
+      .notRequired(),
+    dateOfBirth: Yup.string().notRequired(),
+    occupation: Yup.string()
+      .max(100, t("occupation_max_length_validation"))
+      .notRequired(),
+    preferredLanguage: Yup.string().notRequired(),
+  });
   const [profilePictureFile, setProfilePictureFile] = useState<File | null>(
     null
   );
@@ -93,11 +112,6 @@ const SignupPage: React.FC = () => {
     if (file) {
       setProfilePictureFile(file);
 
-      console.log("handleFileChange: File selected:", file);
-      console.log("handleFileChange: File name:", file.name);
-      console.log("handleFileChange: File type:", file.type);
-      console.log("handleFileChange: File size:", file.size);
-
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfilePicturePreview(reader.result as string);
@@ -107,7 +121,7 @@ const SignupPage: React.FC = () => {
       setProfilePictureFile(null);
       setProfilePicturePreview(null);
 
-      console.log("handleFileChange: No file selected.");
+      // console.log("handleFileChange: No file selected.");
     }
   };
 
@@ -135,12 +149,16 @@ const SignupPage: React.FC = () => {
     // Basic client-side validation before hitting the backend
     if (!username) {
       setUsernameAvailable(false);
-      setUsernameValidationMessage("Username cannot be empty.");
+      setUsernameValidationMessage(
+        t(backendMessageMap["Username cannot be empty."])
+      );
       return;
     }
     if (username.length < 4) {
       setUsernameAvailable(false);
-      setUsernameValidationMessage("Username must be at least 4 characters.");
+      setUsernameValidationMessage(
+        t(backendMessageMap["Username must be at least 4 characters."])
+      );
       return;
     }
 
@@ -156,15 +174,16 @@ const SignupPage: React.FC = () => {
       const isAvailable = response.isAvailable;
       setUsernameAvailable(isAvailable);
       setUsernameValidationMessage(
-        isAvailable ? "Username is available!" : "Username is already taken."
+        isAvailable
+          ? t(backendMessageMap["Username is available!"])
+          : t(backendMessageMap["Username is already taken."])
       );
     } catch (error: any) {
       console.error("Error checking username availability:", error);
       setUsernameAvailable(false);
-      const errorMessage =
-        error.response?.data?.message ||
-        "Error checking username. Please try again.";
-      setUsernameValidationMessage(errorMessage);
+      const errorMessageKey =
+        backendMessageMap[error.response?.message] || "error_checking_username";
+      setUsernameValidationMessage(t(errorMessageKey));
     } finally {
       setIsCheckingUsername(false);
     }
@@ -180,11 +199,15 @@ const SignupPage: React.FC = () => {
     try {
       if (usernameAvailable !== true) {
         notification.error({
-          message: "Signup Failed",
-          description: "Please validate your username to ensure it's unique.",
+          message: t("signup_failed_message"),
+          description: t(
+            backendMessageMap[
+              "Please validate your username to ensure it's unique."
+            ]
+          ),
           placement: "topRight",
         });
-        setSubmitting(false); // Stop submission if validation failed
+        setSubmitting(false);
         return;
       }
 
@@ -229,8 +252,8 @@ const SignupPage: React.FC = () => {
       // console.log("response from signup", response.data);
 
       notification.success({
-        message: "Signup Successful",
-        description: "Your account has been created. Please log in.",
+        message: t("signup_success_message"),
+        description: t("signup_success_description"),
         placement: "topRight",
       });
 
@@ -242,13 +265,14 @@ const SignupPage: React.FC = () => {
 
       router.push("/auth/login");
     } catch (error: any) {
-      console.error("error in signup", error?.response?.data || error.message);
-      const errorMessage =
-        error?.response?.data?.message ||
-        "An unexpected error occurred during signup.";
+      console.error("error in signup", error?.response || error.message);
+      const backendErrorMsg = error?.response?.message || error.message;
+      const translatedErrorMessage = t(
+        backendMessageMap[backendErrorMsg] || "signup_unexpected_error"
+      );
       notification.error({
-        message: "Signup Failed",
-        description: errorMessage,
+        message: t("signup_failed_message"),
+        description: translatedErrorMessage,
         placement: "topRight",
       });
     } finally {
@@ -286,7 +310,7 @@ const SignupPage: React.FC = () => {
                       type="text"
                       id="username"
                       name="username"
-                      placeholder="Username (required, min 4 chars)"
+                      placeholder={t("username_placeholder")}
                       as={Input}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         handleChange(e);
@@ -297,10 +321,6 @@ const SignupPage: React.FC = () => {
                       onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
                         handleBlur(e);
                         validateField("username"); // Validate against Yup's rules first
-                        // Optional: Trigger backend check on blur if Yup passes and username is not empty
-                        // if (!errors.username && e.target.value) {
-                        //   checkUsernameAvailability(e.target.value, setFieldTouched);
-                        // }
                       }}
                       // Adjust width to make space for the button
                       style={{ width: "calc(100% - 100px)" }}
@@ -320,7 +340,7 @@ const SignupPage: React.FC = () => {
                       }
                       style={{ width: "100px" }} // Fixed width for the button
                     >
-                      Validate
+                      {t("validate_username_button")}
                     </Button>
                   </Space.Compact>
                   <ErrorMessage
@@ -350,7 +370,7 @@ const SignupPage: React.FC = () => {
                     type="password"
                     id="password"
                     name="password"
-                    placeholder="Password (required, 8-16 chars)"
+                    placeholder={t("password_placeholder")}
                     as={Input.Password}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       handleChange(e);
@@ -374,7 +394,7 @@ const SignupPage: React.FC = () => {
                     type="email"
                     id="email"
                     name="email"
-                    placeholder="Email (required)"
+                    placeholder={t("email_placeholder")}
                     as={Input}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       handleChange(e);
@@ -398,7 +418,7 @@ const SignupPage: React.FC = () => {
                     type="text"
                     id="fullName"
                     name="fullName"
-                    placeholder="Full Name (optional, max 50 chars)"
+                    placeholder={t("full_name_placeholder")}
                     as={Input}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       handleChange(e);
@@ -419,7 +439,7 @@ const SignupPage: React.FC = () => {
                 {/* Gender (Ant Design Radio.Group) */}
                 <div className="form-field-container">
                   <label htmlFor="gender" className="form-label">
-                    Gender (optional)
+                    {t("gender_label")}
                   </label>
                   <Radio.Group
                     id="gender"
@@ -431,8 +451,8 @@ const SignupPage: React.FC = () => {
                     onBlur={handleBlur}
                     value={values.gender}
                   >
-                    <Radio value="male">Male</Radio>
-                    <Radio value="female">Female</Radio>
+                    <Radio value="male">{t("gender_male_option")}</Radio>
+                    <Radio value="female">{t("gender_female_option")}</Radio>
                   </Radio.Group>
                   {touched.gender && errors.gender && (
                     <div className="error-message">{errors.gender}</div>
@@ -445,7 +465,7 @@ const SignupPage: React.FC = () => {
                     type="text"
                     id="phoneNumber"
                     name="phoneNumber"
-                    placeholder="Phone Number (optional, e.g., +1234567890)"
+                    placeholder={t("phone_number_placeholder")}
                     as={Input}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       handleChange(e);
@@ -466,7 +486,7 @@ const SignupPage: React.FC = () => {
                 {/* Date of Birth (Ant Design DatePicker) */}
                 <div className="form-field-container">
                   <label htmlFor="dateOfBirth" className="form-label">
-                    Date of Birth (optional)
+                    {t("date_of_birth_label")}
                   </label>
                   <DatePicker
                     id="dateOfBirth"
@@ -493,7 +513,7 @@ const SignupPage: React.FC = () => {
                     type="text"
                     id="occupation"
                     name="occupation"
-                    placeholder="Occupation/Industry (optional, max 100 chars)"
+                    placeholder={t("occupation_placeholder")}
                     as={Input}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       handleChange(e);
@@ -514,7 +534,7 @@ const SignupPage: React.FC = () => {
                 {/* Preferred Language (Ant Design Select) */}
                 <div className="form-field-container">
                   <label htmlFor="preferredLanguage" className="form-label">
-                    Preferred Language (optional)
+                    {t("preferred_language_label")}
                   </label>
                   <Select
                     id="preferredLanguage"
@@ -527,11 +547,19 @@ const SignupPage: React.FC = () => {
                     onBlur={handleBlur}
                     value={values.preferredLanguage}
                   >
-                    <Option value="english">English</Option>
-                    <Option value="spanish">Spanish</Option>
-                    <Option value="french">French</Option>
-                    <Option value="korean">Korean</Option>
-                    <Option value="other">Other</Option>
+                    <Option value="english">
+                      {t("language_option_english")}
+                    </Option>
+                    <Option value="spanish">
+                      {t("language_option_spanish")}
+                    </Option>
+                    <Option value="french">
+                      {t("language_option_french")}
+                    </Option>
+                    <Option value="korean">
+                      {t("language_option_korean")}
+                    </Option>
+                    <Option value="other">{t("language_option_other")}</Option>{" "}
                   </Select>
                   {touched.preferredLanguage && errors.preferredLanguage && (
                     <div className="error-message">
@@ -543,7 +571,7 @@ const SignupPage: React.FC = () => {
                 {/* Profile Picture File Upload */}
                 <div className="form-field-container profile-picture-upload">
                   <label htmlFor="profilePicture" className="form-label">
-                    Profile Picture (optional)
+                    {t("profile_picture_label")}
                   </label>
                   <Input
                     type="file"
@@ -557,7 +585,7 @@ const SignupPage: React.FC = () => {
                     <div className="profile-picture-preview">
                       <img
                         src={profilePicturePreview}
-                        alt="Profile Preview"
+                        alt={t("profile_picture_preview_alt")}
                         style={{
                           maxWidth: "100px",
                           maxHeight: "100px",
@@ -571,7 +599,7 @@ const SignupPage: React.FC = () => {
                 {/* Submit Button */}
                 <div className="submit-button-container">
                   <Button htmlType="submit" disabled={isSubmitting}>
-                    Sign Up
+                    {t("signup_button")}
                   </Button>
                 </div>
               </Form>

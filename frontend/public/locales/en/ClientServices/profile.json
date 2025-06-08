@@ -1,0 +1,19 @@
+{
+  "loading_profile_message": "Loading profile...",
+  "failed_to_load_profile_error": "Failed to load profile data. User might not exist or network error.",
+  "user_id_not_provided_error": "User ID not provided in URL.",
+  "error_prefix": "Error",
+  "no_user_data_found_message": "No user data found.",
+  "users_profile_title": "{{username}}'s Profile",
+  "users_profile_alt_text": "{{username}}'s profile picture",
+  "label_id": "ID",
+  "label_full_name": "Full Name",
+  "label_email": "Email",
+  "label_gender": "Gender",
+  "label_phone_number": "Phone Number",
+  "label_date_of_birth": "Date of Birth",
+  "label_occupation": "Occupation",
+  "label_preferred_language": "Preferred Language",
+  "not_provided_text": "Not provided",
+  "edit_profile_button": "Edit Profile"
+}

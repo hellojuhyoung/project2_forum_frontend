@@ -1,0 +1,23 @@
+{
+  "username_placeholder": "사용자 이름",
+  "password_placeholder": "비밀번호",
+  "login_button": "로그인",
+  "logout_button": "로그아웃",
+  "forgot_username_link": "사용자 이름 찾기",
+  "forgot_password_link": "비밀번호를 잊으셨습니까?",
+
+  "find_username_title": "사용자 이름 찾기",
+  "find_username_description": "아래에 등록된 이메일 주소를 입력하시면, 받은 편지함으로 사용자 이름을 보내드립니다.",
+  "email_required_message": "이메일 주소를 입력해주세요!",
+  "email_invalid_message": "유효한 이메일 주소가 아닙니다!",
+  "email_placeholder": "이메일 주소",
+  "send_username_button": "사용자 이름 보내기",
+
+  "request_sent_message": "요청 전송됨",
+  "forgot_username_success_description_generic": "이 이메일과 연결된 계정이 있다면, 사용자 이름이 받은 편지함으로 전송되었습니다.",
+  "request_failed_message": "요청 실패",
+  "request_failed_description_generic": "오류가 발생했습니다. 다시 시도해주세요.",
+
+  "email_required_backend_error": "이메일 주소가 필요합니다.",
+  "generic_processing_error": "요청 처리 중 오류가 발생했습니다."
+}

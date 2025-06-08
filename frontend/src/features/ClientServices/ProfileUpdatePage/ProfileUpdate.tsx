@@ -17,6 +17,7 @@ import { RootState } from "@/redux/store";
 import moment, { Moment } from "moment"; // For DatePicker value handling
 import { setUser } from "@/redux/redux";
 import { getCookie } from "cookies-next";
+import { useTranslation } from "react-i18next";
 
 // Define the shape of your user data for the form
 interface UserProfileFormData {
@@ -33,7 +34,30 @@ interface UserProfileFormData {
   profilePictureFile: File | null; // For new file upload
 }
 
+const backendMessageMap: { [key: string]: string } = {
+  // Username Validation Messages
+  "Username cannot be empty.": "username_cannot_be_empty",
+  "Username must be at least 4 characters.":
+    "username_min_length_backend_error",
+  "This is your current username.": "username_is_current",
+  "Username is available!": "username_is_available",
+  "Username is already taken.": "username_is_already_taken",
+  "Error checking username. Please try again.": "error_checking_username",
+  "Please fix local username errors.": "fix_local_username_errors",
+
+  // Profile Update Notifications/Errors
+  "User ID not found for update.": "user_id_not_found_for_update",
+  "Please validate your username to ensure it's unique.":
+    "username_validation_required_update_error",
+  "Your profile has been successfully updated!":
+    "profile_updated_success_description",
+  "Something went wrong.": "something_went_wrong_generic",
+  "An error occurred during update.": "update_unexpected_error",
+  // Add other specific backend messages you might encounter here
+};
+
 const UpdateProfilePage = () => {
+  const { t } = useTranslation("ClientServices.profileupdate");
   const router = useRouter();
   const dispatch = useDispatch();
   const loggedInUserId = useSelector(
@@ -168,7 +192,9 @@ const UpdateProfilePage = () => {
 
         if (!isInitialCompletion) {
           setUsernameAvailable(true);
-          setUsernameValidationMessage("This is your current username.");
+          setUsernameValidationMessage(
+            t(backendMessageMap["This is your current username."])
+          );
         } else {
           setUsernameAvailable(null);
           setUsernameValidationMessage(null);
@@ -181,7 +207,7 @@ const UpdateProfilePage = () => {
         }
       } catch (err: any) {
         console.error("Failed to load/prepare user profile:", err);
-        setError("Failed to load profile data.");
+        setError(t("failed_to_load_profile_error_update"));
         setInitialUserData(null);
       } finally {
         setLoading(false);
@@ -189,9 +215,6 @@ const UpdateProfilePage = () => {
     };
 
     fetchOrCreateUserProfile();
-    // if (isInitialCompletion) {
-    //   router.replace("/account/update", undefined, { shallow: true });
-    // }
   }, [
     router.isReady,
     isInitialCompletion,
@@ -213,15 +236,17 @@ const UpdateProfilePage = () => {
       !hasNotifiedTempUserRef.current
     ) {
       notification.info({
-        message: "Temporary Username Detected",
-        description: `You are currently logged in with a temporary username: "${initialUserData.username}". Please choose a unique username to personalize your profile!`,
+        message: t("temp_username_detected_message"),
+        description: t("temp_username_detected_description", {
+          username: initialUserData.username,
+        }),
         duration: 0,
         placement: "topRight",
         key: "temporary-username-notification",
       });
       hasNotifiedTempUserRef.current = true;
     }
-  }, [isInitialCompletion, initialUserData]);
+  }, [isInitialCompletion, initialUserData, t]);
 
   // Handle file selection
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -251,18 +276,24 @@ const UpdateProfilePage = () => {
     // Basic client-side validation before hitting the backend
     if (!username) {
       setUsernameAvailable(false);
-      setUsernameValidationMessage("Username cannot be empty.");
+      setUsernameValidationMessage(
+        t(backendMessageMap["Username cannot be empty."])
+      );
       return;
     }
     if (username.length < 4) {
       setUsernameAvailable(false);
-      setUsernameValidationMessage("Username must be at least 4 characters.");
+      setUsernameValidationMessage(
+        t(backendMessageMap["Username must be at least 4 characters."])
+      );
       return;
     }
 
     if (!isInitialCompletion && username === initialUserData?.username) {
       setUsernameAvailable(true);
-      setUsernameValidationMessage("This is your current username.");
+      setUsernameValidationMessage(
+        t(backendMessageMap["This is your current username."])
+      );
       return; // No need to check backend
     }
 
@@ -272,18 +303,19 @@ const UpdateProfilePage = () => {
       const response: any = await instance.get(
         `/users/validate-username?username=${username}`
       );
-      const isAvailable = response.isAvailable; // Using response.isAvailable as per your fix
+      const isAvailable = response.isAvailable;
       setUsernameAvailable(isAvailable);
       setUsernameValidationMessage(
-        isAvailable ? "Username is available!" : "Username is already taken."
+        isAvailable
+          ? t(backendMessageMap["Username is available!"])
+          : t(backendMessageMap["Username is already taken."])
       );
     } catch (error: any) {
       console.error("Error checking username availability:", error);
       setUsernameAvailable(false);
-      const errorMessage =
-        error.response?.data?.message ||
-        "Error checking username. Please try again.";
-      setUsernameValidationMessage(errorMessage);
+      const errorMessageKey =
+        backendMessageMap[error.response?.message] || "error_checking_username";
+      setUsernameValidationMessage(t(errorMessageKey));
     } finally {
       setIsCheckingUsername(false);
     }
@@ -297,8 +329,8 @@ const UpdateProfilePage = () => {
 
     if (!userIdForUpdate) {
       notification.error({
-        message: "Error",
-        description: "User ID not found for update.",
+        message: t("error_message_general"),
+        description: t(backendMessageMap["User ID not found for update."]),
       });
       return;
     }
@@ -310,11 +342,15 @@ const UpdateProfilePage = () => {
 
       if (requiresValidation && usernameAvailable !== true) {
         notification.error({
-          message: "Profile Update Failed",
-          description: "Please validate your username to ensure it's unique.",
+          message: t("profile_update_failed_message"),
+          description: t(
+            backendMessageMap[
+              "Please validate your username to ensure it's unique."
+            ]
+          ),
           placement: "topRight",
         });
-        setIsSubmitting(false); // Stop submission if validation failed
+        setIsSubmitting(false);
         return;
       }
 
@@ -357,8 +393,10 @@ const UpdateProfilePage = () => {
         const currentToken = getCookie("token") as string | undefined;
 
         notification.success({
-          message: "Profile Updated",
-          description: "Your profile has been successfully updated!",
+          message: t("profile_updated_message"),
+          description: t(
+            backendMessageMap["Your profile has been successfully updated!"]
+          ),
         });
 
         dispatch(
@@ -370,7 +408,9 @@ const UpdateProfilePage = () => {
         );
 
         setUsernameAvailable(true);
-        setUsernameValidationMessage("This is your current username.");
+        setUsernameValidationMessage(
+          t(backendMessageMap["This is your current username."])
+        );
 
         if (isInitialCompletion) {
           router.push("/");
@@ -379,16 +419,20 @@ const UpdateProfilePage = () => {
         }
       } else {
         notification.error({
-          message: "Update Failed",
-          description: response.message || "Something went wrong.",
+          message: t("update_failed_message"),
+          description: t(
+            backendMessageMap[response.message] ||
+              "something_went_wrong_generic"
+          ),
         });
       }
     } catch (err: any) {
       console.error("Profile update error:", err);
+      const errorMessageKey =
+        backendMessageMap[err.response?.message] || "update_unexpected_error";
       notification.error({
-        message: "Update Failed",
-        description:
-          err.response?.data?.message || "An error occurred during update.",
+        message: t("update_failed_message"),
+        description: t(errorMessageKey),
       });
     } finally {
       setIsSubmitting(false);
@@ -400,7 +444,7 @@ const UpdateProfilePage = () => {
     return (
       <EditProfileStyled>
         <div>
-          <p>Loading profile...</p>
+          <p>{t("loading_profile_message")}</p>
         </div>
       </EditProfileStyled>
     );
@@ -410,7 +454,7 @@ const UpdateProfilePage = () => {
     return (
       <EditProfileStyled>
         <div>
-          <p>Error: {error}</p>
+          {t("error_prefix")}: {error}
           {!isInitialCompletion && loggedInUserId && (
             <Button
               name="back-to-profile-button"
@@ -418,7 +462,7 @@ const UpdateProfilePage = () => {
                 router.push(`/account/profile?userid=${loggedInUserId}`)
               }
             >
-              Back to Profile
+              {t("back_to_profile_button")}
             </Button>
           )}
         </div>
@@ -430,7 +474,7 @@ const UpdateProfilePage = () => {
     return (
       <EditProfileStyled>
         <div>
-          <p>No profile data available.</p>
+          <p>{t("no_profile_data_available_message")}</p>
         </div>
       </EditProfileStyled>
     );
@@ -441,7 +485,9 @@ const UpdateProfilePage = () => {
       <EditProfileStyled>
         <div>
           <h1>
-            {isInitialCompletion ? "Complete Your Profile" : "Edit Profile"}
+            {isInitialCompletion
+              ? t("complete_profile_title")
+              : t("edit_profile_title")}{" "}
           </h1>
           <Form
             form={form}
@@ -464,12 +510,14 @@ const UpdateProfilePage = () => {
             }}
           >
             <div style={{ marginBottom: "24px" }}>
-              <label htmlFor="profile-picture-input">Profile Picture</label>
+              <label htmlFor="profile-picture-input">
+                {t("profile_picture_label")}
+              </label>
               <div className="profile-picture-upload-section">
                 {imagePreviewUrl && (
                   <img
                     src={imagePreviewUrl}
-                    alt="Profile Preview"
+                    alt={t("profile_preview_alt_text")}
                     className="profile-preview-image"
                   />
                 )}
@@ -481,7 +529,9 @@ const UpdateProfilePage = () => {
                   style={{ display: "none" }}
                 />
                 <label htmlFor="profile-picture-input" className="ant-btn">
-                  {imagePreviewUrl ? "Change Image" : "Upload Image"}
+                  {imagePreviewUrl
+                    ? t("change_image_button")
+                    : t("upload_image_button")}{" "}
                 </label>
                 {imagePreviewUrl && (
                   <Button
@@ -498,7 +548,7 @@ const UpdateProfilePage = () => {
                     }}
                     style={{ marginLeft: "10px" }}
                   >
-                    Remove Image
+                    {t("remove_image_button")}
                   </Button>
                 )}
               </div>
@@ -506,17 +556,17 @@ const UpdateProfilePage = () => {
 
             {/* Username Field - Editable for Initial Completion, Disabled for Edit */}
             <Form.Item
-              label="Username"
+              label={t("username_label")}
               name="username"
               rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: t("username_required_validation") },
               ]}
             >
               {isInitialCompletion ? (
                 // Editable username with validation for initial completion
                 <Space.Compact style={{ width: "100%" }}>
                   <Input
-                    placeholder="Username (required, min 4 chars)"
+                    placeholder={t("username_placeholder")}
                     // Ant Design Form.Item handles value/onChange automatically
                     onBlur={(e) => {
                       // Trigger Ant Design form validation for username
@@ -530,7 +580,11 @@ const UpdateProfilePage = () => {
                           // If Ant Design local rules fail, reset backend validation messages
                           setUsernameAvailable(false);
                           setUsernameValidationMessage(
-                            "Please fix local username errors."
+                            t(
+                              backendMessageMap[
+                                "Please fix local username errors."
+                              ]
+                            )
                           );
                         });
                     }}
@@ -546,7 +600,11 @@ const UpdateProfilePage = () => {
                         .catch(() => {
                           setUsernameAvailable(false);
                           setUsernameValidationMessage(
-                            "Please fix local username errors."
+                            t(
+                              backendMessageMap[
+                                "Please fix local username errors."
+                              ]
+                            )
                           );
                         });
                     }}
@@ -559,7 +617,7 @@ const UpdateProfilePage = () => {
                     }
                     style={{ width: "100px" }} // Fixed width for the button
                   >
-                    Validate
+                    {t("validate_username_button")}
                   </Button>
                 </Space.Compact>
               ) : (
@@ -581,42 +639,49 @@ const UpdateProfilePage = () => {
               )}
 
             <Form.Item
-              label="Email"
+              label={t("email_label")}
               name="email"
               rules={[
-                { required: true, message: "Please input your email!" },
-                { type: "email", message: "The input is not valid E-mail!" },
+                { required: true, message: t("email_required_validation") },
+                { type: "email", message: t("email_invalid_validation") },
               ]}
             >
               <Input disabled={true} />
             </Form.Item>
 
-            <Form.Item label="Full Name" name="fullName">
+            <Form.Item label={t("full_name_label")} name="fullName">
               <Input />
             </Form.Item>
 
-            <Form.Item label="Gender" name="gender">
+            <Form.Item label={t("gender_label")} name="gender">
               <>
-                <Select placeholder="Select your gender">
-                  <Select.Option value="Male">Male</Select.Option>
-                  <Select.Option value="Female">Female</Select.Option>
+                <Select placeholder={t("select_gender_placeholder")}>
+                  <Select.Option value="Male">
+                    {t("gender_male_option")}
+                  </Select.Option>
+                  <Select.Option value="Female">
+                    {t("gender_female_option")}
+                  </Select.Option>
                 </Select>
               </>
             </Form.Item>
 
-            <Form.Item label="Phone Number" name="phoneNumber">
+            <Form.Item label={t("phone_number_label")} name="phoneNumber">
               <Input />
             </Form.Item>
 
-            <Form.Item label="Date of Birth" name="dateOfBirth">
+            <Form.Item label={t("date_of_birth_label")} name="dateOfBirth">
               <DatePicker style={{ width: "100%" }} format="YYYY-MM-DD" />
             </Form.Item>
 
-            <Form.Item label="Occupation" name="occupation">
+            <Form.Item label={t("occupation_label")} name="occupation">
               <Input />
             </Form.Item>
 
-            <Form.Item label="Preferred Language" name="preferredLanguage">
+            <Form.Item
+              label={t("preferred_language_label")}
+              name="preferredLanguage"
+            >
               <Input />
             </Form.Item>
 
@@ -628,7 +693,9 @@ const UpdateProfilePage = () => {
                   htmlType="submit"
                   loading={isSubmitting}
                 >
-                  {isInitialCompletion ? "Complete Profile" : "Update Profile"}
+                  {isInitialCompletion
+                    ? t("complete_profile_button")
+                    : t("update_profile_button")}{" "}
                 </Button>
                 {!isInitialCompletion && (
                   <Button
@@ -638,7 +705,7 @@ const UpdateProfilePage = () => {
                     }
                     style={{ marginLeft: "10px" }}
                   >
-                    Cancel
+                    {t("cancel_button")}
                   </Button>
                 )}
               </>

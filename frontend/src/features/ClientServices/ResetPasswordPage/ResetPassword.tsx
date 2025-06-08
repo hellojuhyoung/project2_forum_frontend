@@ -9,6 +9,14 @@ import { Form, Formik, Field, FormikHelpers, ErrorMessage } from "formik";
 import { Button, Input, notification } from "antd"; // Import necessary Ant Design components
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react"; // Import useEffect for token extraction
+import { useTranslation } from "react-i18next";
+
+const backendErrorMessageMap: { [key: string]: string } = {
+  "Invalid or expired token.": "token_invalid_or_expired_backend_error",
+  "Password reset failed.": "password_reset_failed_backend_error",
+  "An unexpected error occurred during password reset.":
+    "unexpected_error_backend_reset_password",
+};
 
 // --- Interfaces ---
 interface ResetPasswordValues {
@@ -22,21 +30,22 @@ const initialValues: ResetPasswordValues = {
   confirmNewPassword: "",
 };
 
-// --- Validation Schema (Yup) ---
-const validationSchema = Yup.object().shape({
-  newPassword: Yup.string()
-    .min(8, "New password must be at least 8 characters")
-    .max(16, "New password must be at most 16 characters")
-    .required("New password is required"),
-  confirmNewPassword: Yup.string()
-    .oneOf([Yup.ref("newPassword")], "Passwords must match") // Ensures it matches newPassword
-    .required("Confirm password is required"),
-});
-
 const ResetPasswordPage: React.FC = () => {
+  const { t } = useTranslation("ClientServices.resetpassword");
   const router = useRouter();
   const [passwordToken, setPasswordToken] = useState<string | null>(null);
   const [loadingToken, setLoadingToken] = useState(true);
+
+  // --- Validation Schema (Yup) ---
+  const validationSchema = Yup.object().shape({
+    newPassword: Yup.string()
+      .min(8, t("new_password_min_length_validation"))
+      .max(16, t("new_password_max_length_validation"))
+      .required(t("new_password_required_validation")),
+    confirmNewPassword: Yup.string()
+      .oneOf([Yup.ref("newPassword")], t("confirm_password_match_validation")) // Translate
+      .required(t("confirm_password_required_validation")),
+  });
 
   // Extract token from URL query parameters when the component mounts
   useEffect(() => {
@@ -48,15 +57,15 @@ const ResetPasswordPage: React.FC = () => {
       } else {
         // Handle case where token is missing or not a string (e.g., redirect or show error)
         notification.error({
-          message: "Invalid Link",
-          description: "Password reset token is missing or invalid.",
+          message: t("invalid_link_notification_message"),
+          description: t("invalid_link_notification_description"),
           placement: "topRight",
         });
         router.push("/auth/forgot/password");
       }
       setLoadingToken(false);
     }
-  }, [router.isReady, router.query, router]); // Depend on router.isReady and router.query
+  }, [router.isReady, router.query, router, t]); // Depend on router.isReady and router.query
 
   const handleSubmit = async (
     values: ResetPasswordValues,
@@ -66,9 +75,8 @@ const ResetPasswordPage: React.FC = () => {
 
     if (!passwordToken) {
       notification.error({
-        message: "Error",
-        description:
-          "Missing reset token. Please use the link from your email.",
+        message: t("missing_token_error_message"),
+        description: t("missing_token_error_description"),
         placement: "topRight",
       });
       setSubmitting(false);
@@ -84,8 +92,8 @@ const ResetPasswordPage: React.FC = () => {
       console.log("Password reset response:", response);
 
       notification.success({
-        message: "Password Reset Successful",
-        description: "Your password has been updated. Please log in.",
+        message: t("password_reset_success_message"),
+        description: t("password_reset_success_description"),
         placement: "topRight",
       });
 
@@ -96,12 +104,16 @@ const ResetPasswordPage: React.FC = () => {
         "error resetting password",
         error?.response || error.message
       );
-      const errorMessage =
-        error?.response?.message ||
-        "An unexpected error occurred during password reset.";
+      const backendErrorMsg = error?.response?.message || error?.message;
+      const translatedErrorDescription = backendErrorMsg
+        ? t(
+            backendErrorMessageMap[backendErrorMsg] ||
+              "password_reset_failed_description_generic"
+          )
+        : t("password_reset_failed_description_generic");
       notification.error({
-        message: "Password Reset Failed",
-        description: errorMessage,
+        message: t("password_reset_failed_message"),
+        description: translatedErrorDescription,
         placement: "topRight",
       });
     } finally {
@@ -113,7 +125,7 @@ const ResetPasswordPage: React.FC = () => {
     return (
       <ResetPasswordStyled className={clsx("reset-password-container")}>
         <div className="input-container">
-          <p>Loading reset link...</p>
+          <p>{t("loading_reset_link_message")}</p>
         </div>
       </ResetPasswordStyled>
     );
@@ -123,7 +135,7 @@ const ResetPasswordPage: React.FC = () => {
   return (
     <ResetPasswordStyled className={clsx("reset-password-container")}>
       <div className="input-container">
-        <h2>Reset Your Password</h2>
+        <h2>{t("reset_password_title")}</h2>
         <Formik<ResetPasswordValues>
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -146,7 +158,7 @@ const ResetPasswordPage: React.FC = () => {
                   type="password"
                   id="newPassword"
                   name="newPassword"
-                  placeholder="New Password (8-16 chars)"
+                  placeholder={t("new_password_placeholder")}
                   as={Input.Password}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     handleChange(e);
@@ -169,7 +181,7 @@ const ResetPasswordPage: React.FC = () => {
                   type="password"
                   id="confirmNewPassword"
                   name="confirmNewPassword"
-                  placeholder="Confirm New Password"
+                  placeholder={t("confirm_new_password_placeholder")}
                   as={Input.Password}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     handleChange(e);
@@ -189,7 +201,7 @@ const ResetPasswordPage: React.FC = () => {
               {/* Submit Button */}
               <div className="submit-button-container">
                 <Button htmlType="submit" disabled={isSubmitting}>
-                  Reset Password
+                  {t("reset_password_button")}
                 </Button>
               </div>
             </Form>

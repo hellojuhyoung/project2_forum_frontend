@@ -7,8 +7,17 @@ import clsx from "clsx";
 
 import { instance } from "@/utils/apis/axios";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
+
+const backendErrorMessageMap: { [key: string]: string } = {
+  "Email address is required.": "email_required_backend_error",
+  "An error occurred while processing your request.":
+    "generic_processing_error",
+};
 
 const ForgotUsername: React.FC = () => {
+  // translation
+  const { t } = useTranslation("ClientServices.forgotusername");
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -22,15 +31,14 @@ const ForgotUsername: React.FC = () => {
 
       if (response && response.message) {
         notification.success({
-          message: "Request Sent",
-          description: response.message,
+          message: t("request_sent_message"),
+          description: t("forgot_username_success_description_generic"),
           placement: "topRight",
         });
       } else {
         notification.success({
-          message: "Request Sent",
-          description:
-            "If an account is associated with this email, your username has been sent to your inbox.",
+          message: t("request_sent_message"),
+          description: t("forgot_username_success_description_generic"),
           placement: "topRight",
         });
       }
@@ -41,10 +49,18 @@ const ForgotUsername: React.FC = () => {
       }, 2000);
     } catch (error: any) {
       console.error("Find username error:", error);
+
+      const backendErrorMsg = error.response?.message;
+      const translatedErrorDescription = backendErrorMsg
+        ? t(
+            backendErrorMessageMap[backendErrorMsg] ||
+              "request_failed_description_generic"
+          )
+        : t("request_failed_description_generic");
+
       notification.error({
-        message: "Request Failed",
-        description:
-          error.response?.message || "An error occurred. Please try again.",
+        message: t("request_failed_message"), // Already translated
+        description: translatedErrorDescription,
         placement: "topRight",
       });
     } finally {
@@ -56,11 +72,8 @@ const ForgotUsername: React.FC = () => {
     // Use the new FindUsernameStyled component here
     <ForgotUsernameStyled className={clsx("find-username-container")}>
       <div className="input-container">
-        <h2 className="page-title">Find Your Username</h2>
-        <p className="page-description">
-          Enter your registered email address below, and we'll send your
-          username to your inbox.
-        </p>
+        <h2 className="page-title">{t("find_username_title")}</h2>
+        <p className="page-description">{t("find_username_description")}</p>
         <Form
           form={form}
           name="find_username"
@@ -70,13 +83,13 @@ const ForgotUsername: React.FC = () => {
           <Form.Item
             name="email"
             rules={[
-              { required: true, message: "Please enter your email address!" },
-              { type: "email", message: "The input is not a valid E-mail!" },
+              { required: true, message: t("email_required_message") },
+              { type: "email", message: t("email_invalid_message") },
             ]}
           >
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="Email Address"
+              placeholder={t("email_placeholder")}
               className="input-username" // Keep this class if you have specific username input styles
             />
           </Form.Item>
@@ -88,7 +101,7 @@ const ForgotUsername: React.FC = () => {
               loading={loading}
               style={{ width: "100%" }}
             >
-              Send Username
+              {t("send_username_button")}
             </Button>
           </Form.Item>
         </Form>

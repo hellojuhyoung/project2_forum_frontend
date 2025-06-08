@@ -7,10 +7,18 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { instance } from "@/utils/apis/axios";
+import { useTranslation } from "react-i18next";
 
 const { Title, Text } = Typography;
+const backendErrorMessageMap: { [key: string]: string } = {
+  "Email address is required.": "email_required_backend_error_fp",
+  "An error occurred while processing your request.":
+    "generic_processing_error_fp",
+};
 
 const ForgotPassword: React.FC = () => {
+  const { t } = useTranslation("ClientServices.forgotpassword");
+
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -27,8 +35,8 @@ const ForgotPassword: React.FC = () => {
 
       if (response && response.message) {
         notification.success({
-          message: "Request Sent",
-          description: response.message,
+          message: t("request_sent_message"), // Translate "Request Sent"
+          description: t("forgot_password_success_description_generic"), // Translate the specific backend message
           placement: "topRight",
         });
       } else {
@@ -46,10 +54,18 @@ const ForgotPassword: React.FC = () => {
       }, 2000);
     } catch (error: any) {
       console.error("Password reset request error:", error);
+
+      const backendErrorMsg = error.response?.message;
+      const translatedErrorDescription = backendErrorMsg
+        ? t(
+            backendErrorMessageMap[backendErrorMsg] ||
+              "request_failed_description_generic_fp"
+          )
+        : t("request_failed_description_generic_fp");
+
       notification.error({
-        message: "Request Failed",
-        description:
-          error.response?.message || "An error occurred. Please try again.",
+        message: t("request_failed_message_fp"),
+        description: translatedErrorDescription,
         placement: "topRight",
       });
     } finally {
@@ -61,11 +77,10 @@ const ForgotPassword: React.FC = () => {
     <ForgotPasswordStyled className={clsx("find-password-page-container")}>
       <div className="input-container">
         <Title level={4} className="page-title">
-          Forgot Password?
+          {t("forgot_password_title")}
         </Title>
         <Text className="page-description">
-          Enter your email address below and we'll send you a link to reset your
-          password.
+          {t("forgot_password_description")}
         </Text>
 
         <Form
@@ -78,13 +93,13 @@ const ForgotPassword: React.FC = () => {
           <Form.Item
             name="email"
             rules={[
-              { required: true, message: "Please input your email!" },
-              { type: "email", message: "Please enter a valid email address!" },
+              { required: true, message: t("email_required_message_fp") },
+              { type: "email", message: t("email_invalid_message_fp") },
             ]}
           >
             <Input
               prefix={<MailOutlined className="site-form-item-icon" />}
-              placeholder="Email Address"
+              placeholder={t("email_placeholder_fp")}
               className="input-username"
             />
           </Form.Item>
@@ -97,14 +112,14 @@ const ForgotPassword: React.FC = () => {
               block
               className="button-login"
             >
-              Send Reset Link
+              {t("send_reset_link_button")}
             </Button>
           </Form.Item>
         </Form>
 
         <div className="back-to-login-link-container">
           <Link href="/auth/login" className="auth-utility-link">
-            Back to Login
+            {t("back_to_login_link")}
           </Link>
         </div>
       </div>

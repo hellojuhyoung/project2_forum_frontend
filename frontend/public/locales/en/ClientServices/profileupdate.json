@@ -1,0 +1,60 @@
+{
+  "loading_profile_message": "Loading profile...",
+  "failed_to_load_profile_error_update": "Failed to load profile data.",
+  "error_prefix": "Error",
+  "back_to_profile_button": "Back to Profile",
+  "no_profile_data_available_message": "No profile data available.",
+
+  "temp_username_detected_message": "Temporary Username Detected",
+  "temp_username_detected_description": "You are currently logged in with a temporary username: \"{{username}}\". Please choose a unique username to personalize your profile!",
+
+  "complete_profile_title": "Complete Your Profile",
+  "edit_profile_title": "Edit Profile",
+
+  "profile_picture_label": "Profile Picture",
+  "profile_preview_alt_text": "Profile Preview",
+  "change_image_button": "Change Image",
+  "upload_image_button": "Upload Image",
+  "remove_image_button": "Remove Image",
+
+  "username_label": "Username",
+  "username_placeholder": "Username (required, min 4 chars)",
+  "validate_username_button": "Validate",
+
+  "email_label": "Email",
+  "full_name_label": "Full Name",
+  "gender_label": "Gender",
+  "select_gender_placeholder": "Select your gender",
+  "gender_male_option": "Male",
+  "gender_female_option": "Female",
+  "phone_number_label": "Phone Number",
+  "date_of_birth_label": "Date of Birth",
+  "occupation_label": "Occupation",
+  "preferred_language_label": "Preferred Language",
+
+  "complete_profile_button": "Complete Profile",
+  "update_profile_button": "Update Profile",
+  "cancel_button": "Cancel",
+
+  "username_required_validation": "Please input your username!",
+  "email_required_validation": "Please input your email!",
+  "email_invalid_validation": "The input is not valid E-mail!",
+
+  "error_message_general": "Error",
+  "profile_update_failed_message": "Profile Update Failed",
+  "profile_updated_message": "Profile Updated",
+  "update_failed_message": "Update Failed",
+
+  "username_cannot_be_empty": "Username cannot be empty.",
+  "username_min_length_backend_error": "Username must be at least 4 characters.",
+  "username_is_current": "This is your current username.",
+  "username_is_available": "Username is available!",
+  "username_is_already_taken": "Username is already taken.",
+  "error_checking_username": "Error checking username. Please try again.",
+  "fix_local_username_errors": "Please fix local username errors.",
+  "user_id_not_found_for_update": "User ID not found for update.",
+  "username_validation_required_update_error": "Please validate your username to ensure it's unique.",
+  "profile_updated_success_description": "Your profile has been successfully updated!",
+  "something_went_wrong_generic": "Something went wrong.",
+  "update_unexpected_error": "An error occurred during update."
+}

@@ -1,0 +1,19 @@
+{
+  "loading_profile_message": "프로필 로딩 중...",
+  "failed_to_load_profile_error": "프로필 데이터를 로드하지 못했습니다. 사용자가 존재하지 않거나 네트워크 오류일 수 있습니다.",
+  "user_id_not_provided_error": "URL에 사용자 ID가 제공되지 않았습니다.",
+  "error_prefix": "오류",
+  "no_user_data_found_message": "사용자 데이터를 찾을 수 없습니다.",
+  "users_profile_title": "{{username}}님의 프로필",
+  "users_profile_alt_text": "{{username}}님의 프로필 사진",
+  "label_id": "ID",
+  "label_full_name": "전체 이름",
+  "label_email": "이메일",
+  "label_gender": "성별",
+  "label_phone_number": "전화번호",
+  "label_date_of_birth": "생년월일",
+  "label_occupation": "직업",
+  "label_preferred_language": "선호 언어",
+  "not_provided_text": "제공되지 않음",
+  "edit_profile_button": "프로필 수정"
+}

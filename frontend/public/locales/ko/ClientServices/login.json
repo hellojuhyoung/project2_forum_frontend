@@ -4,5 +4,12 @@
   "login_button": "로그인",
   "logout_button": "로그아웃",
   "forgot_username_link": "사용자 이름 찾기",
-  "forgot_password_link": "비밀번호 찾기"
+  "forgot_password_link": "비밀번호 찾기",
+
+  "login_success_message": "로그인 성공",
+  "login_success_description": "성공적으로 인증되었습니다.",
+  "logout_success_message": "로그아웃 성공",
+  "logout_success_description": "성공적으로 로그아웃되었습니다.",
+  "login_error_message": "로그인 실패",
+  "login_error_description_generic": "로그인 중 오류가 발생했습니다. 다시 시도해주세요."
 }

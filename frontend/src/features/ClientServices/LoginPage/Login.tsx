@@ -23,8 +23,10 @@ import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
 const LoginPage: React.FC = () => {
+  // this is for rendering different .json file from
+  // /public/locales/ either /ko or /en depending on the language option
+  const { t } = useTranslation("ClientServices.login");
   const router = useRouter();
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   // in this cause of using useState 'react' hook... would need to customize
@@ -64,13 +66,22 @@ const LoginPage: React.FC = () => {
       );
 
       notification.success({
-        message: "Login Successful",
-        description: "You have been successfully authenticated.",
+        message: t("login_success_message"),
+        description: t("login_success_description"),
         placement: "topRight",
       });
       router.push("/");
-    } catch (error) {
+    } catch (error: any) {
       console.error("login error", error);
+
+      notification.error({
+        message: t("login_error_message"),
+        description:
+          error.response && error.response && error.response.message
+            ? error.response.message
+            : t("login_error_description_generic"),
+        placement: "topRight",
+      });
     }
   };
 
@@ -78,8 +89,8 @@ const LoginPage: React.FC = () => {
     deleteCookie("token");
     dispatch(setUser({ id: null, username: null, token: null }));
     notification.info({
-      message: "Logout Successful",
-      description: "You have been successfully logged out.",
+      message: t("logout_success_message"),
+      description: t("logout_success_description"),
       placement: "topRight",
     });
     router.push("/");
@@ -90,10 +101,6 @@ const LoginPage: React.FC = () => {
       handleLogin(enter as any);
     }
   };
-
-  // this is for rendering different .json file from
-  // /public/locales/ either /ko or /en depending on the language option
-  const { t } = useTranslation("ClientServices.login");
 
   return (
     <>

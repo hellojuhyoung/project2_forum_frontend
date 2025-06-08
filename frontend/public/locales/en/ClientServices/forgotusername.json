@@ -1,0 +1,23 @@
+{
+  "username_placeholder": "Username",
+  "password_placeholder": "Password",
+  "login_button": "Login",
+  "logout_button": "Logout",
+  "forgot_username_link": "Forgot Username?",
+  "forgot_password_link": "Forgot password?",
+
+  "find_username_title": "Find Your Username",
+  "find_username_description": "Enter your registered email address below, and we'll send your username to your inbox.",
+  "email_required_message": "Please enter your email address!",
+  "email_invalid_message": "The input is not a valid E-mail!",
+  "email_placeholder": "Email Address",
+  "send_username_button": "Send Username",
+
+  "request_sent_message": "Request Sent",
+  "forgot_username_success_description_generic": "If an account is associated with this email, your username has been sent to your inbox.",
+  "request_failed_message": "Request Failed",
+  "request_failed_description_generic": "An error occurred. Please try again.",
+
+  "email_required_backend_error": "Email address is required.",
+  "generic_processing_error": "An error occurred while processing your request."
+}
