@@ -24,8 +24,11 @@ const ToastEditor = dynamic(() => import("@/components/Editor/ToastEditor"), {
 //
 import { ImagesFromText } from "@/utils/ToastEditor/EditorContent";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 
 const CreatePostPage: React.FC = () => {
+  const { t } = useTranslation("createpost");
+
   // aquire id from the redux store
   const authentication = useSelector(
     (state: RootState) => state.authentication
@@ -51,9 +54,9 @@ const CreatePostPage: React.FC = () => {
   };
 
   const validationSchema = Yup.object({
-    title: Yup.string().required("Title is required"),
-    category: Yup.string().required("Please select a category"),
-    content: Yup.string().required("Content is required"),
+    title: Yup.string().required(t("validation_title_required")),
+    category: Yup.string().required(t("validation_category_required")),
+    content: Yup.string().required(t("validation_content_required")),
   });
 
   // fetch categories from the backend
@@ -103,9 +106,9 @@ const CreatePostPage: React.FC = () => {
       console.log("post created", response);
 
       notification.success({
-        message: "Post Created",
-        description: "Your new post has been successfully published!",
-        placement: "topRight", // Or your preferred placement
+        message: t("notification_post_created_title"),
+        description: t("notification_post_created_description"),
+        placement: "topRight",
       });
 
       router.push("/");
@@ -113,9 +116,8 @@ const CreatePostPage: React.FC = () => {
       console.error("error creating post", error);
       // You might want to add an error notification here as well
       notification.error({
-        message: "Post Creation Failed",
-        description:
-          "There was an error publishing your post. Please try again.",
+        message: t("notification_post_creation_failed_title"),
+        description: t("notification_post_creation_failed_description"),
         placement: "topRight",
       });
     }
@@ -135,13 +137,13 @@ const CreatePostPage: React.FC = () => {
                 {/* gives off 'title' beside the input box and with the required */}
                 {/* it adds the red asterisk */}
                 <div className="title-container">
-                  <label htmlFor="title">Title</label>
+                  <label htmlFor="title">{t("label_title")}</label>
                   <Input
                     id="title"
                     name="title"
                     value={values.title}
                     onChange={handleChange}
-                    placeholder="enter post title"
+                    placeholder={t("placeholder_enter_post_title")}
                   />
                   {errors.title && touched.title && (
                     <div style={{ color: "red" }}>{errors.title}</div>
@@ -149,7 +151,7 @@ const CreatePostPage: React.FC = () => {
                 </div>
 
                 <div className="category-container">
-                  <label htmlFor="category">Category</label>
+                  <label htmlFor="category">{t("label_category")}</label>
                   <Radio.Group
                     name="category"
                     onChange={(e) => setFieldValue("category", e.target.value)}
@@ -167,7 +169,7 @@ const CreatePostPage: React.FC = () => {
                 </div>
 
                 <div className="content-container">
-                  <label htmlFor="content">Content</label>
+                  <label htmlFor="content">{t("label_content")}</label>
                   <ToastEditor
                     initialValue={values.content}
                     ref={editorRef}
@@ -181,7 +183,7 @@ const CreatePostPage: React.FC = () => {
                 </div>
 
                 <div className="button-container">
-                  <Button htmlType="submit">Submit Post</Button>
+                  <Button htmlType="submit">{t("button_submit_post")}</Button>
                 </div>
               </Form>
             </div>

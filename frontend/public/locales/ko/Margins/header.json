@@ -1,0 +1,23 @@
+{
+  "notification_logout_message": "로그아웃 되었습니다",
+  "dropdown_profile": "프로필",
+  "dropdown_logout": "로그아웃",
+  "nav_create_new_post": "새 게시물 작성",
+  "nav_my_posts": "내 게시물",
+  "nav_welcome_user": "환영합니다, {{username}}님",
+  "nav_login": "로그인",
+  "nav_signup": "회원가입",
+  "alt_forum_logo": "포럼 로고",
+  "alt_user_profile_image": "사용자 프로필",
+  "language_kor": "한글",
+  "language_eng": "영어",
+
+  "home_link_mobile": "홈",
+  "nav_login_mobile": "로그인",
+  "nav_signup_mobile": "회원가입",
+
+  "nav_create_new_post_mobile": "새 게시물 작성",
+  "nav_my_posts_mobile": "내 게시물",
+  "dropdown_profile_mobile": "프로필",
+  "dropdown_logout_mobile": "로그아웃"
+}

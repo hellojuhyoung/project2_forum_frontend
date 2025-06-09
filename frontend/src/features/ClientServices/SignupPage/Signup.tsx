@@ -44,25 +44,25 @@ const backendMessageMap: { [key: string]: string } = {
 interface SignupValues {
   username: string;
   password: string;
+  confirmPassword: string;
   email: string;
   fullName: string;
   gender: string;
   phoneNumber: string;
   dateOfBirth: string;
   occupation: string;
-  preferredLanguage: string;
 }
 
 const initialValues: SignupValues = {
   username: "",
   password: "",
+  confirmPassword: "",
   email: "",
   fullName: "",
   gender: "",
   phoneNumber: "",
   dateOfBirth: "",
   occupation: "",
-  preferredLanguage: "english",
 };
 
 const SignupPage: React.FC = () => {
@@ -77,6 +77,10 @@ const SignupPage: React.FC = () => {
       .min(8, t("password_min_length_validation"))
       .max(16, t("password_max_length_validation"))
       .required(t("password_required_validation")),
+
+    confirmPassword: Yup.string()
+      .required(t("confirm_password_required_validation"))
+      .oneOf([Yup.ref("password")], t("passwords_must_match_validation")),
 
     email: Yup.string()
       .email(t("email_invalid_validation"))
@@ -98,7 +102,6 @@ const SignupPage: React.FC = () => {
     occupation: Yup.string()
       .max(100, t("occupation_max_length_validation"))
       .notRequired(),
-    preferredLanguage: Yup.string().notRequired(),
   });
   const [profilePictureFile, setProfilePictureFile] = useState<File | null>(
     null
@@ -228,9 +231,6 @@ const SignupPage: React.FC = () => {
       if (values.dateOfBirth)
         formData.append("dateOfBirth", values.dateOfBirth);
       if (values.occupation) formData.append("occupation", values.occupation);
-      if (values.preferredLanguage)
-        formData.append("preferredLanguage", values.preferredLanguage);
-
       if (profilePictureFile) {
         console.log("handleSubmit: Appended profilePicture to FormData.");
 
@@ -388,6 +388,30 @@ const SignupPage: React.FC = () => {
                   />
                 </div>
 
+                {/* Confirm Password Input */}
+                <div className="form-field-container">
+                  <Field
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder={t("confirm_password_placeholder")} // Need to translate this
+                    as={Input.Password}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      handleChange(e);
+                      validateField("confirmPassword");
+                      setFieldTouched("confirmPassword", true, false);
+                    }}
+                    onBlur={handleBlur}
+                  />
+                  <ErrorMessage
+                    name="confirmPassword"
+                    component="div"
+                    render={(error) => (
+                      <div className="error-message">{error}</div>
+                    )}
+                  />
+                </div>
+
                 {/* Email */}
                 <div className="form-field-container">
                   <Field
@@ -529,43 +553,6 @@ const SignupPage: React.FC = () => {
                       <div className="error-message">{error}</div>
                     )}
                   />
-                </div>
-
-                {/* Preferred Language (Ant Design Select) */}
-                <div className="form-field-container">
-                  <label htmlFor="preferredLanguage" className="form-label">
-                    {t("preferred_language_label")}
-                  </label>
-                  <Select
-                    id="preferredLanguage"
-                    defaultValue={initialValues.preferredLanguage}
-                    style={{ width: "100%" }}
-                    onChange={(value: string) => {
-                      setFieldValue("preferredLanguage", value);
-                      setFieldTouched("preferredLanguage", true, false);
-                    }}
-                    onBlur={handleBlur}
-                    value={values.preferredLanguage}
-                  >
-                    <Option value="english">
-                      {t("language_option_english")}
-                    </Option>
-                    <Option value="spanish">
-                      {t("language_option_spanish")}
-                    </Option>
-                    <Option value="french">
-                      {t("language_option_french")}
-                    </Option>
-                    <Option value="korean">
-                      {t("language_option_korean")}
-                    </Option>
-                    <Option value="other">{t("language_option_other")}</Option>{" "}
-                  </Select>
-                  {touched.preferredLanguage && errors.preferredLanguage && (
-                    <div className="error-message">
-                      {errors.preferredLanguage}
-                    </div>
-                  )}
                 </div>
 
                 {/* Profile Picture File Upload */}

@@ -1,0 +1,16 @@
+{
+  "validation_title_required": "Title is required",
+  "validation_category_required": "Please select a category",
+  "validation_content_required": "Content is required",
+
+  "notification_post_created_title": "Post Created",
+  "notification_post_created_description": "Your new post has been successfully published!",
+  "notification_post_creation_failed_title": "Post Creation Failed",
+  "notification_post_creation_failed_description": "There was an error publishing your post. Please try again.",
+
+  "label_title": "Title",
+  "placeholder_enter_post_title": "enter post title",
+  "label_category": "Category",
+  "label_content": "Content",
+  "button_submit_post": "Submit Post"
+}

@@ -1,33 +1,82 @@
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
 
-export const MainStyled = styled.div``;
+export const MainStyled = styled.div`
+  min-height: calc(100vh - (var(--header-height) + var(--footer-height)));
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  @media (max-width: 768px) {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+`;
 
 export const Container = styled.div`
   max-width: 1200px;
-  margin: 0 auto; /* Center align */
-  padding: 0 16px; /* Add side padding for screens smaller than max-width */
+  margin: 0 auto;
+  padding: 0 16px;
   display: flex;
   flex-direction: column;
-  gap: 40px; /* Space between sections */
+  gap: 40px;
+
+  @media (max-width: 992px) {
+    padding: 0 20px;
+    gap: 30px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 15px;
+    gap: 25px;
+  }
+
+  @media (max-width: 576px) {
+    padding: 0 10px;
+    gap: 20px;
+  }
 `;
 
 export const MostRecentFeed = styled.div`
   display: flex;
-  overflow-x: hidden;
+  overflow-x: auto;
   width: 100%;
+  padding-bottom: 10px;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const MostLikedFeed = styled.div`
   display: flex;
-  overflow-x: hidden;
+  overflow-x: auto;
   width: 100%;
+  padding-bottom: 10px;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const MainFeedGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  @media (max-width: 576px) {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 `;
 
 export const PaginationStyled = styled.div`
@@ -35,6 +84,8 @@ export const PaginationStyled = styled.div`
   justify-content: center;
   align-items: center;
   margin: 40px auto 0 auto;
+  flex-wrap: wrap;
+  padding: 0 10px;
 
   .page-number {
     cursor: pointer;
@@ -43,6 +94,11 @@ export const PaginationStyled = styled.div`
     margin: 0 6px;
     user-select: none;
     font-size: 16px;
+
+    @media (max-width: 576px) {
+      font-size: 14px;
+      margin: 0 4px;
+    }
   }
 
   .page-number:hover {
@@ -63,6 +119,11 @@ export const PaginationStyled = styled.div`
     padding: 0 8px;
     color: inherit;
     user-select: none;
+
+    @media (max-width: 576px) {
+      font-size: 16px;
+      padding: 0 5px;
+    }
   }
 
   .arrow:hover {
@@ -79,6 +140,14 @@ export const PaginationStyled = styled.div`
 
 export const Section = styled.div`
   margin-bottom: 48px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 30px;
+  }
+
+  @media (max-width: 576px) {
+    margin-bottom: 20px;
+  }
 `;
 
 export const SectionHeader = styled.h2`
@@ -87,4 +156,16 @@ export const SectionHeader = styled.h2`
   margin: ${({ theme }) => theme.spacing.lg} 0
     ${({ theme }) => theme.spacing.md};
   color: ${({ theme }) => theme.colors.text};
+
+  @media (max-width: 992px) {
+    font-size: ${({ theme }) => theme.fontSizes.md};
+    margin: ${({ theme }) => theme.spacing.md} 0
+      ${({ theme }) => theme.spacing.sm};
+  }
+
+  @media (max-width: 576px) {
+    font-size: ${({ theme }) => theme.fontSizes.base};
+    margin: ${({ theme }) => theme.spacing.sm} 0
+      ${({ theme }) => theme.spacing.xs};
+  }
 `;

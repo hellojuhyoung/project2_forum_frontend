@@ -24,8 +24,10 @@ import { useRouter } from "next/router";
 // import redux related built-in functions
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 export default function Main() {
+  const { t } = useTranslation("home"); // Initialize useTranslation
   const router = useRouter();
 
   // username and token saved on store redux
@@ -121,21 +123,21 @@ export default function Main() {
           {token ? <></> : <></>}
 
           <Section>
-            <h2>📌 Most Recent</h2>
+            <h2>{t("section_most_recent")}</h2>
             <MostRecentFeed>
               <SlideFeed slides={recentPost} />
             </MostRecentFeed>
           </Section>
 
           <Section>
-            <h2>👍 Most Liked</h2>
+            <h2>{t("section_most_liked")}</h2>
             <MostLikedFeed>
               <SlideFeed slides={likedPost} />
             </MostLikedFeed>
           </Section>
 
           <Section>
-            <h2>📂 Main Feed</h2>
+            <h2>{t("section_main_feed")}</h2>
             <MainFeedGrid>
               {posts.map((post: any, index: number) => (
                 <MainFeed key={index} post={post} />

@@ -3,6 +3,7 @@ import "styled-components";
 declare module "styled-components" {
   export interface DefaultTheme {
     spacing: {
+      xxs: string;
       xs: string;
       sm: string;
       md: string;
@@ -10,6 +11,8 @@ declare module "styled-components" {
       xl: string;
     };
     fontSizes: {
+      base: string;
+      xs: string;
       sm: string;
       md: string;
       lg: string;
@@ -54,5 +57,7 @@ declare module "styled-components" {
       md: string;
       lg: string;
     };
+
+    headerHeight: string;
   }
 }

@@ -18,7 +18,6 @@ interface UserProfile {
   phoneNumber?: string;
   dateOfBirth?: string;
   occupation?: string;
-  preferredLanguage?: string;
   profilePicture?: string;
 }
 
@@ -134,10 +133,6 @@ const ProfilePage = () => {
         <div className="detail-item">
           <strong>{t("label_occupation")}:</strong>
           <span>{user.occupation || t("not_provided_text")}</span>
-        </div>
-        <div className="detail-item">
-          <strong>{t("label_preferred_language")}:</strong>
-          <span>{user.preferredLanguage || t("not_provided_text")}</span>
         </div>
       </div>
       {/* Example for an "Edit Profile" button */}

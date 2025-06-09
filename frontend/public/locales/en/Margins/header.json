@@ -1,0 +1,23 @@
+{
+  "notification_logout_message": "You are logged out",
+  "dropdown_profile": "Profile",
+  "dropdown_logout": "Logout",
+  "nav_create_new_post": "Create New Post",
+  "nav_my_posts": "My Posts",
+  "nav_welcome_user": "Welcome {{username}}",
+  "nav_login": "Login",
+  "nav_signup": "Signup",
+  "alt_forum_logo": "Forum Logo",
+  "alt_user_profile_image": "User Profile",
+  "language_kor": "KOR",
+  "language_eng": "ENG",
+
+  "home_link_mobile": "Home",
+  "nav_login_mobile": "Login",
+  "nav_signup_mobile": "Sign Up",
+
+  "nav_create_new_post_mobile": "Create New Post",
+  "nav_my_posts_mobile": "My Posts",
+  "dropdown_profile_mobile": "Profile",
+  "dropdown_logout_mobile": "Logout"
+}

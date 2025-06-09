@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { notification } from "antd";
+import { useTranslation } from "react-i18next";
 
 // for the localhost url import from the .env file
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -25,6 +26,7 @@ interface DetailFeedProps {
 }
 
 const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
+  const { t } = useTranslation("detailfeed");
   const router = useRouter();
   const isAuthor = currentUsername === post.user.username;
   const auth = useSelector((s: RootState) => s.authentication);
@@ -74,23 +76,36 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
   const toggleLike = async (e: React.MouseEvent) => {
     e.stopPropagation();
     try {
-      if (isLiked) {
-        await instance.delete(`/likes`, {
-          data: { postid: post.id, userid: userid },
-        });
-        setLikeCount((c) => c - 1);
-        setIsLiked(false);
+      if (isLoggedIn) {
+        // Only allow if logged in
+        if (isLiked) {
+          await instance.delete(`/likes`, {
+            data: { postid: post.id, userid: userid },
+          });
+          setLikeCount((c) => c - 1);
+          setIsLiked(false);
+        } else {
+          await instance.post(`/likes`, {
+            postid: post.id,
+            userid: userid,
+          });
+          setLikeCount((c) => c + 1);
+          setIsLiked(true);
+        }
       } else {
-        await instance.post(`/likes`, {
-          postid: post.id,
-          userid: userid,
+        notification.info({
+          message: t("like_login_required_title"),
+          description: t("like_login_required_description"),
+          placement: "topRight",
         });
-        setLikeCount((c) => c + 1);
-        setIsLiked(true);
       }
     } catch (err: any) {
-      // console.error("Error toggling like", err.message);
-      console.error("Failed to load likes", err?.response?.data || err.message);
+      console.error("Error toggling like", err?.response?.data || err.message);
+      notification.error({
+        message: t("like_toggle_failed_title"),
+        description: t("like_toggle_failed_description"),
+        placement: "topRight",
+      });
     }
   };
 
@@ -101,20 +116,20 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
 
   const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    if (!confirm("Are you sure you want to delete this post?")) return;
+    if (!confirm(t("confirm_delete_post"))) return;
 
     try {
       await instance.delete(`/posts/${post.id}`);
       notification.success({
-        message: "Success",
-        description: "Post successfully deleted.",
+        message: t("notification_success_title"),
+        description: t("notification_post_deleted_description"),
         placement: "topRight",
       });
       router.push("/");
     } catch (error) {
       notification.error({
-        message: "Deletion Failed",
-        description: "There was an error deleting the post. Please try again.",
+        message: t("notification_deletion_failed_title"),
+        description: t("notification_deletion_failed_description"),
         placement: "topRight",
       });
       console.error(error);
@@ -147,7 +162,7 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
         <div className="detail-main-image">
           <img
             src={`${API_URL}${heroImage.postImage}`}
-            alt={`Main image for ${post.title}`}
+            alt={t("image_alt_main_image", { title: post.title })}
             className="main-img"
           />
         </div>
@@ -162,7 +177,10 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
             <img
               key={index}
               src={`${API_URL}${imgObj.postImage}`}
-              alt={`Gallery image ${index + 1} for ${post.title}`}
+              alt={t("image_alt_gallery_image", {
+                index: index + 1,
+                title: post.title,
+              })}
               className="gallery-img"
             />
           ))}
@@ -174,7 +192,13 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
           className={heartClass}
           disabled={!isLoggedIn}
           onClick={isLoggedIn ? toggleLike : undefined}
-          title={isLoggedIn ? (isLiked ? "Unlike" : "Like") : "Login to like"}
+          title={
+            isLoggedIn
+              ? isLiked
+                ? t("button_unlike_title")
+                : t("button_like_title")
+              : t("button_login_to_like_title")
+          }
         >
           {heartIcon} {likeCount}
         </button>
@@ -183,10 +207,10 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
       {isAuthor && (
         <div className="action-buttons">
           <button className="edit-btn" onClick={handleEdit}>
-            Edit
+            {t("button_edit")}
           </button>
           <button className="delete-btn" onClick={handleDelete}>
-            Delete
+            {t("button_delete")}
           </button>
         </div>
       )}

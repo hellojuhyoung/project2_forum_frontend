@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import MainFeedStyled from "./styled";
 import { useEffect, useState } from "react";
 import { instance } from "@/utils/apis/axios";
+import { useTranslation } from "react-i18next";
 
 // for the localhost url import from the .env file
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -25,6 +26,7 @@ const MainFeed: React.FC<MainFeedProps> = ({
   isMostRecentSection,
   isMostLikedSection,
 }) => {
+  const { t } = useTranslation("mainfeed");
   const router = useRouter();
   const [likeCount, setLikeCount] = useState(0);
 
@@ -54,6 +56,11 @@ const MainFeed: React.FC<MainFeedProps> = ({
     });
   };
 
+  const formattedDate = new Date(post.createdAt)
+    .toISOString()
+    .slice(0, 10)
+    .replace(/-/g, ".");
+
   return (
     <>
       <MainFeedStyled
@@ -66,7 +73,11 @@ const MainFeed: React.FC<MainFeedProps> = ({
             src={
               post.thumbnail ? `${API_URL}${post.thumbnail}` : "/no-image.jpg"
             }
-            alt={`Thumbnail for ${post.title}`}
+            alt={
+              post.thumbnail
+                ? t("thumbnail_alt_text", { title: post.title })
+                : t("no_image_available_alt_text")
+            }
             className="thumbnail-img"
           />
         </div>
@@ -75,11 +86,7 @@ const MainFeed: React.FC<MainFeedProps> = ({
         <div className="main-citation-and-likes">
           {/* citation includes username and createdAt */}
           <div className="main-citation">
-            {new Date(post.createdAt)
-              .toISOString()
-              .slice(0, 10)
-              .replace(/-/g, ".")}{" "}
-            | by {post.user.username}
+            {formattedDate} | {t("citation_by_prefix")} {post.user.username}
           </div>
 
           <div className="like-display-section">

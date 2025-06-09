@@ -1,12 +1,5 @@
 import styled from "styled-components";
 
-// isMostRecentSection is changed to $isMostRecentSection
-// MainFeedStyled is created using styled.div, which means it ultimately
-// renders a native HTML 'div' element. HTML 'div' elements do not have a standard
-// attribute called 'isMostRecentSection'. when React sees a prop being passed to a native
-// DOM element that isn't a standard HTML attribute (like 'className', 'id', 'src', ...)
-// it warns you because it might be unintended or could lead to invalid HTML.
-
 export const MainFeedStyled = styled.div<{
   $isMostRecentSection?: boolean;
   $isMostLikedSection?: boolean;
@@ -14,20 +7,69 @@ export const MainFeedStyled = styled.div<{
   cursor: pointer;
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  padding: ${({ theme }) => theme.spacing.md};
-  margin: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => theme.spacing.md}; /* Default padding */
+  margin: ${({ theme }) =>
+    theme.spacing.sm}; /* Default margin around the card */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   background-color: ${({ theme }) => theme.colors.backgroundLight};
   transition: box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.sm};
+  gap: ${({ theme }) => theme.spacing.sm}; /* Default gap between elements */
 
+  /* The fixed height of the card. These values will be reduced for smaller screens. */
   height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
     $isMostRecentSection || $isMostLikedSection ? "380px" : "300px"};
+  box-sizing: border-box; /* Ensures padding and border are included in the element's total height/width */
 
   &:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  /* --- Responsive Adjustments for MainFeedStyled (Card Container) --- */
+
+  /* For tablets and smaller desktops (e.g., up to 992px wide) */
+  @media (max-width: 992px) {
+    padding: ${({ theme }) => theme.spacing.sm}; /* Slightly less padding */
+    margin: ${({ theme }) =>
+      theme.spacing.xs}; /* Slightly less margin between cards */
+    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+      $isMostRecentSection || $isMostLikedSection
+        ? "340px"
+        : "280px"}; /* Reduced card height */
+    gap: ${({ theme }) => theme.spacing.xs}; /* Slightly less gap inside */
+  }
+
+  /* For larger mobile devices and smaller tablets (e.g., up to 768px wide) */
+  @media (max-width: 768px) {
+    padding: ${({ theme }) => theme.spacing.xs}; /* Further reduced padding */
+    margin: 0.5rem; /* Consistent smaller margin */
+    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+      $isMostRecentSection || $isMostLikedSection
+        ? "300px"
+        : "250px"}; /* Further reduced card height */
+    gap: ${({ theme }) => theme.spacing.xxs}; /* Minimal gap inside */
+    border-radius: ${({ theme }) =>
+      theme.borderRadius.sm}; /* Slightly smaller border-radius */
+  }
+
+  /* For small mobile devices (e.g., up to 480px wide) */
+  @media (max-width: 480px) {
+    padding: 0.8rem; /* Use specific rem for fine control */
+    margin: 0.3rem; /* Very small margin */
+    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+      $isMostRecentSection || $isMostLikedSection
+        ? "280px"
+        : "230px"}; /* Even more reduced card height */
+    box-shadow: none; /* Optional: remove shadow for a flat mobile feel */
+  }
+
+  /* For very small mobile devices (e.g., up to 360px wide) */
+  @media (max-width: 360px) {
+    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+      $isMostRecentSection || $isMostLikedSection
+        ? "260px"
+        : "210px"}; /* Adjust for very small screens */
   }
 
   .main-thumbnail {
@@ -37,37 +79,88 @@ export const MainFeedStyled = styled.div<{
   }
 
   .main-thumbnail img {
-    object-fit: contain;
+    object-fit: contain; /* Retaining 'contain' as per your original code */
     width: 100%;
+    /* The fixed height of the image. These values will be reduced for smaller screens. */
     height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection ? "220px" : "160px"};
     border-radius: ${({ theme }) => theme.borderRadius.sm};
+
+    /* --- Responsive Adjustments for Image Height --- */
+    @media (max-width: 992px) {
+      height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+        $isMostRecentSection || $isMostLikedSection
+          ? "180px"
+          : "140px"}; /* Reduced height for tablets */
+    }
+    @media (max-width: 768px) {
+      height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+        $isMostRecentSection || $isMostLikedSection
+          ? "150px"
+          : "120px"}; /* Further reduced height for mobiles */
+    }
+    @media (max-width: 480px) {
+      height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+        $isMostRecentSection || $isMostLikedSection
+          ? "120px"
+          : "90px"}; /* Even more reduced height for small mobiles */
+    }
+    @media (max-width: 360px) {
+      height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+        $isMostRecentSection || $isMostLikedSection
+          ? "100px"
+          : "70px"}; /* Adjust for very small screens */
+    }
   }
 
   .main-title {
-    font-size: ${({ theme }) => theme.fontSizes.md};
+    font-size: ${({ theme }) => theme.fontSizes.md}; /* Default font size */
     font-weight: ${({ theme }) => theme.fontWeights.bold};
     margin: ${({ theme }) => theme.spacing.sm} 0;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 2; /* Limits text to 2 lines */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.4;
-    height: calc(1.4em * 2);
+    height: calc(
+      1.4em * 2
+    ); /* Ensures two lines, adapts if font-size changes */
+
+    /* --- Responsive Adjustments for Title Font Size --- */
+    @media (max-width: 992px) {
+      font-size: ${({ theme }) => theme.fontSizes.sm}; /* Slightly smaller */
+    }
+    @media (max-width: 768px) {
+      font-size: 0.95rem; /* Specific rem value for fine control */
+      margin: ${({ theme }) => theme.spacing.xs} 0; /* Reduced margin */
+    }
+    @media (max-width: 480px) {
+      font-size: 0.9rem; /* Even smaller */
+      -webkit-line-clamp: 3; /* Allow more lines if title is long on small screens */
+      height: auto; /* Let content dictate height, rely on line-clamp for truncation */
+    }
   }
 
   .main-citation-and-likes {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: ${({ theme }) => theme.fontSizes.sm};
+    font-size: ${({ theme }) => theme.fontSizes.sm}; /* Default font size */
     color: ${({ theme }) => theme.colors.textSecondary};
-    margin-top: auto;
+    margin-top: auto; /* Pushes content to the bottom of the flex container */
+
+    /* --- Responsive Adjustments for Citation/Likes Font Size --- */
+    @media (max-width: 768px) {
+      font-size: ${({ theme }) => theme.fontSizes.xs}; /* Smaller */
+    }
+    @media (max-width: 480px) {
+      font-size: 0.75rem; /* Even smaller */
+    }
   }
 
   .main-citation {
-    font-size: ${({ theme }) => theme.fontSizes.sm};
+    /* Font size inherited from .main-citation-and-likes for responsiveness */
     color: ${({ theme }) => theme.colors.textSecondary};
   }
 
@@ -75,13 +168,23 @@ export const MainFeedStyled = styled.div<{
     display: flex;
     align-items: center;
     gap: ${({ theme }) => theme.spacing.xs};
-    font-size: ${({ theme }) => theme.fontSizes.sm};
+    /* Font size inherited from .main-citation-and-likes for responsiveness */
     color: ${({ theme }) => theme.colors.textSecondary};
+
+    /* Adjust gap for smaller screens if needed */
+    @media (max-width: 480px) {
+      gap: ${({ theme }) => theme.spacing.xxs}; /* Smaller gap */
+    }
   }
 
   .like-display-section .heart-icon {
-    font-size: 0.9rem;
+    font-size: 0.9rem; /* Default font size */
     line-height: 1;
+
+    /* Adjust icon size */
+    @media (max-width: 480px) {
+      font-size: 0.75rem;
+    }
   }
 
   .like-display-section .like-count {
@@ -92,5 +195,19 @@ export const MainFeedStyled = styled.div<{
 export default MainFeedStyled;
 
 export const Section = styled.div`
-  margin-bottom: 48px;
+  margin-bottom: 48px; /* Default desktop margin */
+
+  /* --- Responsive Adjustments for Section margin --- */
+  @media (max-width: 992px) {
+    margin-bottom: 40px;
+  }
+  @media (max-width: 768px) {
+    margin-bottom: 32px; /* Reduced margin for tablets */
+  }
+  @media (max-width: 576px) {
+    margin-bottom: 24px; /* Further reduced margin for mobiles */
+  }
+  @media (max-width: 400px) {
+    margin-bottom: 16px; /* Even smaller margin for small mobiles */
+  }
 `;

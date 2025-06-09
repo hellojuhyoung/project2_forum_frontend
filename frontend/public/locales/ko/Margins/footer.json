@@ -1,0 +1,22 @@
+{
+  "company_name": "JL 포럼",
+  "company_description": "생각을 연결하고 아이디어를 공유하세요. 토론과 커뮤니티를 위한 최고의 플랫폼.",
+
+  "section_company": "회사",
+  "link_about_us": "회사 소개",
+  "link_contact": "문의하기",
+  "link_careers": "채용",
+  "link_blog": "블로그",
+
+  "section_support": "지원",
+  "link_faq": "자주 묻는 질문",
+  "link_help_center": "고객센터",
+  "link_feedback": "피드백",
+
+  "section_legal": "법률",
+  "link_privacy_policy": "개인정보처리방침",
+  "link_terms_of_service": "서비스 약관",
+  "link_cookie_policy": "쿠키 정책",
+
+  "copyright_all_rights_reserved": "모든 권리 보유."
+}

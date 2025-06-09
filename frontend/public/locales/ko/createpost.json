@@ -1,0 +1,16 @@
+{
+  "validation_title_required": "제목은 필수입니다",
+  "validation_category_required": "카테고리를 선택해주세요",
+  "validation_content_required": "내용은 필수입니다",
+
+  "notification_post_created_title": "게시물 생성됨",
+  "notification_post_created_description": "새 게시물이 성공적으로 발행되었습니다!",
+  "notification_post_creation_failed_title": "게시물 생성 실패",
+  "notification_post_creation_failed_description": "게시물 발행 중 오류가 발생했습니다. 다시 시도해주세요.",
+
+  "label_title": "제목",
+  "placeholder_enter_post_title": "게시물 제목 입력",
+  "label_category": "카테고리",
+  "label_content": "내용",
+  "button_submit_post": "게시물 제출"
+}

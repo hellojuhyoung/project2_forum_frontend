@@ -23,8 +23,10 @@ import {
   cleanContent,
 } from "@/utils/ToastEditor/EditorContent";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 
 const EditPostPage: React.FC = () => {
+  const { t } = useTranslation("editPost"); // Initialize useTranslation
   const router = useRouter();
   const { postid } = router.query;
 
@@ -99,9 +101,9 @@ const EditPostPage: React.FC = () => {
   }, [router.isReady, postid, API_URL]);
 
   const validationSchema = Yup.object({
-    title: Yup.string().required("Title is required"),
-    category: Yup.string().required("Please select a category"),
-    content: Yup.string().required("Content is required"),
+    title: Yup.string().required(t("validation_title_required")),
+    category: Yup.string().required(t("validation_category_required")),
+    content: Yup.string().required(t("validation_content_required")),
   });
 
   const handleUpdate = async (values: PostValues) => {
@@ -130,15 +132,15 @@ const EditPostPage: React.FC = () => {
       console.log("post updated", response);
 
       notification.success({
-        message: "Success",
-        description: "Post successfully updated.",
+        message: t("notification_success_title"),
+        description: t("notification_post_updated_description"),
         placement: "topRight",
       });
       router.push(`/posts/detail?postid=${postid}`);
     } catch (error) {
       notification.error({
-        message: "Update Failed",
-        description: "Unable to update your post. Please try again.",
+        message: t("notification_update_failed_title"),
+        description: t("notification_update_failed_description"),
         placement: "topRight",
       });
       console.error("error updating post", error);
@@ -160,14 +162,14 @@ const EditPostPage: React.FC = () => {
                 <Form>
                   {/* title input */}
                   <div className="title-container">
-                    <label htmlFor="title">Title</label>
+                    <label htmlFor="title">{t("label_title")}</label>
                     <Input
                       id="title"
                       name="title"
                       value={values.title}
                       // onChange={handleChange}
                       onChange={(e) => setFieldValue("title", e.target.value)}
-                      placeholder="Enter post title"
+                      placeholder={t("placeholder_enter_post_title")}
                     />
                     {errors.title && touched.title && (
                       <div style={{ color: "red" }}>{errors.title}</div>
@@ -176,7 +178,7 @@ const EditPostPage: React.FC = () => {
 
                   {/* category radio */}
                   <div className="category-container">
-                    <label htmlFor="category">Category</label>
+                    <label htmlFor="category">{t("label_category")}</label>
                     <Radio.Group
                       name="category"
                       onChange={(e) =>
@@ -197,7 +199,7 @@ const EditPostPage: React.FC = () => {
 
                   {/* content editor */}
                   <div className="content-container">
-                    <label htmlFor="content">Content</label>
+                    <label htmlFor="content">{t("label_content")}</label>
                     <ToastEditor
                       key={initialValues.content}
                       ref={editorRef}
@@ -213,7 +215,7 @@ const EditPostPage: React.FC = () => {
 
                   {/* submit button */}
                   <div className="button-container">
-                    <Button htmlType="submit">Update Post</Button>
+                    <Button htmlType="submit">{t("button_update_post")}</Button>
                   </div>
                 </Form>
               </div>

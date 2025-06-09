@@ -1,0 +1,22 @@
+{
+  "company_name": "JL Forum",
+  "company_description": "Connecting minds, sharing ideas. Your go-to platform for discussions and community.",
+
+  "section_company": "Company",
+  "link_about_us": "About Us",
+  "link_contact": "Contact",
+  "link_careers": "Careers",
+  "link_blog": "Blog",
+
+  "section_support": "Support",
+  "link_faq": "FAQ",
+  "link_help_center": "Help Center",
+  "link_feedback": "Feedback",
+
+  "section_legal": "Legal",
+  "link_privacy_policy": "Privacy Policy",
+  "link_terms_of_service": "Terms of Service",
+  "link_cookie_policy": "Cookie Policy",
+
+  "copyright_all_rights_reserved": "All rights reserved."
+}

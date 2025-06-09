@@ -29,7 +29,6 @@ interface UserProfileFormData {
   phoneNumber: string | null;
   dateOfBirth: string | null;
   occupation: string | null;
-  preferredLanguage: string | null;
   profilePicture: string | null; // Path of existing picture
   profilePictureFile: File | null; // For new file upload
 }
@@ -140,7 +139,6 @@ const UpdateProfilePage = () => {
             phoneNumber: null,
             dateOfBirth: null,
             occupation: null,
-            preferredLanguage: null,
             profilePicture: null,
             profilePictureFile: null,
           };
@@ -177,7 +175,6 @@ const UpdateProfilePage = () => {
           phoneNumber: fetchedUser.phoneNumber || null,
           dateOfBirth: fetchedUser.dateOfBirth || null,
           occupation: fetchedUser.occupation || null,
-          preferredLanguage: fetchedUser.preferredLanguage || null,
           profilePicture: fetchedUser.profilePicture || null,
           profilePictureFile: null,
         };
@@ -406,6 +403,7 @@ const UpdateProfilePage = () => {
             token: currentToken || "",
           })
         );
+        window.location.reload();
 
         setUsernameAvailable(true);
         setUsernameValidationMessage(
@@ -675,13 +673,6 @@ const UpdateProfilePage = () => {
             </Form.Item>
 
             <Form.Item label={t("occupation_label")} name="occupation">
-              <Input />
-            </Form.Item>
-
-            <Form.Item
-              label={t("preferred_language_label")}
-              name="preferredLanguage"
-            >
               <Input />
             </Form.Item>
 

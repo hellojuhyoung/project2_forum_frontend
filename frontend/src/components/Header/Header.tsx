@@ -1,11 +1,25 @@
+import React, { useEffect, useState } from "react"; // Keep useState for mobile menu
 import clsx from "clsx";
-import { HeaderStyled, StyledAvatarImage, StyledUserIcon } from "./styled";
+import {
+  HeaderStyled,
+  StyledAvatarImage,
+  StyledUserIcon,
+  MobileMenuOverlay, // Import new styled component
+  HamburgerIcon, // Import new styled component for burger
+  CloseIcon, // Import new styled component for close 'X'
+} from "./styled";
 
-// antd dropdown menu for profile option
-import React, { useEffect, useState } from "react";
-import { DownOutlined, UserOutlined } from "@ant-design/icons";
+// Ant Design imports
+import {
+  DownOutlined,
+  UserOutlined,
+  MenuOutlined,
+  CloseOutlined,
+} from "@ant-design/icons"; // Add MenuOutlined, CloseOutlined
 import type { MenuProps } from "antd";
 import { Dropdown, notification, Space } from "antd";
+import { useTranslation } from "react-i18next";
+import i18n from "../../i18n";
 
 // import libraries related to cookies
 import { deleteCookie } from "cookies-next";
@@ -16,26 +30,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { RootState } from "@/redux/store";
 import { instance } from "@/utils/apis/axios";
-// import Image from "next/image";
 
 interface HeaderProps {
   isLoggedIn: boolean;
 }
 
-// from the 'header' component pass over the 'isLoggedIn' variable as a prop
-// declare the variable to be boolean and render different tags
 const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { t } = useTranslation("Margins.header"); // Initialize useTranslation
+
   const authentication = useSelector(
     (state: RootState) => state.authentication
   );
 
-  // import variables from redux store
   const id = authentication.id;
   const username = authentication.username;
 
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
   const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
@@ -44,7 +57,6 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
         try {
           const response: any = await instance.get(`/users/${id}`);
           setProfilePicture(response.user.profilePicture);
-          // console.log(response.user.profilePicture);
         } catch (error) {
           console.error("error fetching profile picture", error);
           setProfilePicture(null);
@@ -52,63 +64,71 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
       };
       fetchProfilePicture();
     }
-  }, [id]);
+  }, [id, isLoggedIn]);
 
-  // function directs user to home
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   async function directToHome() {
     router.push("/");
+    setIsMobileMenuOpen(false); // Close menu on navigation
   }
 
-  // function directs user to the login page
   async function directToLogin() {
     router.push("/auth/login");
+    setIsMobileMenuOpen(false); // Close menu on navigation
   }
 
-  // function directs user to the signup page
   async function directToSignup() {
     router.push("/auth/signup");
+    setIsMobileMenuOpen(false); // Close menu on navigation
   }
 
-  // function directs user to create new post
   async function directToCreatePost() {
     router.push("/posts/create");
+    setIsMobileMenuOpen(false); // Close menu on navigation
   }
 
-  // function directs user to user posts
   async function direcToUsersPosts() {
     router.push({
       pathname: "/posts/user",
       query: { userid: id },
     });
+    setIsMobileMenuOpen(false); // Close menu on navigation
   }
 
-  //function directs user to profile page
   async function directToProfile() {
     router.push({
       pathname: "/account/profile",
       query: { userid: id },
     });
+    setIsMobileMenuOpen(false); // Close menu on navigation
   }
-  // need to add user profile page
-  //
 
-  // function handles logout of the user
   const handleLogout = async () => {
     deleteCookie("token");
     dispatch(clearUser());
-    notification.error({
-      message: "you are logged out",
+    notification.success({
+      message: t("notification_logout_message"),
+      placement: "topRight",
     });
     router.push("/");
+    setIsMobileMenuOpen(false); // Close menu on logout
   };
 
-  // declare dropdown menu items
-  const items: MenuProps["items"] = [
+  // Language switcher handler
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+    setIsMobileMenuOpen(false); // Close menu on language change
+  };
+
+  const profileDropdownItems: MenuProps["items"] = [
     {
       key: "1",
       label: (
         <div onClick={directToProfile} style={{ cursor: "pointer" }}>
-          profile
+          {t("dropdown_profile")}
         </div>
       ),
     },
@@ -116,50 +136,72 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
       key: "2",
       label: (
         <div onClick={handleLogout} style={{ cursor: "pointer" }}>
-          logout
+          {t("dropdown_logout")}
         </div>
       ),
     },
   ];
 
-  return (
-    // ternary operator to decide what menu options to render
-    <HeaderStyled className={clsx("header-container")}>
-      {isLoggedIn ? (
-        <>
-          <header className="header">
-            <div onClick={directToHome} style={{ cursor: "pointer" }}>
-              {/* <Image
-                src="/forum_logo.png"
-                alt="Forum Logo"
-                width={60}
-                height={50}
-                fetchPriority="auto"
-              /> */}
-              <img
-                src="/forum_logo.png"
-                alt="Forum Logo"
-                style={{ width: "60px", height: "50px" }} // Set width and height using style
-              />
-            </div>
+  const renderLanguageSwitcher = () => (
+    <Space>
+      <span
+        onClick={() => changeLanguage("ko")}
+        style={{
+          cursor: "pointer",
+          fontWeight: i18n.language === "ko" ? "bold" : "small",
+          color: i18n.language === "ko" ? "#1890ff" : "inherit",
+        }}
+      >
+        {t("language_kor")}
+      </span>
 
-            <nav className="navigation-bar">
-              <ul>
+      <span
+        onClick={() => changeLanguage("en")}
+        style={{
+          cursor: "pointer",
+          fontWeight: i18n.language === "en" ? "bold" : "small",
+          color: i18n.language === "en" ? "#1890ff" : "inherit",
+        }}
+      >
+        {t("language_eng")}
+      </span>
+    </Space>
+  );
+
+  return (
+    <HeaderStyled className={clsx("header-container")}>
+      <header className="header">
+        {/* Logo Section */}
+        <div onClick={directToHome} style={{ cursor: "pointer" }}>
+          <img
+            src="/forum_logo.png"
+            alt={t("alt_forum_logo")}
+            style={{ width: "60px", height: "50px" }}
+          />
+        </div>
+
+        {/* Desktop Navigation (visible on large screens) */}
+        <nav className="navigation-bar desktop-nav">
+          {" "}
+          {/* Added desktop-nav class */}
+          <ul>
+            {isLoggedIn ? (
+              <>
                 <li onClick={directToCreatePost} style={{ cursor: "pointer" }}>
-                  create new post
+                  {t("nav_create_new_post")}
                 </li>
                 <li onClick={direcToUsersPosts} style={{ cursor: "pointer" }}>
-                  my posts
+                  {t("nav_my_posts")}
                 </li>
-                <li>welcome {username}</li>
+                <li>{t("nav_welcome_user", { username: username })}</li>
                 <li>
-                  <Dropdown menu={{ items }}>
+                  <Dropdown menu={{ items: profileDropdownItems }}>
                     <a onClick={(e) => e.preventDefault()}>
                       <Space>
                         {profilePicture ? (
                           <StyledAvatarImage
                             src={`${BACKEND_BASE_URL}${profilePicture}`}
-                            alt="User Profile"
+                            alt={t("alt_user_profile_image")}
                             onError={(
                               e: React.SyntheticEvent<HTMLImageElement, Event>
                             ) => {
@@ -169,7 +211,6 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                             }}
                           />
                         ) : (
-                          // Use the StyledUserIcon component
                           <StyledUserIcon />
                         )}
                         <DownOutlined />
@@ -177,45 +218,101 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                     </a>
                   </Dropdown>
                 </li>
-              </ul>
-            </nav>
-          </header>
-        </>
-      ) : (
-        <>
-          <header className="header">
-            <div onClick={directToHome} style={{ cursor: "pointer" }}>
-              {/* <Image
-                src="/forum_logo.png"
-                alt="Forum Logo"
-                width={60}
-                height={50}
-                fetchPriority="auto"
-              /> */}
-              <img
-                src="/forum_logo.png"
-                alt="Forum Logo"
-                style={{ width: "60px", height: "50px" }} // Set width and height using style
-              />
-            </div>
-
-            <nav className="navigation-bar">
-              <ul>
+                <li>{renderLanguageSwitcher()}</li>
+              </>
+            ) : (
+              <>
                 <li>
                   <div onClick={directToLogin} style={{ cursor: "pointer" }}>
-                    login
+                    {t("nav_login")}
                   </div>
                 </li>
                 <li>
                   <div onClick={directToSignup} style={{ cursor: "pointer" }}>
-                    signup
+                    {t("nav_signup")}
                   </div>
                 </li>
-              </ul>
-            </nav>
-          </header>
-        </>
-      )}
+                <li>{renderLanguageSwitcher()}</li>
+              </>
+            )}
+          </ul>
+        </nav>
+
+        {/* Mobile Menu Toggle (Hamburger/Close Icon) */}
+        <div className="mobile-menu-toggle">
+          {isMobileMenuOpen ? (
+            <CloseIcon
+              onClick={toggleMobileMenu}
+              aria-label={t("close_menu")}
+            />
+          ) : (
+            <HamburgerIcon
+              onClick={toggleMobileMenu}
+              aria-label={t("open_menu")}
+            />
+          )}
+        </div>
+      </header>
+
+      {/* Mobile Menu Overlay */}
+      <MobileMenuOverlay className={clsx({ "is-open": isMobileMenuOpen })}>
+        <nav className="mobile-nav-links">
+          <ul>
+            {/* Common Links */}
+            <li>
+              <div onClick={directToHome} style={{ cursor: "pointer" }}>
+                {t("home_link_mobile")}
+              </div>
+            </li>
+
+            {isLoggedIn ? (
+              <>
+                <li>
+                  <div
+                    onClick={directToCreatePost}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {t("nav_create_new_post_mobile")}
+                  </div>
+                </li>
+                <li>
+                  <div
+                    onClick={direcToUsersPosts}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {t("nav_my_posts_mobile")}
+                  </div>
+                </li>
+                <li>
+                  <div onClick={directToProfile} style={{ cursor: "pointer" }}>
+                    {t("dropdown_profile_mobile")}
+                  </div>
+                </li>
+                <li>
+                  <div onClick={handleLogout} style={{ cursor: "pointer" }}>
+                    {t("dropdown_logout_mobile")}
+                  </div>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <div onClick={directToLogin} style={{ cursor: "pointer" }}>
+                    {t("nav_login_mobile")}
+                  </div>
+                </li>
+                <li>
+                  <div onClick={directToSignup} style={{ cursor: "pointer" }}>
+                    {t("nav_signup_mobile")}
+                  </div>
+                </li>
+              </>
+            )}
+            {/* Language Switcher for Mobile */}
+            <li>{renderLanguageSwitcher()}</li>
+          </ul>
+        </nav>
+      </MobileMenuOverlay>
     </HeaderStyled>
   );
 };

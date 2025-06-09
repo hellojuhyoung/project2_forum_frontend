@@ -2,6 +2,7 @@ import { DefaultTheme } from "styled-components";
 
 export const theme: DefaultTheme = {
   spacing: {
+    xxs: "2px",
     xs: "4px",
     sm: "8px",
     md: "16px",
@@ -9,6 +10,8 @@ export const theme: DefaultTheme = {
     xl: "40px",
   },
   fontSizes: {
+    base: "1rem",
+    xs: "0.5rem",
     sm: "0.875rem",
     md: "1rem",
     lg: "1.25rem",
@@ -53,4 +56,6 @@ export const theme: DefaultTheme = {
     md: "8px",
     lg: "12px",
   },
+
+  headerHeight: "80px",
 };

@@ -5,9 +5,18 @@ export const SignupStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; // Ensure it takes full viewport height for centering
+  min-height: 100vh;
   background-color: ${({ theme }) => theme.colors.background};
   padding: 20px;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
+
+  @media (max-width: 576px) {
+    padding: 10px;
+  }
 
   .signup-container {
     background-color: ${({ theme }) => theme.colors.backgroundLight};
@@ -15,64 +24,74 @@ export const SignupStyled = styled.div`
     border-radius: ${({ theme }) => theme.borderRadius.lg};
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 500px; // Max width for the form container
-    box-sizing: border-box; // Include padding in width calculation
+    max-width: 500px;
+    box-sizing: border-box;
+
+    @media (max-width: 768px) {
+      padding: 25px;
+      max-width: 450px;
+    }
+
+    @media (max-width: 576px) {
+      padding: 20px;
+      max-width: 95%;
+    }
   }
 
   .input-container {
     width: 100%;
-    max-width: 400px; /* Adjust max-width of form fields if needed */
+    max-width: 400px;
     margin: 0 auto;
+
+    @media (max-width: 576px) {
+      max-width: 100%;
+    }
   }
 
   form {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Spacing between form fields */
+    gap: 15px;
+
+    @media (max-width: 576px) {
+      gap: 12px;
+    }
   }
 
   .form-field-container {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Spacing between label, input, and error */
+    gap: 8px;
 
     .ant-input,
     .ant-input-password,
     .ant-picker,
     .ant-select {
-      height: 40px; /* Standard height for Ant Design inputs */
+      height: 40px;
       font-size: 16px;
     }
     .ant-input-textarea {
-      height: auto; // Allow textarea to adjust height
-      min-height: 80px; // Minimum height for textarea
+      height: auto;
+      min-height: 80px;
     }
   }
 
   .ant-space-compact {
-    /* Target the Space.Compact component */
-    display: flex; // Ensure input and button are flex items
-    width: 100%; // Make sure the compact group takes full width
+    display: flex;
+    width: 100%;
 
     .ant-input {
-      flex-grow: 1; // Allow input to take remaining space
-      /* Ant Design Space.Compact usually handles border radius for compact items */
-      /* You might not need explicit border-radius: 0; here if Space.Compact does it */
+      flex-grow: 1;
     }
     .ant-btn {
-      width: 100px; // Fixed width for the validate button as set in TSX
-      height: 40px; // Match input height
-      font-size: 16px; // Match input font size
-      /* Ant Design Space.Compact usually handles border radius for compact items */
-      /* You might not need explicit border-radius: 0; here if Space.Compact does it */
-      // Adjust colors for a 'default' Ant Design button or secondary action
-      background-color: ${({ theme }) =>
-        theme.colors.buttonDefault}; // Assuming a default button color
-      color: ${({ theme }) =>
-        theme.colors.text}; // Assuming text color for default button
-      border-color: ${({ theme }) =>
-        theme.colors.borderColor}; // Assuming a border color
+      width: 100px;
+      height: 40px;
+      font-size: 16px;
+
+      background-color: ${({ theme }) => theme.colors.buttonDefault};
+      color: ${({ theme }) => theme.colors.text};
+      border-color: ${({ theme }) => theme.colors.borderColor};
 
       &:hover {
         background-color: ${({ theme }) => theme.colors.buttonDefaultHover};
@@ -81,7 +100,7 @@ export const SignupStyled = styled.div`
       }
       &:focus {
         outline: none;
-        box-shadow: 0 0 0 2px rgba(${({ theme }) => theme.colors.primary}, 0.2); // Focus ring
+        box-shadow: 0 0 0 2px rgba(${({ theme }) => theme.colors.primary}, 0.2);
       }
       &:disabled {
         background-color: ${({ theme }) => theme.colors.disabledBackground};
@@ -89,6 +108,15 @@ export const SignupStyled = styled.div`
         border-color: ${({ theme }) => theme.colors.disabledBorder};
         cursor: not-allowed;
       }
+
+      @media (max-width: 480px) {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      flex-direction: column;
+      gap: 8px;
     }
   }
 
@@ -96,6 +124,10 @@ export const SignupStyled = styled.div`
     font-size: 14px;
     color: ${({ theme }) => theme.colors.textSecondary};
     margin-bottom: 4px;
+
+    @media (max-width: 576px) {
+      font-size: 13px;
+    }
   }
 
   /* Styling for Radio.Group */
@@ -106,6 +138,12 @@ export const SignupStyled = styled.div`
     font-size: 16px;
     .ant-radio-wrapper {
       color: ${({ theme }) => theme.colors.text};
+    }
+
+    /* Responsive gap and font size for radio buttons */
+    @media (max-width: 576px) {
+      gap: 10px; /* Smaller gap between radios on mobile */
+      font-size: 15px;
     }
   }
 
@@ -126,6 +164,12 @@ export const SignupStyled = styled.div`
         border-radius: 50%; // Make it circular
         object-fit: cover;
         border: 2px solid ${({ theme }) => theme.colors.border};
+
+        /* Responsive image preview size */
+        @media (max-width: 576px) {
+          max-width: 100px; /* Smaller preview image on mobile */
+          max-height: 100px;
+        }
       }
     }
   }
@@ -134,11 +178,18 @@ export const SignupStyled = styled.div`
     color: ${({ theme }) => theme.colors.danger};
     font-size: 12px;
     margin-top: 4px;
+    /* This min-height was original, so keeping it */
+    min-height: 15px;
+
+    /* Responsive font size for error messages */
+    @media (max-width: 576px) {
+      font-size: 11px; /* Slightly smaller font on mobile */
+    }
   }
 
   .username-validation-message {
     font-size: 12px;
-    margin-top: 5px;
+    margin-top: 5px; /* This margin was original, so keeping it */
     font-weight: 500;
     min-height: 15px;
 
@@ -148,6 +199,11 @@ export const SignupStyled = styled.div`
 
     &.taken {
       color: ${({ theme }) => theme.colors.danger};
+    }
+
+    /* Responsive font size for validation messages */
+    @media (max-width: 576px) {
+      font-size: 11px; /* Slightly smaller font on mobile */
     }
   }
 
@@ -166,7 +222,7 @@ export const SignupStyled = styled.div`
         color: white; // Keep text white on hover
       }
       &:disabled {
-        background-color: ${({ theme }) => theme.colors.backgroundLight};
+        background-color: ${({ theme }) => theme.colors.disabledBackground};
         color: ${({ theme }) => theme.colors.textSecondary};
         cursor: not-allowed;
       }

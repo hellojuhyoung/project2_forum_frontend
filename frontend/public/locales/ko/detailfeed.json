@@ -1,0 +1,20 @@
+{
+  "button_unlike_title": "좋아요 취소",
+  "button_like_title": "좋아요",
+  "button_login_to_like_title": "좋아요를 누르려면 로그인하세요",
+  "button_edit": "수정",
+  "button_delete": "삭제",
+
+  "confirm_delete_post": "이 게시물을 정말로 삭제하시겠습니까?",
+
+  "notification_success_title": "성공",
+  "notification_post_deleted_description": "게시물이 성공적으로 삭제되었습니다.",
+  "notification_deletion_failed_title": "삭제 실패",
+  "notification_deletion_failed_description": "게시물 삭제 중 오류가 발생했습니다. 다시 시도해주세요.",
+  "like_login_required_title": "로그인 필요",
+  "like_login_required_description": "게시물에 좋아요를 누르려면 로그인해야 합니다.",
+  "like_toggle_failed_title": "좋아요 동작 실패",
+  "like_toggle_failed_description": "좋아요 상태를 업데이트하지 못했습니다. 다시 시도해주세요.",
+  "image_alt_main_image": "{{title}}의 메인 이미지",
+  "image_alt_gallery_image": "{{title}}의 갤러리 이미지 {{index}}"
+}
