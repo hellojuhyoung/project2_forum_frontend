@@ -28,7 +28,6 @@ interface UserProfileFormData {
   gender: string | null;
   phoneNumber: string | null;
   dateOfBirth: string | null;
-  occupation: string | null;
   profilePicture: string | null; // Path of existing picture
   profilePictureFile: File | null; // For new file upload
 }
@@ -138,7 +137,6 @@ const UpdateProfilePage = () => {
             gender: null,
             phoneNumber: null,
             dateOfBirth: null,
-            occupation: null,
             profilePicture: null,
             profilePictureFile: null,
           };
@@ -174,7 +172,6 @@ const UpdateProfilePage = () => {
           gender: fetchedUser.gender || null,
           phoneNumber: fetchedUser.phoneNumber || null,
           dateOfBirth: fetchedUser.dateOfBirth || null,
-          occupation: fetchedUser.occupation || null,
           profilePicture: fetchedUser.profilePicture || null,
           profilePictureFile: null,
         };
@@ -670,10 +667,6 @@ const UpdateProfilePage = () => {
 
             <Form.Item label={t("date_of_birth_label")} name="dateOfBirth">
               <DatePicker style={{ width: "100%" }} format="YYYY-MM-DD" />
-            </Form.Item>
-
-            <Form.Item label={t("occupation_label")} name="occupation">
-              <Input />
             </Form.Item>
 
             <Form.Item>
