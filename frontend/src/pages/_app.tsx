@@ -12,6 +12,7 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "@/styles/theme";
 import "../i18n";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 // no need to add the i18n tag in the rendering section
 // the file itself i18n.ts hooks i18next into React's
@@ -64,6 +65,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <AppInitializer />
         <ThemeProvider theme={theme}>
           <Margins>
+            <Head>
+              <title>JL Forum</title>
+            </Head>
             <Component {...pageProps} />
           </Margins>
         </ThemeProvider>
