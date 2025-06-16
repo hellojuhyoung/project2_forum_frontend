@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-forumfrontend-dev-41d2b-authRole",
+      "UnauthRoleArn": "arn:aws:iam::127145911009:role/amplify-forumfrontend-dev-41d2b-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::127145911009:role/amplify-forumfrontend-dev-41d2b-authRole",
+      "Region": "ap-southeast-2",
+      "DeploymentBucketName": "amplify-forumfrontend-dev-41d2b-deployment",
+      "UnauthRoleName": "amplify-forumfrontend-dev-41d2b-unauthRole",
+      "StackName": "amplify-forumfrontend-dev-41d2b",
+      "StackId": "arn:aws:cloudformation:ap-southeast-2:127145911009:stack/amplify-forumfrontend-dev-41d2b/b374eaf0-4a92-11f0-b7c3-0a5a56d5b7fd",
+      "AmplifyAppId": "d3rprzslcyond"
+    }
+  }
+}

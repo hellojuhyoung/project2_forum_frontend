@@ -10,6 +10,7 @@
   "gender_female_option": "Female",
   "phone_number_placeholder": "Phone Number (optional, e.g., +1234567890)",
   "date_of_birth_label": "Date of Birth (optional)",
+  "occupation_placeholder": "Occupation/Industry (optional, max 100 chars)",
   "profile_picture_label": "Profile Picture (optional)",
   "profile_picture_preview_alt": "Profile Preview",
   "signup_button": "Sign Up",
@@ -27,6 +28,7 @@
   "phone_number_invalid_format_validation": "Invalid phone number format",
   "phone_number_too_short_validation": "Phone number too short",
   "phone_number_too_long_validation": "Phone number too long",
+  "occupation_max_length_validation": "Occupation must be at most 100 characters",
 
   "signup_failed_message": "Signup Failed",
   "signup_success_message": "Signup Successful",

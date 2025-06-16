@@ -17,6 +17,7 @@ interface UserProfile {
   gender?: string;
   phoneNumber?: string;
   dateOfBirth?: string;
+  occupation?: string;
   profilePicture?: string;
 }
 
@@ -105,11 +106,7 @@ const ProfilePage = () => {
         />
       </div>
       <div className="profile-details">
-        {" "}
         {/* Apply the styled class */}
-        <div className="detail-item">
-          <strong>{t("label_id")}:</strong> <span>{user.id}</span>{" "}
-        </div>
         <div className="detail-item">
           <strong>{t("label_full_name")}:</strong>
           <span>{user.fullName || t("not_provided_text")}</span>
@@ -128,6 +125,10 @@ const ProfilePage = () => {
         <div className="detail-item">
           <strong>{t("label_date_of_birth")}:</strong>
           <span>{user.dateOfBirth || t("not_provided_text")}</span>
+        </div>
+        <div className="detail-item">
+          <strong>{t("label_occupation")}:</strong>
+          <span>{user.occupation || t("not_provided_text")}</span>
         </div>
       </div>
       {/* Example for an "Edit Profile" button */}

@@ -50,6 +50,7 @@ interface SignupValues {
   gender: string;
   phoneNumber: string;
   dateOfBirth: string;
+  occupation: string;
 }
 
 const initialValues: SignupValues = {
@@ -61,6 +62,7 @@ const initialValues: SignupValues = {
   gender: "",
   phoneNumber: "",
   dateOfBirth: "",
+  occupation: "",
 };
 
 const SignupPage: React.FC = () => {
@@ -97,6 +99,9 @@ const SignupPage: React.FC = () => {
       .max(20, t("phone_number_too_long_validation"))
       .notRequired(),
     dateOfBirth: Yup.string().notRequired(),
+    occupation: Yup.string()
+      .max(100, t("occupation_max_length_validation"))
+      .notRequired(),
   });
   const [profilePictureFile, setProfilePictureFile] = useState<File | null>(
     null
@@ -225,7 +230,7 @@ const SignupPage: React.FC = () => {
         formData.append("phoneNumber", values.phoneNumber);
       if (values.dateOfBirth)
         formData.append("dateOfBirth", values.dateOfBirth);
-
+      if (values.occupation) formData.append("occupation", values.occupation);
       if (profilePictureFile) {
         console.log("handleSubmit: Appended profilePicture to FormData.");
 
@@ -524,6 +529,30 @@ const SignupPage: React.FC = () => {
                   {touched.dateOfBirth && errors.dateOfBirth && (
                     <div className="error-message">{errors.dateOfBirth}</div>
                   )}
+                </div>
+
+                {/* Occupation/Industry */}
+                <div className="form-field-container">
+                  <Field
+                    type="text"
+                    id="occupation"
+                    name="occupation"
+                    placeholder={t("occupation_placeholder")}
+                    as={Input}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      handleChange(e);
+                      validateField("occupation");
+                      setFieldTouched("occupation", true, false);
+                    }}
+                    onBlur={handleBlur}
+                  />
+                  <ErrorMessage
+                    name="occupation"
+                    component="div"
+                    render={(error) => (
+                      <div className="error-message">{error}</div>
+                    )}
+                  />
                 </div>
 
                 {/* Profile Picture File Upload */}
