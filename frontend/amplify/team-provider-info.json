@@ -1,15 +1,23 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-forumfrontend-dev-41d2b-authRole",
-      "UnauthRoleArn": "arn:aws:iam::127145911009:role/amplify-forumfrontend-dev-41d2b-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::127145911009:role/amplify-forumfrontend-dev-41d2b-authRole",
+      "AuthRoleName": "amplify-forumfrontend-dev-27f1f-authRole",
+      "UnauthRoleArn": "arn:aws:iam::127145911009:role/amplify-forumfrontend-dev-27f1f-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::127145911009:role/amplify-forumfrontend-dev-27f1f-authRole",
       "Region": "ap-southeast-2",
-      "DeploymentBucketName": "amplify-forumfrontend-dev-41d2b-deployment",
-      "UnauthRoleName": "amplify-forumfrontend-dev-41d2b-unauthRole",
-      "StackName": "amplify-forumfrontend-dev-41d2b",
-      "StackId": "arn:aws:cloudformation:ap-southeast-2:127145911009:stack/amplify-forumfrontend-dev-41d2b/b374eaf0-4a92-11f0-b7c3-0a5a56d5b7fd",
-      "AmplifyAppId": "d3rprzslcyond"
+      "DeploymentBucketName": "amplify-forumfrontend-dev-27f1f-deployment",
+      "UnauthRoleName": "amplify-forumfrontend-dev-27f1f-unauthRole",
+      "StackName": "amplify-forumfrontend-dev-27f1f",
+      "StackId": "arn:aws:cloudformation:ap-southeast-2:127145911009:stack/amplify-forumfrontend-dev-27f1f/3a447d00-4b71-11f0-b318-06cc1b08c355",
+      "AmplifyAppId": "dvzml9ubkbnki"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "dvzml9ubkbnki",
+          "type": "cicd"
+        }
+      }
     }
   }
 }
