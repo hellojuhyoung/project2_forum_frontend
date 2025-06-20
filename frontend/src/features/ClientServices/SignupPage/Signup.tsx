@@ -169,10 +169,10 @@ const SignupPage: React.FC = () => {
     setFieldTouched("username", true); // Mark username field as touched for Yup
 
     try {
-      // Calling the backend endpoint you've set up
       const response: any = await instance.get(
         `/users/validate-username?username=${username}`
       );
+
       // console.log("this is validate username", response);
       const isAvailable = response.isAvailable;
       setUsernameAvailable(isAvailable);
