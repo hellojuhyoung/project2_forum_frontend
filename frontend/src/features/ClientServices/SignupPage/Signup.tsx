@@ -175,7 +175,7 @@ const SignupPage: React.FC = () => {
       // );
 
       const TEMP_HTTP_BASE_URL =
-        "http://forum-backend-env.eba-rkkugpwy.ap-southeast-2.elasticbeanstalk.com";
+        "https://forum-backend-env.eba-rkkugpwy.ap-southeast-2.elasticbeanstalk.com";
 
       const response: any = await axios.get(
         `${TEMP_HTTP_BASE_URL}/users/validate-username`, // Hardcode the http:// URL here
