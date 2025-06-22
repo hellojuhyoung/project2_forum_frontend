@@ -21,6 +21,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import moment from "moment"; // Import moment for date handling if needed for display/parsing
 import { useTranslation } from "react-i18next";
+import axios from "axios";
 
 const { Option } = Select; // Destructure Option for Select component
 
@@ -169,8 +170,18 @@ const SignupPage: React.FC = () => {
     setFieldTouched("username", true); // Mark username field as touched for Yup
 
     try {
-      const response: any = await instance.get(
-        `/users/validate-username?username=${username}`
+      // const response: any = await instance.get(
+      //   `/users/validate-username?username=${username}`
+      // );
+
+      const TEMP_HTTP_BASE_URL =
+        "http://forum-backend-env.eba-rkkugpwy.ap-southeast-2.elasticbeanstalk.com";
+
+      const response: any = await axios.get(
+        `${TEMP_HTTP_BASE_URL}/users/validate-username`, // Hardcode the http:// URL here
+        {
+          params: { username: username },
+        }
       );
 
       // console.log("this is validate username", response);

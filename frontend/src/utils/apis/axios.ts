@@ -7,17 +7,8 @@ import axios, {
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
 // creating axios request instance
-
-const API_BASE_URL =
-  "http://forum-backend-env.eba-rkkugpwy.ap-southeast-2.elasticbeanstalk.com/";
-
-// export const instance = axios.create({
-//   baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
-//   withCredentials: true,
-// });
-
 export const instance = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
   withCredentials: true,
 });
 
