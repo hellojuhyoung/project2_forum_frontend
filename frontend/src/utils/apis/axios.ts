@@ -9,7 +9,7 @@ import { deleteCookie, getCookie, setCookie } from "cookies-next";
 // creating axios request instance
 
 const API_BASE_URL =
-  "http://forum-backend-env.eba-rkkugpwy.ap-southeast-2.elasticbeanstalk.com";
+  "http://forum-backend-env.eba-rkkugpwy.ap-southeast-2.elasticbeanstalk.com/";
 
 // export const instance = axios.create({
 //   baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
