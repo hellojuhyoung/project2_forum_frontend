@@ -170,18 +170,8 @@ const SignupPage: React.FC = () => {
     setFieldTouched("username", true); // Mark username field as touched for Yup
 
     try {
-      // const response: any = await instance.get(
-      //   `/users/validate-username?username=${username}`
-      // );
-
-      const TEMP_HTTP_BASE_URL =
-        "https://forum-backend-env.eba-rkkugpwy.ap-southeast-2.elasticbeanstalk.com";
-
-      const response: any = await axios.get(
-        `${TEMP_HTTP_BASE_URL}/users/validate-username`, // Hardcode the http:// URL here
-        {
-          params: { username: username },
-        }
+      const response: any = await instance.get(
+        `/users/validate-username?username=${username}`
       );
 
       // console.log("this is validate username", response);
