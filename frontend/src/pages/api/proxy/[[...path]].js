@@ -1,6 +1,9 @@
-// pages/api/proxy/[[...path]].js
+// frontend/src/pages/api/proxy/[[...path]].js
 
-import { createProxyMiddleware } from "http-proxy-middleware";
+import httpProxy from "http-proxy";
+import https from "https";
+
+const proxy = httpProxy.createProxyServer({});
 
 export const config = {
   api: {
@@ -9,19 +12,25 @@ export const config = {
   },
 };
 
-const proxy = createProxyMiddleware({
-  target: process.env.NEXT_PUBLIC_SERVER_URL,
-  changeOrigin: true,
-  pathRewrite: {
-    "^/api/proxy": "", // remove /api/proxy from the path
-  },
-  secure: false, // allow self-signed cert
-});
-
 export default function handler(req, res) {
-  return proxy(req, res, (result) => {
-    if (result instanceof Error) {
-      throw result;
-    }
+  const target = process.env.NEXT_PUBLIC_SERVER_URL; // like https://your-backend
+
+  if (!target) {
+    res.status(500).json({ error: "Backend URL not defined" });
+    return;
+  }
+
+  req.url = req.url.replace(/^\/api\/proxy/, ""); // trim /api/proxy
+
+  proxy.web(req, res, {
+    target,
+    changeOrigin: true,
+    secure: false,
+    agent: new https.Agent({ rejectUnauthorized: false }), // ignore self-signed cert error
+  });
+
+  proxy.on("error", (err) => {
+    console.error("Proxy error:", err);
+    res.status(500).json({ error: "Proxy error", details: err.message });
   });
 }
