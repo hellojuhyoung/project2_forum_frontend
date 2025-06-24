@@ -7,8 +7,14 @@ import axios, {
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
 // creating axios request instance
+// export const instance = axios.create({
+//   baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+//   withCredentials: true,
+// });
+
+// with proxy for deployment
 export const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+  baseURL: "/api/proxy",
   withCredentials: true,
 });
 
