@@ -107,14 +107,26 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
   }
 
   const handleLogout = async () => {
-    deleteCookie("token");
-    dispatch(clearUser());
-    notification.success({
-      message: t("notification_logout_message"),
-      placement: "topRight",
-    });
-    router.push("/");
-    setIsMobileMenuOpen(false); // Close menu on logout
+    // deleteCookie("token");
+    // dispatch(clearUser());
+    // notification.success({
+    //   message: t("notification_logout_message"),
+    //   placement: "topRight",
+    // });
+    // router.push("/");
+    // setIsMobileMenuOpen(false); // Close menu on logout
+    try {
+      await instance.post("/auth/logout"); // server will clear the cookie
+      dispatch(clearUser());
+      notification.success({
+        message: t("notification_logout_message"),
+        placement: "topRight",
+      });
+      router.push("/");
+      setIsMobileMenuOpen(false);
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   // Language switcher handler
