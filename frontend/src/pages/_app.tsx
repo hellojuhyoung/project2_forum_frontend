@@ -28,7 +28,11 @@ function AppInitializer() {
   // const username = authentication.username;
 
   useEffect(() => {
+    console.log("AppInitializer mounted");
+
     const token = getCookie("token") as string | undefined;
+
+    console.log("Token from cookie on refresh:", token);
 
     if (token) {
       (async () => {
@@ -39,7 +43,7 @@ function AppInitializer() {
             },
           });
 
-          // console.log("Profile response:", response);
+          console.log("Profile response:", response);
 
           dispatch(
             setUser({
