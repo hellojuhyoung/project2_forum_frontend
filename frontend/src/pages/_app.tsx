@@ -27,61 +27,61 @@ function AppInitializer() {
   // const id = authentication.id;
   // const username = authentication.username;
 
-  // useEffect(() => {
-  //   console.log("AppInitializer mounted");
-
-  //   // const token = getCookie("token") as string | undefined;
-
-  //   console.log("Token from cookie on refresh:", token);
-
-  //   if (token) {
-  //     (async () => {
-  //       try {
-  //         const response: any = await instance.get("/auth/profile", {
-  //           // headers: {
-  //           //   Authorization: `Bearer ${token}`,
-  //           // },
-  //         });
-
-  //         console.log("Profile response:", response);
-
-  //         dispatch(
-  //           setUser({
-  //             id: response.id,
-  //             username: response.username,
-  //             token: token,
-  //           })
-  //         );
-  //       } catch (error) {
-  //         console.error("error in _app file app initializer", error);
-  //       }
-  //     })();
-  //   }
-  // }, [dispatch, router]);
-
   useEffect(() => {
-    (async () => {
-      try {
-        const response: any = await instance.get("/auth/profile", {
-          // headers: {
-          //   Authorization: `Bearer ${token}`,
-          // },
-        });
+    console.log("AppInitializer mounted");
 
-        console.log("Profile response:", response);
+    const token = getCookie("token") as string | undefined;
 
-        dispatch(
-          setUser({
-            id: response.id,
-            username: response.username,
-            token: "cookie",
-          })
-        );
-      } catch (error) {
-        console.error("error in _app file app initializer", error);
-      }
-    })();
+    console.log("Token from cookie on refresh:", token);
+
+    if (token) {
+      (async () => {
+        try {
+          const response: any = await instance.get("/auth/profile", {
+            // headers: {
+            //   Authorization: `Bearer ${token}`,
+            // },
+          });
+
+          console.log("Profile response:", response);
+
+          dispatch(
+            setUser({
+              id: response.id,
+              username: response.username,
+              token: token,
+            })
+          );
+        } catch (error) {
+          console.error("error in _app file app initializer", error);
+        }
+      })();
+    }
   }, [dispatch, router]);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const response: any = await instance.get("/auth/profile", {
+  //         // headers: {
+  //         //   Authorization: `Bearer ${token}`,
+  //         // },
+  //       });
+
+  //       console.log("Profile response:", response);
+
+  //       dispatch(
+  //         setUser({
+  //           id: response.id,
+  //           username: response.username,
+  //           token: "cookie",
+  //         })
+  //       );
+  //     } catch (error) {
+  //       console.error("error in _app file app initializer", error);
+  //     }
+  //   })();
+  // }, [dispatch, router]);
 
   return null;
 }
