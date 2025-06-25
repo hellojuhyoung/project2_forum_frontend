@@ -45,6 +45,8 @@ const LoginPage: React.FC = () => {
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
+      console.log("Calling /auth/profile");
+
       const response: any = await instance.post(
         "/auth/login",
         {
@@ -56,6 +58,8 @@ const LoginPage: React.FC = () => {
 
       const cookieToken = getCookie("token");
       setToken(cookieToken);
+
+      console.log("DISPATCHING", response);
 
       dispatch(
         setUser({
