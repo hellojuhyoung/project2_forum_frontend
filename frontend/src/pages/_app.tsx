@@ -38,9 +38,9 @@ function AppInitializer() {
       (async () => {
         try {
           const response: any = await instance.get("/auth/profile", {
-            // headers: {
-            //   Authorization: `Bearer ${token}`,
-            // },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           });
 
           console.log("Profile response:", response);
