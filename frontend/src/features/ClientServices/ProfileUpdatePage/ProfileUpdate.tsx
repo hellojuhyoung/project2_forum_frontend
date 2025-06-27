@@ -71,6 +71,8 @@ const UpdateProfilePage = () => {
     (state: RootState) => state.authentication.token
   );
 
+  console.log("current token from redux store", currentToken);
+
   // Form instance for Ant Design Form
   const [form] = Form.useForm();
 
