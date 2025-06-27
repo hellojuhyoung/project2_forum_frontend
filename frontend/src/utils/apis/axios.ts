@@ -1,4 +1,4 @@
-import { RootState } from "@/redux/store";
+import { RootState, store } from "@/redux/store";
 import axios, {
   AxiosError,
   AxiosResponse,
@@ -42,7 +42,7 @@ instance.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
     // const token = getCookie("token"); // 토큰 미사용시 무시
 
-    const token = useSelector((state: RootState) => state.authentication.token);
+    const token = store.getState().authentication.token;
 
     if (token) {
       // 토큰 사용시 헤더에 토큰 추가
