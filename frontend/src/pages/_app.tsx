@@ -76,7 +76,7 @@ function AppInitializer() {
           { withCredentials: true }
         );
 
-        const token = loginResponse.data.token;
+        const token = loginResponse.token;
 
         // 2. Use token to fetch profile
         const profileResponse: any = await instance.get("/auth/profile", {
@@ -85,13 +85,13 @@ function AppInitializer() {
           },
         });
 
-        console.log("Profile response:", profileResponse.data);
+        console.log("Profile response:", profileResponse);
 
         // 3. Dispatch to Redux
         dispatch(
           setUser({
-            id: profileResponse.data.id,
-            username: profileResponse.data.username,
+            id: profileResponse.id,
+            username: profileResponse.username,
             token: token,
           })
         );
