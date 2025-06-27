@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import { Provider, useDispatch } from "react-redux";
 import { store, persistor } from "@/redux/store";
 import { getCookie } from "cookies-next";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setUser } from "@/redux/redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { instance } from "@/utils/apis/axios";
@@ -18,72 +18,90 @@ import Head from "next/head";
 // the file itself i18n.ts hooks i18next into React's
 // context system when the i18n.init() method is called
 
+// function AppInitializer() {
+//   const dispatch = useDispatch();
+//   const router = useRouter();
+//   // const authentication = useSelector(
+//   //   (state: RootState) => state.authentication
+//   // );
+//   // const id = authentication.id;
+//   // const username = authentication.username;
+
+//   useEffect(() => {
+//     console.log("AppInitializer mounted");
+
+//     const token = getCookie("token") as string | undefined;
+
+//     console.log("Token from cookie on refresh:", token);
+
+//     if (token) {
+//       (async () => {
+//         try {
+//           const response: any = await instance.get("/auth/profile", {
+//             headers: {
+//               Authorization: `Bearer ${token}`,
+//             },
+//           });
+
+//           console.log("Profile response:", response);
+
+//           dispatch(
+//             setUser({
+//               id: response.id,
+//               username: response.username,
+//               token: token,
+//             })
+//           );
+//         } catch (error) {
+//           console.error("error in _app file app initializer", error);
+//         }
+//       })();
+//     }
+//   }, [dispatch, router]);
+
+//   return null;
+// }
+
 function AppInitializer() {
   const dispatch = useDispatch();
-  const router = useRouter();
-  // const authentication = useSelector(
-  //   (state: RootState) => state.authentication
-  // );
-  // const id = authentication.id;
-  // const username = authentication.username;
+  const [token, setToken] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    console.log("AppInitializer mounted");
-
-    const token = getCookie("token") as string | undefined;
-
-    console.log("Token from cookie on refresh:", token);
-
-    if (token) {
-      (async () => {
-        try {
-          const response: any = await instance.get("/auth/profile", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          console.log("Profile response:", response);
-
-          dispatch(
-            setUser({
-              id: response.id,
-              username: response.username,
-              token: token,
-            })
-          );
-        } catch (error) {
-          console.error("error in _app file app initializer", error);
-        }
-      })();
+    if (!token) {
+      const currentToken = getCookie("token") as string | undefined;
+      if (currentToken) {
+        setToken(currentToken);
+      }
     }
-  }, [dispatch, router]);
+  }, [token]);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const response: any = await instance.get("/auth/profile", {
-  //         // headers: {
-  //         //   Authorization: `Bearer ${token}`,
-  //         // },
-  //       });
+  useEffect(() => {
+    if (!token) return;
 
-  //       console.log("Profile response:", response);
+    (async () => {
+      try {
+        const response: any = await instance.get("/auth/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-  //       dispatch(
-  //         setUser({
-  //           id: response.id,
-  //           username: response.username,
-  //           token: "cookie",
-  //         })
-  //       );
-  //     } catch (error) {
-  //       console.error("error in _app file app initializer", error);
-  //     }
-  //   })();
-  // }, [dispatch, router]);
+        console.log("Profile response:", response);
 
-  return null;
+        dispatch(
+          setUser({
+            id: response.id,
+            username: response.username,
+            token: token,
+          })
+        );
+      } catch (error) {
+        console.error("error in _app file app initializer", error);
+      }
+    })();
+  }, [token]);
+
+  return null; // or your component JSX
 }
 
 export default function App({ Component, pageProps }: AppProps) {
