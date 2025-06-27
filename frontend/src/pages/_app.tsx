@@ -99,7 +99,7 @@ function AppInitializer() {
         console.error("Error in AppInitializer:", error);
       }
     })();
-  }, []);
+  }, [dispatch, router]);
 
   return null;
 }
