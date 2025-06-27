@@ -118,6 +118,9 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
     try {
       await instance.post("/auth/logout"); // server will clear the cookie
       dispatch(clearUser());
+      localStorage.removeItem("username");
+      localStorage.removeItem("password");
+
       notification.success({
         message: t("notification_logout_message"),
         placement: "topRight",
