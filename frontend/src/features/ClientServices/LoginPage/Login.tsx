@@ -71,6 +71,8 @@ const LoginPage: React.FC = () => {
         description: t("login_success_description"),
         placement: "topRight",
       });
+      window.location.reload();
+
       router.push("/");
     } catch (error: any) {
       console.error("login error", error);
