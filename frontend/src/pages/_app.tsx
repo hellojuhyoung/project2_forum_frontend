@@ -18,90 +18,90 @@ import Head from "next/head";
 // the file itself i18n.ts hooks i18next into React's
 // context system when the i18n.init() method is called
 
-// function AppInitializer() {
-//   const dispatch = useDispatch();
-//   const router = useRouter();
-//   // const authentication = useSelector(
-//   //   (state: RootState) => state.authentication
-//   // );
-//   // const id = authentication.id;
-//   // const username = authentication.username;
-
-//   useEffect(() => {
-//     console.log("AppInitializer mounted");
-
-//     const token = getCookie("token") as string | undefined;
-
-//     console.log("Token from cookie on refresh:", token);
-
-//     if (token) {
-//       (async () => {
-//         try {
-//           const response: any = await instance.get("/auth/profile", {
-//             headers: {
-//               Authorization: `Bearer ${token}`,
-//             },
-//           });
-
-//           console.log("Profile response:", response);
-
-//           dispatch(
-//             setUser({
-//               id: response.id,
-//               username: response.username,
-//               token: token,
-//             })
-//           );
-//         } catch (error) {
-//           console.error("error in _app file app initializer", error);
-//         }
-//       })();
-//     }
-//   }, [dispatch, router]);
-
-//   return null;
-// }
-
 function AppInitializer() {
   const dispatch = useDispatch();
-  const [token, setToken] = useState<string | undefined>(undefined);
+  const router = useRouter();
+  // const authentication = useSelector(
+  //   (state: RootState) => state.authentication
+  // );
+  // const id = authentication.id;
+  // const username = authentication.username;
 
   useEffect(() => {
-    if (!token) {
-      const currentToken = getCookie("token") as string | undefined;
-      if (currentToken) {
-        setToken(currentToken);
-      }
+    console.log("AppInitializer mounted");
+
+    const username = localStorage.getItem("username");
+    const password = localStorage.getItem("password");
+
+    if (!username || !password) {
+      console.log("No credentials found in localStorage.");
+      return;
     }
-  }, [token]);
 
-  useEffect(() => {
-    if (!token) return;
+    // const token = getCookie("token") as string | undefined;
+
+    //   console.log("Token from cookie on refresh:", token);
+
+    //   if (token) {
+    //     (async () => {
+    //       try {
+    //         const response: any = await instance.get("/auth/profile", {
+    //           headers: {
+    //             Authorization: `Bearer ${token}`,
+    //           },
+    //         });
+
+    //         console.log("Profile response:", response);
+
+    //         dispatch(
+    //           setUser({
+    //             id: response.id,
+    //             username: response.username,
+    //             token: token,
+    //           })
+    //         );
+    //       } catch (error) {
+    //         console.error("error in _app file app initializer", error);
+    //       }
+    //     })();
+    //   }
+    // }, [dispatch, router]);
 
     (async () => {
       try {
-        const response: any = await instance.get("/auth/profile", {
+        // 1. Login again using stored creds
+        const loginResponse: any = await instance.post(
+          "/auth/login",
+          { username, password },
+          { withCredentials: true }
+        );
+
+        const token = loginResponse.data.token;
+
+        // 2. Use token to fetch profile
+        const profileResponse: any = await instance.get("/auth/profile", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        console.log("Profile response:", response);
+        console.log("Profile response:", profileResponse.data);
 
+        // 3. Dispatch to Redux
         dispatch(
           setUser({
-            id: response.id,
-            username: response.username,
+            id: profileResponse.data.id,
+            username: profileResponse.data.username,
             token: token,
           })
         );
       } catch (error) {
-        console.error("error in _app file app initializer", error);
+        console.error("Error in AppInitializer:", error);
       }
     })();
-  }, [token]);
+  }, [dispatch, router]);
 
-  return null; // or your component JSX
+  return null;
 }
 
 export default function App({ Component, pageProps }: AppProps) {

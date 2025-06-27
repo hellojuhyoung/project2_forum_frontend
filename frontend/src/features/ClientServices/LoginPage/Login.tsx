@@ -45,14 +45,13 @@ const LoginPage: React.FC = () => {
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response: any = await instance.post(
-        "/auth/login",
-        {
-          username: username,
-          password: password,
-        },
-        { withCredentials: true }
-      );
+      const response: any = await instance.post("/auth/login", {
+        username: username,
+        password: password,
+      });
+
+      localStorage.setItem("username", username);
+      localStorage.setItem("password", password);
 
       const cookieToken = getCookie("token");
       setToken(cookieToken);
