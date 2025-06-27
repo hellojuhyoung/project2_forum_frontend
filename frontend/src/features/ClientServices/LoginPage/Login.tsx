@@ -73,7 +73,6 @@ const LoginPage: React.FC = () => {
       });
 
       router.push("/");
-      window.location.reload();
     } catch (error: any) {
       console.error("login error", error);
 
