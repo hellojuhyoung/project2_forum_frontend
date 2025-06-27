@@ -67,6 +67,10 @@ const UpdateProfilePage = () => {
     (state: RootState) => state.authentication.username
   );
 
+  const currentToken = useSelector(
+    (state: RootState) => state.authentication.token
+  );
+
   // Form instance for Ant Design Form
   const [form] = Form.useForm();
 
@@ -124,7 +128,7 @@ const UpdateProfilePage = () => {
         let fetchedUser: UserProfileFormData;
 
         if (isInitialCompletion) {
-          const currentToken = getCookie("token") as string | undefined;
+          // const currentToken = getCookie("token") as string | undefined;
 
           fetchedUser = {
             id: parseInt(userIdToUse),
@@ -155,7 +159,7 @@ const UpdateProfilePage = () => {
           }>(`/users/${userIdToUse}`);
           fetchedUser = response.user;
           if (loggedInUsername !== fetchedUser.username) {
-            const currentToken = getCookie("token") as string | undefined;
+            // const currentToken = getCookie("token") as string | undefined;
             dispatch(
               setUser({
                 id: fetchedUser.id,
@@ -387,7 +391,7 @@ const UpdateProfilePage = () => {
       );
 
       if (response.result) {
-        const currentToken = getCookie("token") as string | undefined;
+        // const currentToken = getCookie("token") as string | undefined;
 
         notification.success({
           message: t("profile_updated_message"),
