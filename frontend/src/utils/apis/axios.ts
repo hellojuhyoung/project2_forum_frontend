@@ -1,3 +1,4 @@
+import { RootState } from "@/redux/store";
 import axios, {
   AxiosError,
   AxiosResponse,
@@ -5,6 +6,7 @@ import axios, {
 } from "axios";
 
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
+import { useSelector } from "react-redux";
 
 // creating axios request instance
 export const instance = axios.create({
@@ -38,7 +40,9 @@ export const instance = axios.create({
 // then adding token in the header
 instance.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
-    const token = getCookie("token"); // 토큰 미사용시 무시
+    // const token = getCookie("token"); // 토큰 미사용시 무시
+
+    const token = useSelector((state: RootState) => state.authentication.token);
 
     if (token) {
       // 토큰 사용시 헤더에 토큰 추가
