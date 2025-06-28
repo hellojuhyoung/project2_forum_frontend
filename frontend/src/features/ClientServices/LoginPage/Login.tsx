@@ -63,7 +63,7 @@ const LoginPage: React.FC = () => {
         setUser({
           id: response.id,
           username: response.username,
-          token: cookieToken,
+          token: response.token,
         })
       );
 

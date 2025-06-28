@@ -92,8 +92,8 @@ function AppInitializer() {
         // 3. Dispatch to Redux
         dispatch(
           setUser({
-            id: profileResponse.id,
-            username: profileResponse.username,
+            id: profileResponse.user.id,
+            username: profileResponse.user.username,
             token: profileResponse.token,
           })
         );
