@@ -35,10 +35,10 @@ const LoginPage: React.FC = () => {
   const [token, setToken] = useState<CookieValueTypes | undefined>();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const token = getCookie("token");
-    setToken(token);
-  }, []);
+  // useEffect(() => {
+  //   const token = getCookie("token");
+  //   setToken(token);
+  // }, []);
 
   // must add withCredentials to be true when sending the
   // axios request... this is to secure the token transfer
@@ -53,7 +53,8 @@ const LoginPage: React.FC = () => {
       localStorage.setItem("username", username);
       localStorage.setItem("password", password);
 
-      const cookieToken = getCookie("token");
+      // const cookieToken = getCookie("token");
+      const cookieToken = response.token;
       setToken(cookieToken);
 
       console.log("DISPATCHING", response);

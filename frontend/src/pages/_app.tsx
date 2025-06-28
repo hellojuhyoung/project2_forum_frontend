@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { Provider, useDispatch } from "react-redux";
-import { store, persistor } from "@/redux/store";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import { store, persistor, RootState } from "@/redux/store";
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import { setUser } from "@/redux/redux";
@@ -70,13 +70,17 @@ function AppInitializer() {
     (async () => {
       try {
         // 1. Login again using stored creds
-        const loginResponse: any = await instance.post(
-          "/auth/login",
-          { username, password },
-          { withCredentials: true }
-        );
+        // const loginResponse: any = await instance.post(
+        //   "/auth/login",
+        //   { username, password },
+        //   { withCredentials: true }
+        // );
 
-        const token = loginResponse.token;
+        // const token = loginResponse.token;
+
+        const token = useSelector(
+          (state: RootState) => state.authentication.token
+        );
 
         // 2. Use token to fetch profile
         const profileResponse: any = await instance.get("/auth/profile", {
