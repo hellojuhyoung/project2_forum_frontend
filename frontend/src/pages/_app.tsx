@@ -94,7 +94,7 @@ function AppInitializer() {
           setUser({
             id: profileResponse.id,
             username: profileResponse.username,
-            token: token,
+            token: profileResponse.token,
           })
         );
       } catch (error) {

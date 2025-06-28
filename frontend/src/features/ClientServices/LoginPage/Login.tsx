@@ -50,14 +50,14 @@ const LoginPage: React.FC = () => {
         password: password,
       });
 
+      console.log("DISPATCHING", response);
+
       localStorage.setItem("username", username);
       localStorage.setItem("password", password);
 
       // const cookieToken = getCookie("token");
       const cookieToken = response.token;
       setToken(cookieToken);
-
-      console.log("DISPATCHING", response);
 
       dispatch(
         setUser({
