@@ -27,6 +27,8 @@ function AppInitializer() {
   // const id = authentication.id;
   // const username = authentication.username;
 
+  const token = useSelector((state: RootState) => state.authentication.token);
+
   useEffect(() => {
     console.log("AppInitializer mounted");
 
@@ -77,10 +79,6 @@ function AppInitializer() {
         // );
 
         // const token = loginResponse.token;
-
-        const token = useSelector(
-          (state: RootState) => state.authentication.token
-        );
 
         // 2. Use token to fetch profile
         const profileResponse: any = await instance.get("/auth/profile", {
