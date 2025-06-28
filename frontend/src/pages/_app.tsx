@@ -32,14 +32,6 @@ function AppInitializer() {
   useEffect(() => {
     console.log("AppInitializer mounted");
 
-    const username = localStorage.getItem("username");
-    const password = localStorage.getItem("password");
-
-    if (!username || !password) {
-      console.log("No credentials found in localStorage.");
-      return;
-    }
-
     // const token = getCookie("token") as string | undefined;
 
     //   console.log("Token from cookie on refresh:", token);
