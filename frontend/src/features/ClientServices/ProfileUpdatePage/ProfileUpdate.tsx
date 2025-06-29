@@ -97,9 +97,6 @@ const UpdateProfilePage = () => {
 
   const hasNotifiedTempUserRef = useRef(false);
 
-  // Tracks if the main fetch useEffect has run its logic
-  const initialFetchPerformedRef = useRef(false);
-
   // Get your backend's base URL
   const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -110,6 +107,42 @@ const UpdateProfilePage = () => {
 
   const [formInitialValues, setFormInitialValues] = useState<any>(null);
 
+  //
+  useEffect(() => {
+    if (!currentToken && !isInitialCompletion) {
+      console.log(
+        "ProfileUpdatePage (Auth Effect): No token, not initial completion. Redirecting to login."
+      );
+      router.replace("/auth/login");
+      return;
+    }
+
+    if (!loggedInUserId && !isInitialCompletion) {
+      console.log(
+        "ProfileUpdatePage (Auth Effect): No loggedInUserId, not initial completion. Redirecting to login."
+      );
+      router.replace("/auth/login");
+      return;
+    }
+
+    if (isInitialCompletion && !initialUserIdFromQuery) {
+      console.log(
+        "ProfileUpdatePage (Auth Effect): Initial completion but missing userId. Redirecting to login."
+      );
+      router.replace("/auth/login?reason=invalid_initial_completion");
+      return;
+    }
+  }, [
+    currentToken,
+    loggedInUserId,
+    isInitialCompletion,
+    initialUserIdFromQuery,
+    router,
+  ]);
+  //
+  //
+  //
+
   useEffect(() => {
     if (!router.isReady) return;
 
@@ -117,21 +150,11 @@ const UpdateProfilePage = () => {
       ? initialUserIdFromQuery
       : loggedInUserId;
 
-    if (!userIdToUse && !isInitialCompletion) {
-      setLoading(false);
-      router.replace("/account/update");
-      initialFetchPerformedRef.current = true;
-
-      return;
-    }
-
-    if (!currentToken && !isInitialCompletion) {
+    if (!userIdToUse || (!currentToken && !isInitialCompletion)) {
       console.log(
-        "ProfileUpdatePage: No currentToken and not initial completion. Redirecting to login."
+        "ProfileUpdatePage (Fetch Effect): Pre-empting fetch due to unauthenticated/invalid state."
       );
       setLoading(false);
-      router.replace("/auth/login");
-      initialFetchPerformedRef.current = true;
       return;
     }
 
