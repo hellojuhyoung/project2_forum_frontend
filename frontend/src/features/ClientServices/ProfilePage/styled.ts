@@ -59,9 +59,6 @@ export const ProfileStyled = styled.div`
   .detail-item {
     padding: ${({ theme }) => theme.spacing.sm} 0;
     border-bottom: 1px solid ${({ theme }) => theme.colors.border}; // Subtle separator
-    &:last-child {
-      border-bottom: none; // No border on the last item
-    }
 
     strong {
       color: ${({ theme }) => theme.colors.textSecondary};
