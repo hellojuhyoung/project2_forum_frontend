@@ -98,17 +98,19 @@ export const EditProfileStyled = styled.div`
 
   // Style for the Form.Item that contains the action buttons (Update/Complete & Cancel)
   // This uses flexbox to push the buttons to the right and control their spacing.
-  .ant-form-item.ant-form-item-control-input-last {
-    .ant-form-item-control-input-content {
-      display: flex;
-      justify-content: flex-end; /* Align buttons to the right */
-      gap: 10px; /* Space between the buttons */
+  .form-actions {
+    display: flex;
+    justify-content: flex-end; /* Push content to the right */
+    gap: 10px; /* Space between buttons */
+    width: 100%; /* Ensure it spans the full width to allow right alignment */
+    margin-top: ${({ theme }) =>
+      theme.spacing
+        .md}; /* Add some top margin to separate from last form item */
 
-      /* Responsive adjustment: stack buttons on very small screens */
-      @media (max-width: 480px) {
-        flex-direction: column; /* Stack buttons vertically */
-        align-items: center; /* Center stacked buttons horizontally */
-      }
+    /* Responsive adjustment: stack buttons on very small screens */
+    @media (max-width: 480px) {
+      flex-direction: column; /* Stack buttons vertically */
+      align-items: center; /* Center stacked buttons horizontally */
     }
   }
 
