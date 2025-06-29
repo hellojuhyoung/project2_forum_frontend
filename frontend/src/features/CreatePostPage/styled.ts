@@ -146,7 +146,8 @@ export const CreatePostStyled = styled.div`
   .ant-radio-group {
     display: flex;
     gap: 1.2rem; /* Default gap between radios */
-    flex-wrap: wrap; /* Allow radios to wrap to the next line if space is tight */
+    flex-wrap: nowrap; /* Allow radios to wrap to the next line if space is tight */
+    overflow-x: auto;
 
     /* Adjust gap for radios on smaller screens */
     @media (max-width: 400px) {
@@ -160,6 +161,7 @@ export const CreatePostStyled = styled.div`
   }
 
   .ant-radio-wrapper {
+    flex-shrink: 0;
     margin-right: 0 !important;
   }
 
