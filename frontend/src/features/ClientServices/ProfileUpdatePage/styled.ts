@@ -41,15 +41,22 @@ export const EditProfileStyled = styled.div`
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   }
 
-  .username-compact-group {
-    width: 100%;
+  // Styling for the Ant Design Space.Compact holding username input and validate button
+  // This ensures proper spacing and rounded corners when the input and button are side-by-side.
+  .ant-space-compact {
+    width: 100%; // Ensure it takes full width
 
+    // Style for the Input component within the compact group
+    .ant-input-affix-wrapper,
     .ant-input {
-      flex-grow: 1;
+      flex-grow: 1; // Allow input to take available space
+      border-radius: 10px 0 0 10px; // Rounded left side for input
     }
-    .validate-username-button {
-      width: 100px;
-      height: 40px;
+
+    // Specific styling for the validate username button within the compact group
+    .ant-btn {
+      border-radius: 0 10px 10px 0; // Rounded right side for button
+      height: 40px; // Match input height
       font-size: 16px;
       background-color: ${({ theme }) => theme.colors.buttonDefault};
       color: ${({ theme }) => theme.colors.text};
@@ -76,9 +83,9 @@ export const EditProfileStyled = styled.div`
   .username-validation-message {
     font-size: 12px;
     margin-top: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 15px; // This ensures consistent spacing after message
     font-weight: 500;
-    min-height: 15px;
+    min-height: 15px; /* Give it a minimum height to prevent layout shifts */
 
     &.available {
       color: ${({ theme }) => theme.colors.success};
@@ -86,6 +93,22 @@ export const EditProfileStyled = styled.div`
 
     &.taken {
       color: ${({ theme }) => theme.colors.danger};
+    }
+  }
+
+  // Style for the Form.Item that contains the action buttons (Update/Complete & Cancel)
+  // This uses flexbox to push the buttons to the right and control their spacing.
+  .ant-form-item.ant-form-item-control-input-last {
+    .ant-form-item-control-input-content {
+      display: flex;
+      justify-content: flex-end; /* Align buttons to the right */
+      gap: 10px; /* Space between the buttons */
+
+      /* Responsive adjustment: stack buttons on very small screens */
+      @media (max-width: 480px) {
+        flex-direction: column; /* Stack buttons vertically */
+        align-items: center; /* Center stacked buttons horizontally */
+      }
     }
   }
 
@@ -104,6 +127,17 @@ export const EditProfileStyled = styled.div`
       color: ${({ theme }) => theme.colors.danger};
       &:hover {
         color: ${({ theme }) => theme.colors.dangerHover};
+      }
+    }
+    // Specific styles for the "Upload Image" / "Change Image" button (which is a default Ant Design button)
+    &.ant-btn-default {
+      background-color: ${({ theme }) => theme.colors.buttonDefault};
+      color: ${({ theme }) => theme.colors.text};
+      border-color: ${({ theme }) => theme.colors.borderColor};
+      &:hover {
+        background-color: ${({ theme }) => theme.colors.buttonDefaultHover};
+        color: ${({ theme }) => theme.colors.text};
+        border-color: ${({ theme }) => theme.colors.borderColorHover};
       }
     }
   }
