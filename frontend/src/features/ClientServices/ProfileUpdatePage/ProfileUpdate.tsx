@@ -97,6 +97,9 @@ const UpdateProfilePage = () => {
 
   const hasNotifiedTempUserRef = useRef(false);
 
+  // Tracks if the main fetch useEffect has run its logic
+  const initialFetchPerformedRef = useRef(false);
+
   // Get your backend's base URL
   const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -114,11 +117,21 @@ const UpdateProfilePage = () => {
       ? initialUserIdFromQuery
       : loggedInUserId;
 
-    if (!userIdToUse) {
+    if (!userIdToUse && !isInitialCompletion) {
       setLoading(false);
-      if (!isInitialCompletion) {
-        router.push("/account/update");
-      }
+      router.replace("/account/update");
+      initialFetchPerformedRef.current = true;
+
+      return;
+    }
+
+    if (!currentToken && !isInitialCompletion) {
+      console.log(
+        "ProfileUpdatePage: No currentToken and not initial completion. Redirecting to login."
+      );
+      setLoading(false);
+      router.replace("/auth/login");
+      initialFetchPerformedRef.current = true;
       return;
     }
 
@@ -230,6 +243,7 @@ const UpdateProfilePage = () => {
     form,
     BACKEND_BASE_URL,
     dispatch,
+    currentToken,
   ]);
 
   useEffect(() => {
@@ -409,7 +423,12 @@ const UpdateProfilePage = () => {
             token: currentToken || "",
           })
         );
-        window.location.reload();
+        // window.location.reload();
+        if (isInitialCompletion) {
+          router.replace("/"); // Redirect to home page
+        } else {
+          router.replace(`/account/profile?userid=${userIdForUpdate}`); // Redirect to profile view page
+        }
 
         setUsernameAvailable(true);
         setUsernameValidationMessage(
