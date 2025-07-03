@@ -9,8 +9,15 @@ import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { useSelector } from "react-redux";
 
 // creating axios request instance
+// export const instance = axios.create({
+//   baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+//   withCredentials: true,
+// });
+
+// instead of calling the full backend server url from the env file
+// leave the base url as /api then handle the backend server url from the amplify console
 export const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
+  baseURL: "/api",
   withCredentials: true,
 });
 

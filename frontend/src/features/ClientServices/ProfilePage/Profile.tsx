@@ -93,11 +93,9 @@ const ProfilePage = () => {
 
   return (
     <ProfileStyled>
-      {" "}
       {/* Use ProfileStyled as the main container */}
       {t("users_profile_title", { username: user.username })}
       <div className="profile-picture-container">
-        {" "}
         {/* Apply the styled class */}
         <img
           src={profileImageUrl}
