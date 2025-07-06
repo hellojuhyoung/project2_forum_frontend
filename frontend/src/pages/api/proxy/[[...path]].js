@@ -4,7 +4,7 @@ const httpProxy = require("http-proxy"); // Use require for .js file (CommonJS)
 
 // IMPORTANT: Replace this with your actual Elastic Beanstalk HTTP URL
 // e.g., 'http://your-env-name.region.elasticbeanstalk.com'
-const BACKEND_URL = process.env.NEXT_PUBLIC_SERVER_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // Create a proxy server instance
 const proxy = httpProxy.createProxyServer();
