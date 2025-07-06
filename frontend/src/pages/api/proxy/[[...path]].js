@@ -44,6 +44,10 @@ export default function handler(req, res) {
       forwardedPath = "/";
     }
 
+    if (forwardedPath.length > 1 && forwardedPath.endsWith("/")) {
+      forwardedPath = forwardedPath.slice(0, -1);
+    }
+
     req.url = forwardedPath; // Set the request URL for the proxy to use
 
     proxy.web(
