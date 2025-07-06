@@ -1,36 +1,50 @@
 // frontend/src/pages/api/proxy/[[...path]].js
 
-import httpProxy from "http-proxy";
-import https from "https";
+const httpProxy = require("http-proxy"); // Use require for .js file (CommonJS)
 
-const proxy = httpProxy.createProxyServer({});
+// IMPORTANT: Replace this with your actual Elastic Beanstalk HTTP URL
+// e.g., 'http://your-env-name.region.elasticbeanstalk.com'
+const BACKEND_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
+// Create a proxy server instance
+const proxy = httpProxy.createProxyServer();
+
+// Custom Next.js API route config
 export const config = {
   api: {
-    bodyParser: false,
-    externalResolver: true,
+    bodyParser: false, // Disable Next.js's body parser to allow http-proxy to handle raw body
+    externalResolver: true, // Tells Next.js to not worry about the response being handled by an external resolver (http-proxy)
   },
 };
 
 export default function handler(req, res) {
-  const target = process.env.NEXT_PUBLIC_SERVER_URL; // like https://your-backend
+  // Return a promise to ensure the Next.js handler waits for the proxy operation to complete
+  return new Promise((resolve, reject) => {
+    // Modify the request URL to strip the /api/proxy prefix before forwarding to the actual backend
+    // For example, if the request is /api/proxy/auth/profile, we want to hit /auth/profile on the backend
+    req.url = req.url.replace("/api/proxy", "");
 
-  if (!target) {
-    res.status(500).json({ error: "Backend URL not defined" });
-    return;
-  }
+    proxy.web(
+      req,
+      res,
+      {
+        target: BACKEND_URL,
+        changeOrigin: true, // Needed for many APIs to correctly route based on Host header
+        selfHandleResponse: false, // Let http-proxy handle piping the response back
+      },
+      (err) => {
+        // Handle proxy errors
+        console.error("Proxy Error:", err);
+        if (!res.headersSent) {
+          // Only send error if headers haven't been sent yet
+          res.status(500).json({ error: "Proxy error occurred." });
+        }
+        reject(err); // Reject the promise on error
+      }
+    );
 
-  req.url = req.url.replace(/^\/api\/proxy/, ""); // trim /api/proxy
-
-  proxy.web(req, res, {
-    target,
-    changeOrigin: true,
-    secure: false,
-    agent: new https.Agent({ rejectUnauthorized: false }), // ignore self-signed cert error
-  });
-
-  proxy.on("error", (err) => {
-    console.error("Proxy error:", err);
-    res.status(500).json({ error: "Proxy error", details: err.message });
+    // Resolve the promise when the proxy response is received (or an error occurs)
+    proxy.once("proxyRes", () => resolve());
+    // The error callback above will also reject the promise
   });
 }
