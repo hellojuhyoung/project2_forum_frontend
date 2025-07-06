@@ -22,7 +22,29 @@ export default function handler(req, res) {
   return new Promise((resolve, reject) => {
     // Modify the request URL to strip the /api/proxy prefix before forwarding to the actual backend
     // For example, if the request is /api/proxy/auth/profile, we want to hit /auth/profile on the backend
-    req.url = req.url.replace("/api/proxy", "");
+    // req.url = req.url.replace("/api/proxy", "");
+
+    const fullPath = req.url;
+    const proxyPathPrefix = "/api/proxy";
+
+    let forwardedPath = "";
+    if (fullPath.startsWith(proxyPathPrefix)) {
+      forwardedPath = fullPath.substring(proxyPathPrefix.length);
+    } else {
+      // Fallback in case the prefix somehow isn't there, though it should be due to rewrites
+      forwardedPath = fullPath;
+    }
+
+    // Ensure the path starts with a single leading slash if it's not empty
+    if (forwardedPath && !forwardedPath.startsWith("/")) {
+      forwardedPath = "/" + forwardedPath;
+    } else if (!forwardedPath) {
+      // If the path became empty (e.g., original was just /api/proxy),
+      // we might want to default to '/', assuming the backend has a root handler.
+      forwardedPath = "/";
+    }
+
+    req.url = forwardedPath; // Set the request URL for the proxy to use
 
     proxy.web(
       req,
