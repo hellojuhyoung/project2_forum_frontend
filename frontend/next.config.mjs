@@ -17,7 +17,7 @@ const nextConfig = {
   // Environment variables that should be available on the client-side
   // Remember to also set these in your Amplify Console build settings for production!
   env: {
-    NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_SERVER_URL,
+    NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
   },
 };
 
