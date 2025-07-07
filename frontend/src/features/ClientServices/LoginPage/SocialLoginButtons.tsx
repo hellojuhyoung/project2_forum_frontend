@@ -8,6 +8,7 @@ import {
   NaverButton,
 } from "./SocialButtons.styled";
 
+// re-direct links for the social login google, kakao, and naver
 const SocialLoginButtons: React.FC = () => {
   const handleGoogleLogin = () => {
     window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
