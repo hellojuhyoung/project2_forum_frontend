@@ -21,12 +21,6 @@ export const instance = axios.create({
   withCredentials: true,
 });
 
-// with proxy for deployment
-// export const instance = axios.create({
-//   baseURL: "/api/proxy",
-//   withCredentials: true,
-// });
-
 // this is for the token storage, would need to set the token in cookies
 // export const AuthStorage = {
 //   async setToken(token: string) {
