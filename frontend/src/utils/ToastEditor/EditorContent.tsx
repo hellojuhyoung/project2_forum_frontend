@@ -13,6 +13,7 @@ export function ImagesFromText(content: string) {
   return { text: text.trim(), images };
 }
 
+// converts image url from the editor to base64 style string
 export async function convertImageUrlsToBase64(
   content: string,
   imagePaths: string[],
