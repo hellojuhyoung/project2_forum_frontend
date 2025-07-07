@@ -3,21 +3,24 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  // Add other Next.js configurations here as needed
 
   async rewrites() {
     return [
       {
-        source: "/api/:path*", // Match any request starting with /api/
-        destination: "/api/proxy/:path*", // <<<--- CORRECTED DESTINATION to your specified proxy path
+        source: "/api/:path*",
+        // Use an environment variable for the backend API URL
+        // Make sure to set NEXT_PUBLIC_BACKEND_URL in your Amplify Console!
+        destination: `${process.env.NEXT_PUBLIC_BACKEND_URL}/:path*`,
       },
     ];
   },
 
   // Environment variables that should be available on the client-side
-  // Remember to also set these in your Amplify Console build settings for production!
+  // Note: NEXT_PUBLIC_API_URL is already defined in your env,
+  // but NEXT_PUBLIC_BACKEND_URL is the one used for the rewrite.
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL, // Keep this if your app uses it
+    NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL, // Add this for the rewrite
   },
 };
 
