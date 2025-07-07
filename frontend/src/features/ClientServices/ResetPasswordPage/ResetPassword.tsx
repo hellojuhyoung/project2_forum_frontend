@@ -37,6 +37,7 @@ const ResetPasswordPage: React.FC = () => {
   const [loadingToken, setLoadingToken] = useState(true);
 
   // --- Validation Schema (Yup) ---
+  // new password validation is identical to the signup password format
   const validationSchema = Yup.object().shape({
     newPassword: Yup.string()
       .min(8, t("new_password_min_length_validation"))
