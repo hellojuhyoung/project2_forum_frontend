@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 
 // instead of calling the full backend server url from the env file
 // leave the base url as /api then handle the backend server url from the amplify console
+// for the proxy set up
 export const instance = axios.create({
   baseURL: "/api",
   withCredentials: true,
