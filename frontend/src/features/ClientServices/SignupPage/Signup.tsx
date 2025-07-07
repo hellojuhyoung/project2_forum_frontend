@@ -111,6 +111,7 @@ const SignupPage: React.FC = () => {
     string | null
   >(null);
 
+  // handles file uploads and updates
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
