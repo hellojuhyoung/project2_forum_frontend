@@ -9,6 +9,7 @@ import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { useSelector } from "react-redux";
 
 // creating axios request instance
+// use the following axios create function for the local environment
 // export const instance = axios.create({
 //   baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
 //   withCredentials: true,
