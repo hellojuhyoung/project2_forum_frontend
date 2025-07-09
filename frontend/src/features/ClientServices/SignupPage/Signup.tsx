@@ -140,6 +140,7 @@ const SignupPage: React.FC = () => {
     string | null
   >(null);
 
+  // validate username to see if there are any duplicates from the database
   const validateUsername = async (
     username: string,
     setFieldTouched: (
