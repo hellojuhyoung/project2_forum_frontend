@@ -52,6 +52,7 @@ export default function Main() {
   useEffect(() => {
     if (!router.isReady) return;
 
+    // most recently created posts ordered by date total of 8 posts
     const getRecentPosts = async () => {
       try {
         const response: any = await instance.get("/posts/recent");
@@ -64,6 +65,7 @@ export default function Main() {
       }
     };
 
+    // most liked posts by the like counts total of 8 posts
     const getLikedPosts = async () => {
       try {
         const response: any = await instance.get("/posts/mostLiked");
@@ -75,6 +77,7 @@ export default function Main() {
       }
     };
 
+    // all the posts by the style of pagination
     const getPaginatedPosts = async () => {
       try {
         const response: any = await instance.get(`/posts?page=${currentPage}`);
