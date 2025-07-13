@@ -1,135 +1,11 @@
-// import "@/styles/globals.css";
-// import type { AppProps } from "next/app";
-// import { Provider, useDispatch, useSelector } from "react-redux";
-// import { store, persistor, RootState } from "@/redux/store";
-// import { getCookie } from "cookies-next";
-// import { useEffect, useState } from "react";
-// import { setUser } from "@/redux/redux";
-// import { PersistGate } from "redux-persist/integration/react";
-// import { instance } from "@/utils/apis/axios";
-// import Margins from "@/components/Margins/Margins";
-// import { ThemeProvider } from "styled-components";
-// import { theme } from "@/styles/theme";
-// import "../i18n";
-// import { useRouter } from "next/router";
-// import Head from "next/head";
-
-// // no need to add the i18n tag in the rendering section
-// // the file itself i18n.ts hooks i18next into React's
-// // context system when the i18n.init() method is called
-
-// function AppInitializer() {
-//   const dispatch = useDispatch();
-//   const router = useRouter();
-//   // const authentication = useSelector(
-//   //   (state: RootState) => state.authentication
-//   // );
-//   // const id = authentication.id;
-//   // const username = authentication.username;
-
-//   const token = useSelector((state: RootState) => state.authentication.token);
-
-//   useEffect(() => {
-//     console.log("AppInitializer mounted");
-
-//     // const token = getCookie("token") as string | undefined;
-
-//     //   console.log("Token from cookie on refresh:", token);
-
-//     //   if (token) {
-//     //     (async () => {
-//     //       try {
-//     //         const response: any = await instance.get("/auth/profile", {
-//     //           headers: {
-//     //             Authorization: `Bearer ${token}`,
-//     //           },
-//     //         });
-
-//     //         console.log("Profile response:", response);
-
-//     //         dispatch(
-//     //           setUser({
-//     //             id: response.id,
-//     //             username: response.username,
-//     //             token: token,
-//     //           })
-//     //         );
-//     //       } catch (error) {
-//     //         console.error("error in _app file app initializer", error);
-//     //       }
-//     //     })();
-//     //   }
-//     // }, [dispatch, router]);
-
-//     (async () => {
-//       try {
-//         // 1. Login again using stored creds
-//         // const loginResponse: any = await instance.post(
-//         //   "/auth/login",
-//         //   { username, password },
-//         //   { withCredentials: true }
-//         // );
-
-//         // const token = loginResponse.token;
-
-//         // 2. Use token to fetch profile
-//         const profileResponse: any = await instance.get("/auth/profile", {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           },
-//         });
-
-//         console.log("Profile response:", profileResponse);
-
-//         // 3. Dispatch to Redux
-//         dispatch(
-//           setUser({
-//             id: profileResponse.user.id,
-//             username: profileResponse.user.username,
-//             token: profileResponse.token,
-//           })
-//         );
-//       } catch (error) {
-//         console.error("Error in AppInitializer:", error);
-//       }
-//     })();
-//   }, [dispatch, router]);
-
-//   return null;
-// }
-
-// export default function App({ Component, pageProps }: AppProps) {
-//   return (
-//     <Provider store={store}>
-//       <PersistGate loading={null} persistor={persistor}>
-//         <AppInitializer />
-//         <ThemeProvider theme={theme}>
-//           <Margins>
-//             <Head>
-//               <title>JL Forum</title>
-//             </Head>
-//             <Component {...pageProps} />
-//           </Margins>
-//         </ThemeProvider>
-//       </PersistGate>
-//     </Provider>
-//   );
-// }
-//
-//
-//
-//
-// updated _app.tsx due to infinite loop upon updating the profile
-
-// pages/_app.tsx
-// pages/_app.tsx
+// frontend/src/pages/_app.tsx
 
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { store, persistor, RootState } from "@/redux/store";
 import { useEffect, useState, useRef, useCallback } from "react";
-import { setUser } from "@/redux/redux";
+import { setUser, clearUser } from "@/redux/redux"; // Assuming clearUser is also defined in this file
 import { PersistGate } from "redux-persist/integration/react";
 import { instance } from "@/utils/apis/axios";
 import Margins from "@/components/Margins/Margins";
@@ -140,14 +16,25 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import { AxiosError } from "axios";
 
-function AppInitializer({ onReady }: { onReady: () => void }) {
+// REMOVED: The getCookie utility function was removed from here.
+
+// AppInitializer now receives a prop to indicate when Redux Persist is ready
+function AppInitializer({
+  onReady,
+  persistorReady,
+}: {
+  onReady: () => void;
+  persistorReady: boolean;
+}) {
+  // MODIFIED: Added persistorReady prop
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const currentToken = useSelector(
+  // Get token and user ID directly from Redux store
+  const currentTokenFromRedux = useSelector(
     (state: RootState) => state.authentication.token
   );
-  const loggedInUserId = useSelector(
+  const loggedInUserIdFromRedux = useSelector(
     (state: RootState) => state.authentication.id
   );
 
@@ -161,136 +48,125 @@ function AppInitializer({ onReady }: { onReady: () => void }) {
   }, [onReady]);
 
   useEffect(() => {
-    if (initialAuthCheckPerformed.current) {
+    // CRITICAL: Only run this effect once Redux Persist has rehydrated and initial check hasn't run
+    if (!persistorReady || initialAuthCheckPerformed.current) {
+      // MODIFIED: Added !persistorReady condition
+      console.log(
+        `AppInitializer useEffect skipped. persistorReady: ${persistorReady}, initialAuthCheckPerformed: ${initialAuthCheckPerformed.current}`
+      );
       return;
     }
 
-    console.log("AppInitializer useEffect triggered.");
-    console.log("Token from Redux store in AppInitializer:", currentToken);
-    console.log("User ID from Redux store in AppInitializer:", loggedInUserId);
+    console.log("AppInitializer useEffect triggered after persistorReady.");
+    console.log(
+      "Token from Redux store (after persist):",
+      currentTokenFromRedux
+    );
+    console.log(
+      "User ID from Redux store (after persist):",
+      loggedInUserIdFromRedux
+    );
 
     const performAuthCheck = async () => {
-      try {
-        if (currentToken && loggedInUserId) {
-          console.log(
-            "Token and User ID present in Redux. Attempting profile fetch/verification."
+      // Now we solely rely on the token being present in the Redux store after rehydration
+      if (currentTokenFromRedux && loggedInUserIdFromRedux) {
+        console.log(
+          "Token and User ID present in Redux. Attempting profile fetch/verification."
+        );
+        try {
+          // Make an API call to your backend to validate the token.
+          // The browser will automatically send the HttpOnly cookie with this request
+          // because 'instance' (Axios) has 'withCredentials: true'.
+          // Your backend's /auth/profile endpoint should be protected by middleware
+          // that reads the 'token' cookie and populates 'req.user'.
+          const profileResponse: any = await instance.get("/auth/profile"); // MODIFIED: Removed Authorization header from here
+
+          console.log("Profile verification successful:", profileResponse.data);
+
+          // Re-hydrate Redux state with user data (even if already there, ensures consistency)
+          dispatch(
+            setUser({
+              id: profileResponse.data?.user?.id, // MODIFIED: Added ?.user?. to access nested user object
+              username: profileResponse.data?.user?.username, // MODIFIED: Added ?.user?. to access nested user object
+              token: currentTokenFromRedux, // Use the token from Redux, as it was validated by the backend
+            })
           );
-          try {
-            const profileResponse: any = await instance.get("/auth/profile", {
-              headers: { Authorization: `Bearer ${currentToken}` },
-              withCredentials: true,
-            });
-            console.log(
-              "Profile verification successful:",
-              profileResponse.data
-            );
+          memoizedOnReady();
+        } catch (error: any) {
+          console.error("Error verifying token or fetching profile:", error);
+          const axiosError = error as AxiosError;
 
-            dispatch(
-              setUser({
-                id: profileResponse.data?.id,
-                username: profileResponse.data?.username,
-                token: currentToken,
-              })
+          // Handle specific authentication errors (401/403)
+          if (
+            axiosError.response &&
+            (axiosError.response.status === 401 ||
+              axiosError.response.status === 403)
+          ) {
+            console.warn(
+              "Token invalid/expired during verification (401/403). Clearing user data."
             );
-            memoizedOnReady();
-          } catch (error: any) {
-            console.error("Error verifying token or fetching profile:", error);
-            const axiosError = error as AxiosError;
-
-            if (axiosError.response) {
-              console.warn(
-                "Axios error response status during profile verification:",
-                axiosError.response.status
-              );
-              if (
-                axiosError.response.status === 401 ||
-                axiosError.response.status === 403
-              ) {
-                console.warn(
-                  "Token invalid/expired during verification (401/403). Clearing user data and redirecting."
-                );
-                dispatch(setUser({ id: null, username: null, token: null }));
-                // CORRECTED: Redirect to your actual login page
-                if (
-                  router.pathname !== "/auth/login" &&
-                  router.pathname !== "/users/signup" &&
-                  router.pathname !== "/"
-                ) {
-                  router.replace("/auth/login");
-                }
-              } else {
-                console.error(
-                  "Non-authentication related HTTP error during profile fetch:",
-                  axiosError.response.status
-                );
-                dispatch(setUser({ id: null, username: null, token: null }));
-                // CORRECTED: Redirect to your actual login page
-                if (
-                  router.pathname !== "/auth/login" &&
-                  router.pathname !== "/users/signup" &&
-                  router.pathname !== "/"
-                ) {
-                  router.replace("/auth/login");
-                }
-              }
-            } else if (axiosError.request) {
-              console.error(
-                "Network error: Request made but no response received.",
-                axiosError.message
-              );
-              dispatch(setUser({ id: null, username: null, token: null }));
-              // CORRECTED: Redirect to your actual login page, with network error flag
-              if (
-                router.pathname !== "/auth/login" &&
-                router.pathname !== "/users/signup" &&
-                router.pathname !== "/"
-              ) {
-                router.replace("/auth/login?error=network");
-              }
-            } else {
-              console.error("Error setting up request:", axiosError.message);
-              dispatch(setUser({ id: null, username: null, token: null }));
-              // CORRECTED: Redirect to your actual login page
+            dispatch(clearUser());
+            // Redirect only if not already on a public page
+            if (
+              !["/auth/login", "/users/signup", "/"].includes(router.pathname)
+            ) {
               router.replace("/auth/login");
             }
-            memoizedOnReady();
-          }
-        } else {
-          console.log("No token in Redux. User needs to login.");
-          // CORRECTED: Check against your actual public pages
-          if (
-            router.pathname !== "/auth/login" &&
-            router.pathname !== "/users/signup" &&
-            router.pathname !== "/"
-          ) {
-            console.log(
-              "Redirecting to login page as no authentication state found."
+          } else if (axiosError.request) {
+            console.error(
+              "Network error: Request made but no response received.",
+              axiosError.message
             );
-            dispatch(setUser({ id: null, username: null, token: null }));
-            router.replace("/auth/login");
+            dispatch(clearUser());
+            if (
+              !["/auth/login", "/users/signup", "/"].includes(router.pathname)
+            ) {
+              router.replace("/auth/login?error=network");
+            }
+          } else {
+            console.error(
+              "Error setting up request or unexpected error:",
+              axiosError.message
+            );
+            dispatch(clearUser());
+            if (
+              !["/auth/login", "/users/signup", "/"].includes(router.pathname)
+            ) {
+              router.replace("/auth/login");
+            }
           }
           memoizedOnReady();
         }
-      } catch (overallError) {
-        console.error(
-          "Critical unexpected error in AppInitializer:",
-          overallError
-        );
-        dispatch(setUser({ id: null, username: null, token: null }));
-        // CORRECTED: Redirect to your actual login page
-        router.replace("/auth/login");
+      } else {
+        console.log("No token found in Redux. User needs to login.");
+        dispatch(clearUser()); // Ensure Redux state is clear
+        // Redirect only if not already on a public page
+        if (!["/auth/login", "/users/signup", "/"].includes(router.pathname)) {
+          console.log(
+            "Redirecting to login page as no authentication state found."
+          );
+          router.replace("/auth/login");
+        }
         memoizedOnReady();
       }
     };
 
     performAuthCheck();
-  }, [dispatch, router, currentToken, loggedInUserId, memoizedOnReady]);
+  }, [
+    dispatch,
+    router,
+    persistorReady,
+    currentTokenFromRedux,
+    loggedInUserIdFromRedux,
+    memoizedOnReady,
+  ]); // MODIFIED: Added persistorReady to dependencies
 
   return null;
 }
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isAppInitialized, setIsAppInitialized] = useState(false);
+  const [persistorReady, setPersistorReady] = useState(false); // ADDED: New state to track persistor readiness
 
   const handleAppReady = useCallback(() => {
     console.log(
@@ -299,10 +175,25 @@ export default function App({ Component, pageProps }: AppProps) {
     setIsAppInitialized(true);
   }, []);
 
+  // ADDED: Callback from PersistGate when rehydration is complete
+  const onBeforeLift = () => {
+    console.log("Redux Persist: Rehydration complete.");
+    setPersistorReady(true);
+  };
+
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <AppInitializer onReady={handleAppReady} />
+      {/* MODIFIED: Added onBeforeLift prop to PersistGate */}
+      <PersistGate
+        loading={null}
+        persistor={persistor}
+        onBeforeLift={onBeforeLift}
+      >
+        {/* Pass persistorReady to AppInitializer */}
+        <AppInitializer
+          onReady={handleAppReady}
+          persistorReady={persistorReady}
+        />
 
         {isAppInitialized ? (
           <ThemeProvider theme={theme}>
