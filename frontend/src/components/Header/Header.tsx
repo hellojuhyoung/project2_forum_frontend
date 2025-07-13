@@ -217,13 +217,13 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                           <StyledAvatarImage
                             src={`${BACKEND_BASE_URL}${profilePicture}`}
                             alt={t("alt_user_profile_image")}
-                            // onError={(
-                            //   e: React.SyntheticEvent<HTMLImageElement, Event>
-                            // ) => {
-                            //   (e.target as HTMLImageElement).src =
-                            //     "/no-image.jpg";
-                            //   e.currentTarget.onerror = null;
-                            // }}
+                            onError={(
+                              e: React.SyntheticEvent<HTMLImageElement, Event>
+                            ) => {
+                              (e.target as HTMLImageElement).src =
+                                "/no-image.jpg";
+                              e.currentTarget.onerror = null;
+                            }}
                           />
                         ) : (
                           <StyledUserIcon />
