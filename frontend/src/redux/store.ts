@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authenticationReducer from "./redux";
 import {
   persistStore,
@@ -18,12 +18,17 @@ const persistConfig = {
   whitelist: ["authentication"], // only persist this slice
 };
 
-const persistedReducer = persistReducer(persistConfig, authenticationReducer);
+// Define your root reducer by combining all slices
+const rootReducer = combineReducers({
+  authentication: authenticationReducer, // Your authentication slice
+  // Add other reducers here if you have them, e.g., posts: postsReducer
+});
+
+// Create the persisted reducer from the rootReducer
+const persistedReducer = persistReducer(persistConfig, rootReducer); // MODIFIED: persistReducer now wraps rootReducer
 
 export const store = configureStore({
-  reducer: {
-    authentication: persistedReducer,
-  },
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
