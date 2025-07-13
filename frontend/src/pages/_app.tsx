@@ -14,7 +14,7 @@ import { theme } from "@/styles/theme";
 import "../i18n";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 
 // REMOVED: The getCookie utility function was removed from here.
 
@@ -79,7 +79,13 @@ function AppInitializer({
           // because 'instance' (Axios) has 'withCredentials: true'.
           // Your backend's /auth/profile endpoint should be protected by middleware
           // that reads the 'token' cookie and populates 'req.user'.
-          const profileResponse: any = await instance.get("/auth/profile"); // MODIFIED: Removed Authorization header from here
+          // const profileResponse: any = await instance.get("/auth/profile"); // MODIFIED: Removed Authorization header from here
+          // MODIFIED: Use direct axios import instead of custom instance
+          // IMPORTANT: You need to manually set the base URL and withCredentials here
+          const profileResponse: any = await axios.get(
+            `https://main.dvzml9ubkbnki.amplifyapp.com/api/auth/profile`, // Use full URL for direct axios
+            { withCredentials: true } // Crucial for sending cookies
+          );
 
           console.log("Profile verification successful:", profileResponse.data);
 
