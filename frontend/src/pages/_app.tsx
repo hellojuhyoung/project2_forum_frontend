@@ -83,12 +83,17 @@ function AppInitializer({
 
           console.log("Profile verification successful:", profileResponse.data);
 
+          // CORRECTED: Access properties from profileResponse.data.user and profileResponse.data.token
+          const id = profileResponse.data?.user?.id;
+          const username = profileResponse.data?.user?.username;
+          const token = profileResponse.data?.token; // Use the token returned by the backend
+
           // Re-hydrate Redux state with user data (even if already there, ensures consistency)
           dispatch(
             setUser({
-              id: profileResponse.data?.user?.id, // MODIFIED: Added ?.user?. to access nested user object
-              username: profileResponse.data?.user?.username, // MODIFIED: Added ?.user?. to access nested user object
-              token: currentTokenFromRedux, // Use the token from Redux, as it was validated by the backend
+              id: id,
+              username: username,
+              token: token, // Use the token returned by the backend's profile verification
             })
           );
           memoizedOnReady();
