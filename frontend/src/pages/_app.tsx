@@ -83,6 +83,15 @@ function AppInitializer({
 
           console.log("Profile verification successful:", profileResponse.data);
 
+          // ADDED NEW DEBUG LOGS HERE
+          console.log("Full profileResponse object:", profileResponse); // Log the entire Axios response object
+          console.log("profileResponse.status:", profileResponse.status); // Log the status code
+          console.log("profileResponse.headers:", profileResponse.headers); // Log all response headers
+          console.log(
+            "Profile verification successful (profileResponse.data):",
+            profileResponse.data
+          );
+
           // CORRECTED: Access properties from profileResponse.data.user and profileResponse.data.token
           const id = profileResponse.data?.user?.id;
           const username = profileResponse.data?.user?.username;
