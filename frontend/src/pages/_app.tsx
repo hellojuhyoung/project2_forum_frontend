@@ -88,6 +88,17 @@ function AppInitializer({
           const username = profileResponse.data?.user?.username;
           const token = profileResponse.data?.token; // Use the token returned by the backend
 
+          // ADDED DEBUG LOGS HERE
+          console.log("Dispatching setUser with:");
+          console.log("  id:", id);
+          console.log("  username:", username);
+          console.log(
+            "  token:",
+            token
+              ? "Token present (not null/undefined)"
+              : "Token missing (null/undefined)"
+          );
+
           // Re-hydrate Redux state with user data (even if already there, ensures consistency)
           dispatch(
             setUser({
