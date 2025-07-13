@@ -5,18 +5,16 @@ import type { AppProps } from "next/app";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { store, persistor, RootState } from "@/redux/store";
 import { useEffect, useState, useRef, useCallback } from "react";
-import { setUser, clearUser } from "@/redux/redux"; // Assuming clearUser is also defined in this file
+import { setUser, clearUser } from "@/redux/redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { instance } from "@/utils/apis/axios";
+import { instance } from "@/utils/apis/axios"; // Now importing your custom instance
 import Margins from "@/components/Margins/Margins";
 import { ThemeProvider } from "styled-components";
 import { theme } from "@/styles/theme";
 import "../i18n";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import axios, { AxiosError } from "axios";
-
-// REMOVED: The getCookie utility function was removed from here.
+import { AxiosError } from "axios";
 
 // AppInitializer now receives a prop to indicate when Redux Persist is ready
 function AppInitializer({
@@ -26,7 +24,6 @@ function AppInitializer({
   onReady: () => void;
   persistorReady: boolean;
 }) {
-  // MODIFIED: Added persistorReady prop
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -50,7 +47,6 @@ function AppInitializer({
   useEffect(() => {
     // CRITICAL: Only run this effect once Redux Persist has rehydrated and initial check hasn't run
     if (!persistorReady || initialAuthCheckPerformed.current) {
-      // MODIFIED: Added !persistorReady condition
       console.log(
         `AppInitializer useEffect skipped. persistorReady: ${persistorReady}, initialAuthCheckPerformed: ${initialAuthCheckPerformed.current}`
       );
@@ -74,36 +70,34 @@ function AppInitializer({
           "Token and User ID present in Redux. Attempting profile fetch/verification."
         );
         try {
-          // Make an API call to your backend to validate the token.
-          // The browser will automatically send the HttpOnly cookie with this request
-          // because 'instance' (Axios) has 'withCredentials: true'.
-          // Your backend's /auth/profile endpoint should be protected by middleware
-          // that reads the 'token' cookie and populates 'req.user'.
-          // const profileResponse: any = await instance.get("/auth/profile"); // MODIFIED: Removed Authorization header from here
-          // MODIFIED: Use direct axios import instead of custom instance
-          // IMPORTANT: You need to manually set the base URL and withCredentials here
-          const profileResponse: any = await axios.get(
-            `https://main.dvzml9ubkbnki.amplifyapp.com/api/auth/profile`, // Use full URL for direct axios
-            { withCredentials: true } // Crucial for sending cookies
-          );
+          // Using your custom instance. Axios will automatically handle base URL and withCredentials.
+          // Now, 'profileResponse' will be the full Axios response object.
+          const profileResponse: any = await instance.get("/auth/profile");
 
-          console.log("Profile verification successful:", profileResponse.data);
-
-          // ADDED NEW DEBUG LOGS HERE
-          console.log("Full profileResponse object:", profileResponse); // Log the entire Axios response object
-          console.log("profileResponse.status:", profileResponse.status); // Log the status code
-          console.log("profileResponse.headers:", profileResponse.headers); // Log all response headers
+          // Debugging logs (these should now show correct values)
           console.log(
-            "Profile verification successful (profileResponse.data):",
+            "Full profileResponse object (custom instance):",
+            profileResponse
+          );
+          console.log(
+            "profileResponse.status (custom instance):",
+            profileResponse.status
+          );
+          console.log(
+            "profileResponse.headers (custom instance):",
+            profileResponse.headers
+          );
+          console.log(
+            "Profile verification successful (profileResponse.data, custom instance):",
             profileResponse.data
           );
 
-          // CORRECTED: Access properties from profileResponse.data.user and profileResponse.data.token
+          // CORRECTED: Access properties from profileResponse.data (standard Axios behavior)
           const id = profileResponse.data?.user?.id;
           const username = profileResponse.data?.user?.username;
-          const token = profileResponse.data?.token; // Use the token returned by the backend
+          const token = profileResponse.data?.token;
 
-          // ADDED DEBUG LOGS HERE
+          // Debug logs for dispatch payload
           console.log("Dispatching setUser with:");
           console.log("  id:", id);
           console.log("  username:", username);
@@ -114,12 +108,12 @@ function AppInitializer({
               : "Token missing (null/undefined)"
           );
 
-          // Re-hydrate Redux state with user data (even if already there, ensures consistency)
+          // Re-hydrate Redux state with user data
           dispatch(
             setUser({
               id: id,
               username: username,
-              token: token, // Use the token returned by the backend's profile verification
+              token: token,
             })
           );
           memoizedOnReady();
@@ -190,14 +184,14 @@ function AppInitializer({
     currentTokenFromRedux,
     loggedInUserIdFromRedux,
     memoizedOnReady,
-  ]); // MODIFIED: Added persistorReady to dependencies
+  ]);
 
   return null;
 }
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isAppInitialized, setIsAppInitialized] = useState(false);
-  const [persistorReady, setPersistorReady] = useState(false); // ADDED: New state to track persistor readiness
+  const [persistorReady, setPersistorReady] = useState(false);
 
   const handleAppReady = useCallback(() => {
     console.log(
@@ -206,7 +200,7 @@ export default function App({ Component, pageProps }: AppProps) {
     setIsAppInitialized(true);
   }, []);
 
-  // ADDED: Callback from PersistGate when rehydration is complete
+  // Callback from PersistGate when rehydration is complete
   const onBeforeLift = () => {
     console.log("Redux Persist: Rehydration complete.");
     setPersistorReady(true);
@@ -214,7 +208,6 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
-      {/* MODIFIED: Added onBeforeLift prop to PersistGate */}
       <PersistGate
         loading={null}
         persistor={persistor}
