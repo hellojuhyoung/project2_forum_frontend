@@ -57,7 +57,7 @@ export default function Main() {
       try {
         const response: any = await instance.get("/posts/recent");
         const mostRecent_posts = response.posts;
-        // console.log(response);
+        console.log("most recent posts", response);
         // console.log(mostRecent_posts);
         setRecentPost(mostRecent_posts);
       } catch (error) {
@@ -70,7 +70,7 @@ export default function Main() {
       try {
         const response: any = await instance.get("/posts/mostLiked");
         const mostLiked_posts = response.posts;
-        // console.log(response);
+        console.log("mostliked response", response);
         setLikedPost(mostLiked_posts);
       } catch (error) {
         console.error("error fetching most liked posts", error);
