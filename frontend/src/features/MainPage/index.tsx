@@ -142,9 +142,13 @@ export default function Main() {
           <Section>
             <h2>{t("section_main_feed")}</h2>
             <MainFeedGrid>
-              {posts.map((post: any, index: number) => (
-                <MainFeed key={index} post={post} />
-              ))}
+              {
+                posts && Array.isArray(posts) && posts.length > 0
+                  ? posts.map((post: any, index: number) => (
+                      <MainFeed key={index} post={post} />
+                    ))
+                  : null // Render nothing if no posts in main feed
+              }
             </MainFeedGrid>
           </Section>
 
