@@ -10,11 +10,13 @@ if (!i18n.isInitialized) {
     .use(LanguageDetector)
     .use(initReactI18next)
     .init({
+      lng: "en", // Force language to 'en'
       fallbackLng: "en",
       debug: process.env.NODE_ENV === "development",
 
-      supportedLngs: ["en", "ko"],
-      nonExplicitSupportedLngs: true,
+      // supportedLngs and nonExplicitSupportedLngs are not needed when lng is explicitly set
+      // supportedLngs: ["en", "ko"],
+      // nonExplicitSupportedLngs: true,
 
       ns: allNamespaces,
       defaultNS: "common",
