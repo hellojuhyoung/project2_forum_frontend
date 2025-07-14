@@ -1,3 +1,4 @@
+import { theme } from "@/styles/theme";
 import styled from "styled-components";
 
 export const MainFeedStyled = styled.div<{
@@ -15,8 +16,10 @@ export const MainFeedStyled = styled.div<{
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.sm}; /* Default gap between elements */
+
+  /* UPDATED: Increased default height for better visual balance and content space */
   height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
-    $isMostRecentSection || $isMostLikedSection ? "380px" : "300px"};
+    $isMostRecentSection || $isMostLikedSection ? "420px" : "320px"};
   box-sizing: border-box; /* Ensures padding and border are included in the element's total height/width */
 
   &:hover {
@@ -31,8 +34,8 @@ export const MainFeedStyled = styled.div<{
     /* margin handled by Swiper */
     height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection
-        ? "340px"
-        : "280px"}; /* Reduced card height */
+        ? "380px"
+        : "300px"}; /* Reduced card height, but still taller for recent/liked */
     gap: ${({ theme }) => theme.spacing.xs}; /* Slightly less gap inside */
   }
 
@@ -42,8 +45,8 @@ export const MainFeedStyled = styled.div<{
     /* margin handled by Swiper */
     height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection
-        ? "300px"
-        : "250px"}; /* Further reduced card height */
+        ? "350px"
+        : "280px"}; /* Further reduced card height, maintaining recent/liked difference */
     gap: ${({ theme }) => theme.spacing.xxs}; /* Minimal gap inside */
     border-radius: ${({ theme }) =>
       theme.borderRadius.sm}; /* Slightly smaller border-radius */
@@ -51,12 +54,12 @@ export const MainFeedStyled = styled.div<{
 
   /* For small mobile devices (e.g., up to 480px wide) */
   @media (max-width: 480px) {
-    padding: 0.8rem; /* Use specific rem for fine control */
+    padding: ${theme.spacing.xs}; /* Adjusted to theme spacing */
     /* margin handled by Swiper */
     height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection
-        ? "280px"
-        : "230px"}; /* Even more reduced card height */
+        ? "320px"
+        : "260px"}; /* Even more reduced card height, ensuring images are prominent */
     box-shadow: none; /* Optional: remove shadow for a flat mobile feel */
   }
 
@@ -64,8 +67,8 @@ export const MainFeedStyled = styled.div<{
   @media (max-width: 360px) {
     height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection
-        ? "260px"
-        : "210px"}; /* Adjust for very small screens */
+        ? "300px"
+        : "240px"}; /* Adjust for very small screens */
   }
 
   .main-thumbnail {
@@ -77,35 +80,35 @@ export const MainFeedStyled = styled.div<{
   .main-thumbnail img {
     object-fit: cover; /* CHANGED: Use 'cover' to fill the area, reducing whitespace */
     width: 100%;
-    /* The fixed height of the image. These values will be reduced for smaller screens. */
+    /* UPDATED: Increased image height to take up more space within the card */
     height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
-      $isMostRecentSection || $isMostLikedSection ? "220px" : "160px"};
+      $isMostRecentSection || $isMostLikedSection ? "260px" : "180px"};
     border-radius: ${({ theme }) => theme.borderRadius.sm};
 
     /* --- Responsive Adjustments for Image Height --- */
     @media (max-width: 992px) {
       height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
         $isMostRecentSection || $isMostLikedSection
-          ? "180px"
-          : "140px"}; /* Reduced height for tablets */
+          ? "220px"
+          : "160px"}; /* Reduced height for tablets */
     }
     @media (max-width: 768px) {
       height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
         $isMostRecentSection || $isMostLikedSection
-          ? "150px"
-          : "120px"}; /* Further reduced height for mobiles */
+          ? "190px"
+          : "140px"}; /* Further reduced height for mobiles */
     }
     @media (max-width: 480px) {
       height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
         $isMostRecentSection || $isMostLikedSection
-          ? "120px"
-          : "90px"}; /* Even more reduced height for small mobiles */
+          ? "160px"
+          : "110px"}; /* Even more reduced height for small mobiles, but still prominent */
     }
     @media (max-width: 360px) {
       height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
         $isMostRecentSection || $isMostLikedSection
-          ? "100px"
-          : "70px"}; /* Adjust for very small screens */
+          ? "140px"
+          : "90px"}; /* Adjust for very small screens */
     }
   }
 
