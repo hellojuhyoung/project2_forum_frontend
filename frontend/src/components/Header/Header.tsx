@@ -49,6 +49,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
 
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
+  const [imageLoadError, setImageLoadError] = useState(false);
   const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
@@ -57,14 +58,28 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
         try {
           const response: any = await instance.get(`/users/${id}`);
           setProfilePicture(response.user.profilePicture);
+          setImageLoadError(false);
         } catch (error) {
           console.error("error fetching profile picture", error);
           setProfilePicture(null);
+          setImageLoadError(true);
         }
       };
       fetchProfilePicture();
+    } else {
+      setProfilePicture(null);
+      setImageLoadError(false);
     }
   }, [id, isLoggedIn]);
+
+  // Handler for image loading errors
+  const handleImageError = (
+    e: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
+    console.error("Profile image failed to load:", e.currentTarget.src);
+    setImageLoadError(true); // Set the flag to true
+    e.currentTarget.onerror = null; // Prevent infinite loop if fallback also fails (though we're not using a fallback image here)
+  };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -213,20 +228,14 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                   <Dropdown menu={{ items: profileDropdownItems }}>
                     <a onClick={(e) => e.preventDefault()}>
                       <Space>
-                        {profilePicture ? (
+                        {profilePicture && !imageLoadError ? (
                           <StyledAvatarImage
                             src={`${BACKEND_BASE_URL}${profilePicture}`}
                             alt={t("alt_user_profile_image")}
-                            onError={(
-                              e: React.SyntheticEvent<HTMLImageElement, Event>
-                            ) => {
-                              (e.target as HTMLImageElement).src =
-                                "/no-image.jpg";
-                              e.currentTarget.onerror = null;
-                            }}
+                            onError={handleImageError} // Use the new handler
                           />
                         ) : (
-                          <StyledUserIcon />
+                          <StyledUserIcon /> // Show StyledUserIcon if no profilePicture or if image fails to load
                         )}
                         <DownOutlined />
                       </Space>
