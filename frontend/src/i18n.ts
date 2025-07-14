@@ -13,6 +13,9 @@ if (!i18n.isInitialized) {
       fallbackLng: "en",
       debug: process.env.NODE_ENV === "development",
 
+      supportedLngs: ["en", "ko"],
+      nonExplicitSupportedLngs: true,
+
       ns: allNamespaces,
       defaultNS: "common",
 
