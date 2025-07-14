@@ -9,7 +9,6 @@ export const MainFeedStyled = styled.div<{
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   padding: ${({ theme }) => theme.spacing.md}; /* Default padding */
-  /* REMOVED: margin - Swiper handles spacing between slides */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   background-color: ${({ theme }) => theme.colors.backgroundLight};
   transition: box-shadow 0.3s ease;
@@ -17,7 +16,7 @@ export const MainFeedStyled = styled.div<{
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.sm}; /* Default gap between elements */
 
-  /* UPDATED: Increased default height for better visual balance and content space */
+  /* Increased default height for better visual balance and content space */
   height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
     $isMostRecentSection || $isMostLikedSection ? "420px" : "320px"};
   box-sizing: border-box; /* Ensures padding and border are included in the element's total height/width */
@@ -31,7 +30,6 @@ export const MainFeedStyled = styled.div<{
   /* For tablets and smaller desktops (e.g., up to 992px wide) */
   @media (max-width: 992px) {
     padding: ${({ theme }) => theme.spacing.sm}; /* Slightly less padding */
-    /* margin handled by Swiper */
     height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection
         ? "380px"
@@ -42,7 +40,6 @@ export const MainFeedStyled = styled.div<{
   /* For larger mobile devices and smaller tablets (e.g., up to 768px wide) */
   @media (max-width: 768px) {
     padding: ${({ theme }) => theme.spacing.xs}; /* Further reduced padding */
-    /* margin handled by Swiper */
     height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection
         ? "350px"
@@ -52,23 +49,34 @@ export const MainFeedStyled = styled.div<{
       theme.borderRadius.sm}; /* Slightly smaller border-radius */
   }
 
-  /* For small mobile devices (e.g., up to 480px wide) */
-  @media (max-width: 480px) {
-    padding: ${theme.spacing.xs}; /* Adjusted to theme spacing */
-    /* margin handled by Swiper */
+  /* For small mobile devices (e.g., up to 576px wide, single column for MainFeedGrid) */
+  @media (max-width: 576px) {
+    padding: ${theme.spacing.sm}; /* Increased padding for single column view */
+    /* Height for single column view - significantly increased for prominence */
     height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection
-        ? "320px"
-        : "260px"}; /* Even more reduced card height, ensuring images are prominent */
+        ? "380px" // Maintain distinction for Most Recent/Liked
+        : "300px"}; // Increased height for main feed cards
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Re-added shadow for single column */
+    gap: ${theme.spacing.sm}; /* More gap for better spacing */
+  }
+
+  /* For very small mobile devices (e.g., up to 480px wide) */
+  @media (max-width: 480px) {
+    padding: ${theme.spacing.xs}; /* Adjusted to theme spacing */
+    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+      $isMostRecentSection || $isMostLikedSection
+        ? "360px" // Adjust for very small screens, maintaining distinction
+        : "280px"}; /* Adjusted for very small screens */
     box-shadow: none; /* Optional: remove shadow for a flat mobile feel */
   }
 
-  /* For very small mobile devices (e.g., up to 360px wide) */
+  /* For even smaller mobile devices (e.g., up to 360px wide) */
   @media (max-width: 360px) {
     height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection
-        ? "300px"
-        : "240px"}; /* Adjust for very small screens */
+        ? "340px" // Adjust for very small screens
+        : "260px"}; /* Adjust for very small screens */
   }
 
   .main-thumbnail {
@@ -78,9 +86,9 @@ export const MainFeedStyled = styled.div<{
   }
 
   .main-thumbnail img {
-    object-fit: cover; /* CHANGED: Use 'cover' to fill the area, reducing whitespace */
+    object-fit: cover;
     width: 100%;
-    /* UPDATED: Increased image height to take up more space within the card */
+    /* Increased image height to take up more space within the card */
     height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection ? "260px" : "180px"};
     border-radius: ${({ theme }) => theme.borderRadius.sm};
@@ -98,17 +106,24 @@ export const MainFeedStyled = styled.div<{
           ? "190px"
           : "140px"}; /* Further reduced height for mobiles */
     }
+    /* UPDATED: Increased image heights for single column mobile view */
+    @media (max-width: 576px) {
+      height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+        $isMostRecentSection || $isMostLikedSection
+          ? "220px" // Larger image for Most Recent/Liked on mobile
+          : "180px"}; // Larger image for Main Feed on mobile
+    }
     @media (max-width: 480px) {
       height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
         $isMostRecentSection || $isMostLikedSection
-          ? "160px"
-          : "110px"}; /* Even more reduced height for small mobiles, but still prominent */
+          ? "200px" // Adjust for very small screens
+          : "160px"};
     }
     @media (max-width: 360px) {
       height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
         $isMostRecentSection || $isMostLikedSection
-          ? "140px"
-          : "90px"}; /* Adjust for very small screens */
+          ? "180px" // Adjust for very small screens
+          : "140px"};
     }
   }
 
@@ -134,10 +149,15 @@ export const MainFeedStyled = styled.div<{
       font-size: 0.95rem; /* Specific rem value for fine control */
       margin: ${({ theme }) => theme.spacing.xs} 0; /* Reduced margin */
     }
-    @media (max-width: 480px) {
-      font-size: 0.9rem; /* Even smaller */
-      -webkit-line-clamp: 3; /* Allow more lines if title is long on small screens */
+    /* UPDATED: Title font size for single column mobile view */
+    @media (max-width: 576px) {
+      font-size: ${theme.fontSizes.md}; /* Keep title readable on mobile */
+      -webkit-line-clamp: 2; /* Ensure 2 lines for consistency */
       height: auto; /* Let content dictate height, rely on line-clamp for truncation */
+    }
+    @media (max-width: 480px) {
+      font-size: ${theme.fontSizes
+        .sm}; /* Slightly smaller for very small phones */
     }
   }
 
@@ -153,13 +173,17 @@ export const MainFeedStyled = styled.div<{
     @media (max-width: 768px) {
       font-size: ${({ theme }) => theme.fontSizes.xs}; /* Smaller */
     }
+    /* UPDATED: Citation/Likes font size for single column mobile view */
+    @media (max-width: 576px) {
+      font-size: ${theme.fontSizes.sm}; /* Larger for readability on mobile */
+    }
     @media (max-width: 480px) {
-      font-size: 0.75rem; /* Even smaller */
+      font-size: ${theme.fontSizes
+        .xs}; /* Slightly smaller for very small phones */
     }
   }
 
   .main-citation {
-    /* Font size inherited from .main-citation-and-likes for responsiveness */
     color: ${({ theme }) => theme.colors.textSecondary};
   }
 
@@ -167,7 +191,6 @@ export const MainFeedStyled = styled.div<{
     display: flex;
     align-items: center;
     gap: ${({ theme }) => theme.spacing.xs};
-    /* Font size inherited from .main-citation-and-likes for responsiveness */
     color: ${({ theme }) => theme.colors.textSecondary};
 
     /* Adjust gap for smaller screens if needed */
