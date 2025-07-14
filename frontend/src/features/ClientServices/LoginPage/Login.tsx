@@ -58,9 +58,9 @@ const LoginPage: React.FC = () => {
 
       dispatch(
         setUser({
-          id: response.data.id,
-          username: response.data.username,
-          token: response.data.token,
+          id: response.id,
+          username: response.username,
+          token: response.token,
         })
       );
 

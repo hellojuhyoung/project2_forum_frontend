@@ -11,7 +11,7 @@ instance.interceptors.response.use(
   (response: AxiosResponse) => {
     // CORRECTED: Return the full response object, not just response.data
     // This makes 'instance' behave like a standard Axios instance.
-    return response;
+    return response.data;
   },
   (error: AxiosError) => {
     // You can add global error handling here if needed

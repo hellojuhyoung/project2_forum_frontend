@@ -93,9 +93,9 @@ function AppInitializer({
           );
 
           // CORRECTED: Access properties from profileResponse.data (standard Axios behavior)
-          const id = profileResponse.data?.user?.id;
-          const username = profileResponse.data?.user?.username;
-          const token = profileResponse.data?.token;
+          const id = profileResponse?.user?.id;
+          const username = profileResponse?.user?.username;
+          const token = profileResponse?.token;
 
           // Debug logs for dispatch payload
           console.log("Dispatching setUser with:");
