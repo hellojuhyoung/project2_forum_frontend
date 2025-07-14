@@ -6,6 +6,7 @@ import {
   PaginationStyled,
   Section,
   MostLikedFeed,
+  SectionTitle, // IMPORTED: New SectionTitle component
 } from "./styled";
 
 import clsx from "clsx";
@@ -56,12 +57,15 @@ export default function Main() {
     const getRecentPosts = async () => {
       try {
         const response: any = await instance.get("/posts/recent");
-        const mostRecent_posts = response.posts;
+        // Ensure response.posts exists and is an array
+        const mostRecent_posts = Array.isArray(response.posts)
+          ? response.posts
+          : [];
         console.log("most recent posts", response);
-        // console.log(mostRecent_posts);
         setRecentPost(mostRecent_posts);
       } catch (error) {
         console.error("error in getting recent posts", error);
+        setRecentPost([]); // Set to empty array on error
       }
     };
 
@@ -69,11 +73,15 @@ export default function Main() {
     const getLikedPosts = async () => {
       try {
         const response: any = await instance.get("/posts/mostLiked");
-        const mostLiked_posts = response.posts;
+        // Ensure response.posts exists and is an array
+        const mostLiked_posts = Array.isArray(response.posts)
+          ? response.posts
+          : [];
         console.log("mostliked response", response);
         setLikedPost(mostLiked_posts);
       } catch (error) {
         console.error("error fetching most liked posts", error);
+        setLikedPost([]); // Set to empty array on error
       }
     };
 
@@ -81,13 +89,16 @@ export default function Main() {
     const getPaginatedPosts = async () => {
       try {
         const response: any = await instance.get(`/posts?page=${currentPage}`);
-        // console.log(response);
-        setPosts(response.posts);
-        setTotalPages(response.totalPages);
-        // console.log(response);
-        // console.log(posts, typeof posts);
+        // Ensure response.posts exists and is an array
+        const fetchedPosts = Array.isArray(response.posts)
+          ? response.posts
+          : [];
+        setPosts(fetchedPosts);
+        setTotalPages(response.totalPages || 0); // Default to 0 if totalPages is undefined
       } catch (error) {
         console.error("error in getting all the posts", error);
+        setPosts([]); // Set to empty array on error
+        setTotalPages(0); // Reset total pages on error
       }
     };
 
@@ -97,8 +108,11 @@ export default function Main() {
   }, [router.isReady, token, currentPage]);
 
   const renderPageNumbers = () => {
+    // Ensure totalPages is a number and not NaN
+    const safeTotalPages = isNaN(totalPages) ? 0 : totalPages;
+
     let startPage = Math.max(1, currentPage - 2);
-    let endPage = Math.min(totalPages, startPage + 4);
+    let endPage = Math.min(safeTotalPages, startPage + 4);
 
     if (endPage - startPage < 4) {
       startPage = Math.max(1, endPage - 4);
@@ -126,29 +140,36 @@ export default function Main() {
           {token ? <></> : <></>}
 
           <Section>
-            <h2>{t("section_most_recent")}</h2>
+            <SectionTitle>{t("section_most_recent")}</SectionTitle>{" "}
+            {/* UPDATED: Using SectionTitle */}
             <MostRecentFeed>
-              <SlideFeed slides={recentPost} />
+              {recentPost &&
+              Array.isArray(recentPost) &&
+              recentPost.length > 0 ? (
+                <SlideFeed slides={recentPost} />
+              ) : null}
             </MostRecentFeed>
           </Section>
 
           <Section>
-            <h2>{t("section_most_liked")}</h2>
+            <SectionTitle>{t("section_most_liked")}</SectionTitle>{" "}
+            {/* UPDATED: Using SectionTitle */}
             <MostLikedFeed>
-              <SlideFeed slides={likedPost} />
+              {likedPost && Array.isArray(likedPost) && likedPost.length > 0 ? (
+                <SlideFeed slides={likedPost} />
+              ) : null}
             </MostLikedFeed>
           </Section>
 
           <Section>
-            <h2>{t("section_main_feed")}</h2>
+            <SectionTitle>{t("section_main_feed")}</SectionTitle>{" "}
+            {/* UPDATED: Using SectionTitle */}
             <MainFeedGrid>
-              {
-                posts && Array.isArray(posts) && posts.length > 0
-                  ? posts.map((post: any, index: number) => (
-                      <MainFeed key={index} post={post} />
-                    ))
-                  : null // Render nothing if no posts in main feed
-              }
+              {posts && Array.isArray(posts) && posts.length > 0
+                ? posts.map((post: any, index: number) => (
+                    <MainFeed key={index} post={post} />
+                  ))
+                : null}
             </MainFeedGrid>
           </Section>
 

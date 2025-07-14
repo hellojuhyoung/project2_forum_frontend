@@ -3,36 +3,48 @@ import { theme } from "@/styles/theme";
 
 export const MainStyled = styled.div`
   min-height: calc(100vh - (var(--header-height) + var(--footer-height)));
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: ${theme.spacing
+    .xl}; /* Increased padding top for more breathing room */
+  padding-bottom: ${theme.spacing.xl}; /* Increased padding bottom */
+  background-color: ${theme.colors.backgroundLight}; /* A subtle background */
 
   @media (max-width: 768px) {
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-top: ${theme.spacing.lg};
+    padding-bottom: ${theme.spacing.lg};
+  }
+
+  @media (max-width: 576px) {
+    padding-top: ${theme.spacing.md};
+    padding-bottom: ${theme.spacing.md};
   }
 `;
 
 export const Container = styled.div`
-  max-width: 1200px;
+  max-width: 1400px; /* Increased max-width for more content on larger screens */
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 ${theme.spacing.lg}; /* Adjusted padding */
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: ${theme.spacing
+    .xl}; /* Increased gap between sections for better separation */
+
+  @media (max-width: 1440px) {
+    max-width: 1200px; /* Standardize max-width for common large screens */
+  }
 
   @media (max-width: 992px) {
-    padding: 0 20px;
-    gap: 30px;
+    padding: 0 ${theme.spacing.md};
+    gap: ${theme.spacing.lg};
   }
 
   @media (max-width: 768px) {
-    padding: 0 15px;
-    gap: 25px;
+    padding: 0 ${theme.spacing.md};
+    gap: ${theme.spacing.md};
   }
 
   @media (max-width: 576px) {
-    padding: 0 10px;
-    gap: 20px;
+    padding: 0 ${theme.spacing.sm};
+    gap: ${theme.spacing.md};
   }
 `;
 
@@ -40,10 +52,28 @@ export const MostRecentFeed = styled.div`
   display: flex;
   overflow-x: auto;
   width: 100%;
-  padding-bottom: 10px;
-  scrollbar-width: none;
+  padding-bottom: ${theme.spacing
+    .sm}; /* Reduced padding to make scrollbar less intrusive */
+  scrollbar-width: none; /* Firefox */
   &::-webkit-scrollbar {
-    display: none;
+    display: none; /* Chrome, Safari, Edge */
+  }
+
+  /* Ensure items within this container are correctly sized for horizontal scroll */
+  > * {
+    flex: 0 0 auto; /* Prevent items from shrinking */
+    width: 280px; /* Default width for horizontal cards */
+    margin-right: ${theme.spacing.md}; /* Space between cards */
+
+    @media (max-width: 768px) {
+      width: 250px; /* Slightly smaller on tablets */
+      margin-right: ${theme.spacing.sm};
+    }
+
+    @media (max-width: 576px) {
+      width: 200px; /* More prominent on small phones */
+      margin-right: ${theme.spacing.sm};
+    }
   }
 `;
 
@@ -51,31 +81,51 @@ export const MostLikedFeed = styled.div`
   display: flex;
   overflow-x: auto;
   width: 100%;
-  padding-bottom: 10px;
-  scrollbar-width: none;
+  padding-bottom: ${theme.spacing.sm}; /* Reduced padding */
+  scrollbar-width: none; /* Firefox */
   &::-webkit-scrollbar {
-    display: none;
+    display: none; /* Chrome, Safari, Edge */
+  }
+
+  /* Ensure items within this container are correctly sized for horizontal scroll */
+  > * {
+    flex: 0 0 auto; /* Prevent items from shrinking */
+    width: 280px; /* Default width for horizontal cards */
+    margin-right: ${theme.spacing.md}; /* Space between cards */
+
+    @media (max-width: 768px) {
+      width: 250px; /* Slightly smaller on tablets */
+      margin-right: ${theme.spacing.sm};
+    }
+
+    @media (max-width: 576px) {
+      width: 200px; /* More prominent on small phones */
+      margin-right: ${theme.spacing.sm};
+    }
   }
 `;
 
 export const MainFeedGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: ${theme.spacing.md}; /* Consistent gap */
 
-  @media (max-width: 1200px) {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(
+      3,
+      1fr
+    ); /* 3 columns for slightly smaller desktops */
+    gap: ${theme.spacing.md};
   }
 
   @media (max-width: 992px) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
+    gap: ${theme.spacing.sm};
   }
 
   @media (max-width: 576px) {
-    grid-template-columns: 1fr;
-    gap: 10px;
+    grid-template-columns: 1fr; /* Single column for mobile */
+    gap: ${theme.spacing.sm};
   }
 `;
 
@@ -83,89 +133,105 @@ export const PaginationStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 40px auto 0 auto;
+  margin: ${theme.spacing.xl} auto ${theme.spacing.md} auto; /* Adjusted margin */
   flex-wrap: wrap;
-  padding: 0 10px;
+  padding: 0 ${theme.spacing.sm};
 
   .page-number {
     cursor: pointer;
-    color: inherit;
+    color: ${theme.colors.textSecondary}; /* Default color */
     text-decoration: none;
-    margin: 0 6px;
+    margin: 0 ${theme.spacing.xs}; /* Smaller margin for numbers */
     user-select: none;
-    font-size: 16px;
+    font-size: ${theme.fontSizes.md}; /* Base font size */
+    padding: ${theme.spacing.xxs} ${theme.spacing.xs}; /* Added padding for better click area */
+    border-radius: ${theme.borderRadius.sm}; /* Slightly rounded corners */
+    transition: all 0.2s ease-in-out; /* Smooth transition */
 
     @media (max-width: 576px) {
-      font-size: 14px;
-      margin: 0 4px;
+      font-size: ${theme.fontSizes.sm};
+      margin: 0 ${theme.spacing.xxs};
+      padding: ${theme.spacing.xxs} ${theme.spacing.xs};
     }
   }
 
   .page-number:hover {
-    text-decoration: underline;
-    color: #0070f3;
+    background-color: ${theme.colors.primaryHover}; /* Highlight on hover */
+    color: ${theme.colors.backgroundLight}; /* White text on hover */
+    text-decoration: none; /* No underline on hover */
   }
 
   .page-number.active {
-    font-weight: bold;
-    color: #0070f3;
+    font-weight: ${theme.fontWeights.bold};
+    color: ${theme.colors.background}; /* White text for active */
+    background-color: ${theme.colors.primary}; /* Primary color for active */
+    pointer-events: none; /* Disable click on active page */
   }
 
   .arrow {
     background: none;
-    border: none;
+    border: 1px solid ${theme.colors.borderColor}; /* Subtle border */
+    border-radius: ${theme.borderRadius.sm};
     cursor: pointer;
-    font-size: 18px;
-    padding: 0 8px;
-    color: inherit;
+    font-size: ${theme.fontSizes.lg};
+    padding: ${theme.spacing.xs} ${theme.spacing.sm};
+    color: ${theme.colors.text};
     user-select: none;
+    transition: all 0.2s ease-in-out;
 
     @media (max-width: 576px) {
-      font-size: 16px;
-      padding: 0 5px;
+      font-size: ${theme.fontSizes.md};
+      padding: ${theme.spacing.xs};
     }
   }
 
   .arrow:hover {
-    text-decoration: underline;
-    color: #0070f3;
+    background-color: ${theme.colors.buttonDefaultHover};
+    color: ${theme.colors.primary};
+    text-decoration: none;
   }
 
   .arrow:disabled {
-    cursor: default;
-    color: grey;
+    cursor: not-allowed;
+    color: ${theme.colors.disabledText};
+    border-color: ${theme.colors.disabledBorder};
+    background-color: ${theme.colors.disabledBackground};
     text-decoration: none;
   }
 `;
 
 export const Section = styled.div`
-  margin-bottom: 48px;
+  margin-bottom: ${theme.spacing.xl}; /* Increased margin between sections */
 
   @media (max-width: 768px) {
-    margin-bottom: 30px;
+    margin-bottom: ${theme.spacing.lg};
   }
 
   @media (max-width: 576px) {
-    margin-bottom: 20px;
+    margin-bottom: ${theme.spacing.md};
   }
 `;
 
-export const SectionHeader = styled.h2`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
-  margin: ${({ theme }) => theme.spacing.lg} 0
-    ${({ theme }) => theme.spacing.md};
-  color: ${({ theme }) => theme.colors.text};
+// Renamed from SectionHeader to avoid conflict and make it a component
+export const SectionTitle = styled.h2`
+  font-size: ${theme.fontSizes.xl}; /* Larger heading */
+  font-weight: ${theme.fontWeights.bold};
+  margin: ${theme.spacing.lg} 0 ${theme.spacing.md}; /* Adjusted top/bottom margin */
+  color: ${theme.colors.textPrimary}; /* Darker text for headings */
+  border-bottom: 2px solid ${theme.colors.borderColor}; /* Subtle underline */
+  padding-bottom: ${theme.spacing.sm}; /* Padding for the underline */
+  display: inline-block; /* To make border-bottom wrap content */
+  line-height: 1.2; /* Adjust line height for better spacing */
 
   @media (max-width: 992px) {
-    font-size: ${({ theme }) => theme.fontSizes.md};
-    margin: ${({ theme }) => theme.spacing.md} 0
-      ${({ theme }) => theme.spacing.sm};
+    font-size: ${theme.fontSizes.lg};
+    margin: ${theme.spacing.md} 0 ${theme.spacing.sm};
+    padding-bottom: ${theme.spacing.xs};
   }
 
   @media (max-width: 576px) {
-    font-size: ${({ theme }) => theme.fontSizes.base};
-    margin: ${({ theme }) => theme.spacing.sm} 0
-      ${({ theme }) => theme.spacing.xs};
+    font-size: ${theme.fontSizes.md};
+    margin: ${theme.spacing.sm} 0 ${theme.spacing.xs};
+    padding-bottom: ${theme.spacing.xxs};
   }
 `;
