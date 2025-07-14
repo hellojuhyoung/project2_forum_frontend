@@ -58,9 +58,9 @@ const LoginPage: React.FC = () => {
 
       dispatch(
         setUser({
-          id: response.id,
-          username: response.username,
-          token: response.token,
+          id: response.data.id,
+          username: response.data.username,
+          token: response.data.token,
         })
       );
 
@@ -77,8 +77,8 @@ const LoginPage: React.FC = () => {
       notification.error({
         message: t("login_error_message"),
         description:
-          error.response && error.response && error.response.message
-            ? error.response.message
+          error.response && error.response && error.response.data.message
+            ? error.response.data.message
             : t("login_error_description_generic"),
         placement: "topRight",
       });
