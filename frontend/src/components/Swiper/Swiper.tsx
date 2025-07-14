@@ -6,6 +6,7 @@ import "swiper/css/navigation";
 
 import { SwiperStyled } from "./styled";
 import MainFeed from "../MainFeed/MainFeed";
+import { theme } from "@/styles/theme";
 
 interface Post {
   id: number;
@@ -22,32 +23,60 @@ interface SlideFeedProps {
 const SlideFeed: React.FC<SlideFeedProps> = ({ slides }) => {
   const [swiperInstance, setSwiperInstance] = useState<any>(null);
 
-  // safety for all the swiper, very brief moment during component re-renders (perhaps due to router.isReady or other effects)
-  // where slides temporarily becomes undefined or null before the useEffect fetches data, or before useState fully takes effect in a subsequent render cycle.
-  // basically rendeirng issues associated with rehydration? possibly
-  // redux rehydration
-
   if (!slides || !Array.isArray(slides) || slides.length === 0) {
-    // Optionally, render a loading state, a message, or null
-    // For now, we'll return null to prevent the crash.
-    // console.log("SlideFeed: 'slides' is not a valid array or is empty.", slides);
     return null;
   }
 
   return (
     <>
       <SwiperStyled
-        onSwiper={setSwiperInstance} // capture swiper instance here
-        onClick={() => swiperInstance?.slideNext()} // safely call slideNext if instance exists
+        onSwiper={setSwiperInstance}
+        // REMOVED: onClick={() => swiperInstance?.slideNext()} - This was causing unintended slide advances
         modules={[Navigation]}
         navigation={true}
-        spaceBetween={30}
-        slidesPerView={4}
+        spaceBetween={theme.spacing.md} // Use theme spacing for consistency
         loop={false}
-        slidesPerGroup={4}
+        // slidesPerGroup is now handled by breakpoints for responsive grouping
+        // slidesPerView is now handled by breakpoints for responsive viewing
+
+        // NEW: Responsive Breakpoints for slidesPerView and spaceBetween
+        breakpoints={{
+          // When window width is >= 1400px (large desktops)
+          1400: {
+            slidesPerView: 4,
+            slidesPerGroup: 4,
+            spaceBetween: theme.spacing.lg, // More space on larger screens
+          },
+          // When window width is >= 992px (medium desktops/laptops)
+          992: {
+            slidesPerView: 3,
+            slidesPerGroup: 3,
+            spaceBetween: theme.spacing.md,
+          },
+          // When window width is >= 768px (tablets)
+          768: {
+            slidesPerView: 2.5, // Show 2 full and a partial 3rd to indicate scroll
+            slidesPerGroup: 2,
+            spaceBetween: theme.spacing.md,
+          },
+          // When window width is >= 576px (larger phones)
+          576: {
+            slidesPerView: 1.8, // Show 1 full and a partial 2nd
+            slidesPerGroup: 1,
+            spaceBetween: theme.spacing.sm,
+          },
+          // When window width is < 576px (small phones)
+          0: {
+            // Default for smaller screens
+            slidesPerView: 1.2, // Show 1 full and a partial 2nd
+            slidesPerGroup: 1,
+            spaceBetween: theme.spacing.sm,
+          },
+        }}
       >
         {slides.map((slide: Post, index: number) => (
           <SwiperSlide key={index}>
+            {/* isMostRecentSection and isMostLikedSection props are for MainFeed styling */}
             <MainFeed post={slide} isMostRecentSection isMostLikedSection />
           </SwiperSlide>
         ))}

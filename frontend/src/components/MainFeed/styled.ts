@@ -8,16 +8,13 @@ export const MainFeedStyled = styled.div<{
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   padding: ${({ theme }) => theme.spacing.md}; /* Default padding */
-  margin: ${({ theme }) =>
-    theme.spacing.sm}; /* Default margin around the card */
+  /* REMOVED: margin - Swiper handles spacing between slides */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   background-color: ${({ theme }) => theme.colors.backgroundLight};
   transition: box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.sm}; /* Default gap between elements */
-
-  /* The fixed height of the card. These values will be reduced for smaller screens. */
   height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
     $isMostRecentSection || $isMostLikedSection ? "380px" : "300px"};
   box-sizing: border-box; /* Ensures padding and border are included in the element's total height/width */
@@ -31,8 +28,7 @@ export const MainFeedStyled = styled.div<{
   /* For tablets and smaller desktops (e.g., up to 992px wide) */
   @media (max-width: 992px) {
     padding: ${({ theme }) => theme.spacing.sm}; /* Slightly less padding */
-    margin: ${({ theme }) =>
-      theme.spacing.xs}; /* Slightly less margin between cards */
+    /* margin handled by Swiper */
     height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection
         ? "340px"
@@ -43,7 +39,7 @@ export const MainFeedStyled = styled.div<{
   /* For larger mobile devices and smaller tablets (e.g., up to 768px wide) */
   @media (max-width: 768px) {
     padding: ${({ theme }) => theme.spacing.xs}; /* Further reduced padding */
-    margin: 0.5rem; /* Consistent smaller margin */
+    /* margin handled by Swiper */
     height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection
         ? "300px"
@@ -56,7 +52,7 @@ export const MainFeedStyled = styled.div<{
   /* For small mobile devices (e.g., up to 480px wide) */
   @media (max-width: 480px) {
     padding: 0.8rem; /* Use specific rem for fine control */
-    margin: 0.3rem; /* Very small margin */
+    /* margin handled by Swiper */
     height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection
         ? "280px"
@@ -79,7 +75,7 @@ export const MainFeedStyled = styled.div<{
   }
 
   .main-thumbnail img {
-    object-fit: contain; /* Retaining 'contain' as per your original code */
+    object-fit: cover; /* CHANGED: Use 'cover' to fill the area, reducing whitespace */
     width: 100%;
     /* The fixed height of the image. These values will be reduced for smaller screens. */
     height: ${({ $isMostRecentSection, $isMostLikedSection }) =>

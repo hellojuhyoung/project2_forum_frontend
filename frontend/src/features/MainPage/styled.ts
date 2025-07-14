@@ -59,22 +59,8 @@ export const MostRecentFeed = styled.div`
     display: none; /* Chrome, Safari, Edge */
   }
 
-  /* Ensure items within this container are correctly sized for horizontal scroll */
-  > * {
-    flex: 0 0 auto; /* Prevent items from shrinking */
-    width: 280px; /* Default width for horizontal cards */
-    margin-right: ${theme.spacing.md}; /* Space between cards */
-
-    @media (max-width: 768px) {
-      width: 250px; /* Slightly smaller on tablets */
-      margin-right: ${theme.spacing.sm};
-    }
-
-    @media (max-width: 576px) {
-      width: 200px; /* More prominent on small phones */
-      margin-right: ${theme.spacing.sm};
-    }
-  }
+  /* REMOVED: The fixed width and margin-right on children.
+     Swiper will now manage the slide widths via its own configuration. */
 `;
 
 export const MostLikedFeed = styled.div`
@@ -87,22 +73,8 @@ export const MostLikedFeed = styled.div`
     display: none; /* Chrome, Safari, Edge */
   }
 
-  /* Ensure items within this container are correctly sized for horizontal scroll */
-  > * {
-    flex: 0 0 auto; /* Prevent items from shrinking */
-    width: 280px; /* Default width for horizontal cards */
-    margin-right: ${theme.spacing.md}; /* Space between cards */
-
-    @media (max-width: 768px) {
-      width: 250px; /* Slightly smaller on tablets */
-      margin-right: ${theme.spacing.sm};
-    }
-
-    @media (max-width: 576px) {
-      width: 200px; /* More prominent on small phones */
-      margin-right: ${theme.spacing.sm};
-    }
-  }
+  /* REMOVED: The fixed width and margin-right on children.
+     Swiper will now manage the slide widths via its own configuration. */
 `;
 
 export const MainFeedGrid = styled.div`
