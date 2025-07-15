@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
-import { DetailFeedStyled } from "./styled";
+import { DetailFeedStyled, ImageLightboxStyled } from "./styled"; // Import ImageLightboxStyled
 import { instance } from "@/utils/apis/axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { notification } from "antd";
+import { notification, Modal } from "antd"; // Import Modal from antd
 import { useTranslation } from "react-i18next";
 
 // for the localhost url import from the .env file
@@ -18,6 +18,7 @@ interface Post {
   title: string;
   content: string;
   images: { postImage: string }[];
+  thumbnail?: string; // MODIFIED: Made thumbnail property optional
 }
 
 interface DetailFeedProps {
@@ -36,8 +37,12 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
 
   const [likeCount, setLikeCount] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
-  const heartClass = likeCount > 0 ? "liked" : "not-liked";
-  const heartIcon = likeCount > 0 ? "❤️" : "🤍";
+  const heartClass = likeCount > 0 ? "liked" : "not-liked"; // Reverted to original logic
+  const heartIcon = likeCount > 0 ? "❤️" : "🤍"; // Reverted to original logic
+
+  // NEW STATE: For image lightbox
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [lightboxImageSrc, setLightboxImageSrc] = useState("");
 
   const date = new Date(post.createdAt);
   const formattedDate = `${date.getFullYear()}.${(date.getMonth() + 1)
@@ -52,6 +57,7 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
           params.userid = userid;
         }
 
+        // Access data using destructuring from response objects as per your original code
         const [{ data: countData }, { data: checkData }] = await Promise.all([
           instance.get(`/likes/count/${post.id}`),
           instance.get(`/likes/check`, { params }),
@@ -114,36 +120,61 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
     router.push(`/posts/edit?postid=${post.id}`);
   };
 
+  // UPDATED: Use Ant Design Modal.confirm instead of browser confirm()
   const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    if (!confirm(t("confirm_delete_post"))) return;
-
-    try {
-      await instance.delete(`/posts/${post.id}`);
-      notification.success({
-        message: t("notification_success_title"),
-        description: t("notification_post_deleted_description"),
-        placement: "topRight",
-      });
-      router.push("/");
-    } catch (error) {
-      notification.error({
-        message: t("notification_deletion_failed_title"),
-        description: t("notification_deletion_failed_description"),
-        placement: "topRight",
-      });
-      console.error(error);
-    }
+    Modal.confirm({
+      title: t("confirm_delete_post_title"), // Use translation for title
+      content: t("confirm_delete_post_content"), // Use translation for content
+      okText: t("confirm_delete_post_ok_text"),
+      cancelText: t("confirm_delete_post_cancel_text"),
+      onOk: async () => {
+        try {
+          await instance.delete(`/posts/${post.id}`);
+          notification.success({
+            message: t("notification_success_title"),
+            description: t("notification_post_deleted_description"),
+            placement: "topRight",
+          });
+          router.push("/");
+        } catch (error) {
+          notification.error({
+            message: t("notification_deletion_failed_title"),
+            description: t("notification_deletion_failed_description"),
+            placement: "topRight",
+          });
+          console.error(error);
+        }
+      },
+      onCancel() {
+        // User clicked cancel, do nothing
+      },
+    });
   };
 
-  // Destructure images for clarity
-  const images = post.images || [];
+  // Determine the main image (thumbnail takes precedence, otherwise first image from images array)
+  // This logic correctly handles if thumbnail is undefined or null
+  const mainDisplayImage = post.thumbnail
+    ? post.thumbnail
+    : post.images && post.images.length > 0
+    ? post.images[0].postImage
+    : null;
 
-  // Hero image is the first one (if exists)
-  const heroImage = images.length > 0 ? images[0] : null;
+  // Filter out the main image from the gallery images
+  const galleryImages =
+    post.images?.filter((img) => img.postImage !== mainDisplayImage) || [];
 
-  // Gallery images are all after the first one
-  const galleryImages = images.length > 1 ? images.slice(1) : [];
+  // NEW: Function to open the lightbox
+  const openLightbox = (imageSrc: string) => {
+    setLightboxImageSrc(imageSrc);
+    setIsLightboxOpen(true);
+  };
+
+  // NEW: Function to close the lightbox
+  const closeLightbox = () => {
+    setIsLightboxOpen(false);
+    setLightboxImageSrc("");
+  };
 
   return (
     <DetailFeedStyled>
@@ -157,20 +188,24 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
         </div>
       </div>
 
-      {/* Hero Image */}
-      {heroImage && (
-        <div className="detail-main-image">
+      {/* Main Display Image (Thumbnail or first image) */}
+      {mainDisplayImage && (
+        <div
+          className="detail-main-image"
+          onClick={() => openLightbox(`${API_URL}${mainDisplayImage}`)}
+        >
           <img
-            src={`${API_URL}${heroImage.postImage}`}
+            src={`${API_URL}${mainDisplayImage}`}
             alt={t("image_alt_main_image", { title: post.title })}
             className="main-img"
           />
         </div>
       )}
 
+      {/* Post Content (plain text) */}
       <div className="detail-content">{post.content}</div>
 
-      {/* Gallery Images */}
+      {/* Gallery Images (all images excluding the one used as mainDisplayImage) */}
       {galleryImages.length > 0 && (
         <div className="detail-gallery">
           {galleryImages.map((imgObj, index) => (
@@ -182,6 +217,7 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
                 title: post.title,
               })}
               className="gallery-img"
+              onClick={() => openLightbox(`${API_URL}${imgObj.postImage}`)} // Clickable for lightbox
             />
           ))}
         </div>
@@ -213,6 +249,13 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
             {t("button_delete")}
           </button>
         </div>
+      )}
+
+      {/* Image Lightbox Modal */}
+      {isLightboxOpen && lightboxImageSrc && (
+        <ImageLightboxStyled onClick={closeLightbox}>
+          <img src={lightboxImageSrc} alt={t("image_alt_lightbox")} />
+        </ImageLightboxStyled>
       )}
     </DetailFeedStyled>
   );
