@@ -1,3 +1,4 @@
+// frontend / src / utils / ToastEditor / EditorContent.tsx;
 export function ImagesFromText(content: string) {
   // Regular expression to find images in markdown ![](...)
   const imageRegex = /!\[\]\((data:image\/[a-zA-Z]+;base64,[^)]+)\)/g;
