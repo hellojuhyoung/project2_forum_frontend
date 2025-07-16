@@ -16,5 +16,10 @@
   "like_toggle_failed_title": "Like Action Failed",
   "like_toggle_failed_description": "Failed to update like status. Please try again.",
   "image_alt_main_image": "Main image for {{title}}",
-  "image_alt_gallery_image": "Gallery image {{index}} for {{title}}"
+  "image_alt_gallery_image": "Gallery image {{index}} for {{title}}",
+
+  "confirm_delete_post_title": "Confirm Deletion",
+  "confirm_delete_post_content": "Are you sure you want to delete this post? This action cannot be undone.",
+  "confirm_delete_post_ok_text": "Delete",
+  "confirm_delete_post_cancel_text": "Cancel"
 }

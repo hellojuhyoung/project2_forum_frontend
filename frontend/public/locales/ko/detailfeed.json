@@ -16,5 +16,10 @@
   "like_toggle_failed_title": "좋아요 동작 실패",
   "like_toggle_failed_description": "좋아요 상태를 업데이트하지 못했습니다. 다시 시도해주세요.",
   "image_alt_main_image": "{{title}}의 메인 이미지",
-  "image_alt_gallery_image": "{{title}}의 갤러리 이미지 {{index}}"
+  "image_alt_gallery_image": "{{title}}의 갤러리 이미지 {{index}}",
+
+  "confirm_delete_post_title": "삭제 확인",
+  "confirm_delete_post_content": "이 게시물을 정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+  "confirm_delete_post_ok_text": "삭제",
+  "confirm_delete_post_cancel_text": "취소"
 }
