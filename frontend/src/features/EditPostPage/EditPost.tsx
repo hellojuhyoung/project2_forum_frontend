@@ -26,7 +26,7 @@ import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 
 const EditPostPage: React.FC = () => {
-  const { t } = useTranslation("editPost"); // Initialize useTranslation
+  const { t } = useTranslation("editpost");
   const router = useRouter();
   const { postid } = router.query;
 
