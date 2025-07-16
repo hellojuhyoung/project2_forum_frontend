@@ -165,6 +165,13 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
     ? post.images[0].postImage
     : null;
 
+  const displayImageSrc = mainDisplayImage
+    ? mainDisplayImage.startsWith("http://") ||
+      mainDisplayImage.startsWith("https://")
+      ? mainDisplayImage // If it's already an absolute URL, use it directly
+      : `${API_URL}${mainDisplayImage}` // Otherwise, prepend API_URL (for relative paths)
+    : "/no-image.jpg"; // Fallback if no main display image
+
   // Filter out the main image from the gallery images
   const galleryImages =
     post.images?.filter((img) => img.postImage !== mainDisplayImage) || [];
@@ -200,7 +207,8 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
           onClick={() => openLightbox(`${API_URL}${mainDisplayImage}`)}
         >
           <img
-            src={`${API_URL}${mainDisplayImage}`}
+            // --- UPDATE src to use displayImageSrc ---
+            src={displayImageSrc}
             alt={t("image_alt_main_image", { title: post.title })}
             className="main-img"
           />
@@ -217,18 +225,26 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
       {/* Gallery Images (all images excluding the one used as mainDisplayImage) */}
       {galleryImages.length > 0 && (
         <div className="detail-gallery">
-          {galleryImages.map((imgObj, index) => (
-            <img
-              key={index}
-              src={`${API_URL}${imgObj.postImage}`}
-              alt={t("image_alt_gallery_image", {
-                index: index + 1,
-                title: post.title,
-              })}
-              className="gallery-img"
-              onClick={() => openLightbox(`${API_URL}${imgObj.postImage}`)} // Clickable for lightbox
-            />
-          ))}
+          {galleryImages.map((imgObj, index) => {
+            const galleryImgSrc =
+              imgObj.postImage.startsWith("http://") ||
+              imgObj.postImage.startsWith("https://")
+                ? imgObj.postImage
+                : `${API_URL}${imgObj.postImage}`;
+
+            return (
+              <img
+                key={index}
+                src={galleryImgSrc}
+                alt={t("image_alt_gallery_image", {
+                  index: index + 1,
+                  title: post.title,
+                })}
+                className="gallery-img"
+                onClick={() => openLightbox(galleryImgSrc)}
+              />
+            );
+          })}
         </div>
       )}
 
