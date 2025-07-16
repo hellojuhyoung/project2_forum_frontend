@@ -1,3 +1,5 @@
+// frontend/src/features/DetailPostPage/DetailPost.tsx
+
 import { DetailPostStyled } from "./styled";
 
 // axios request api url localhost:5001

@@ -1,3 +1,5 @@
+// frontend/src/components/DetailFeed/DetailFeed.tsx
+
 import { useRouter } from "next/router";
 import { DetailFeedStyled, ImageLightboxStyled } from "./styled"; // Import ImageLightboxStyled
 import { instance } from "@/utils/apis/axios";
@@ -6,6 +8,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { notification, Modal } from "antd"; // Import Modal from antd
 import { useTranslation } from "react-i18next";
+
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 // for the localhost url import from the .env file
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -203,7 +208,11 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
       )}
 
       {/* Post Content (plain text) */}
-      <div className="detail-content">{post.content}</div>
+      <div className="detail-content">
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {post.content}
+        </ReactMarkdown>
+      </div>
 
       {/* Gallery Images (all images excluding the one used as mainDisplayImage) */}
       {galleryImages.length > 0 && (

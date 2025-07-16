@@ -1,3 +1,5 @@
+// frontend/src/components/MainFeed/MainFeed.tsx
+
 import { useRouter } from "next/router";
 import MainFeedStyled from "./styled";
 import { useEffect, useState } from "react";
@@ -61,6 +63,13 @@ const MainFeed: React.FC<MainFeedProps> = ({
     .slice(0, 10)
     .replace(/-/g, ".");
 
+  const thumbnailUrl = post.thumbnail
+    ? post.thumbnail.startsWith("http://") ||
+      post.thumbnail.startsWith("https://")
+      ? post.thumbnail // If it's already an absolute URL, use it directly
+      : `${API_URL}${post.thumbnail}` // Otherwise, prepend API_URL (for relative paths)
+    : "/no-image.jpg"; // Fallback if no thumbnail
+
   return (
     <>
       <MainFeedStyled
@@ -70,9 +79,7 @@ const MainFeed: React.FC<MainFeedProps> = ({
       >
         <div className="main-thumbnail">
           <img
-            src={
-              post.thumbnail ? `${API_URL}${post.thumbnail}` : "/no-image.jpg"
-            }
+            src={thumbnailUrl}
             alt={
               post.thumbnail
                 ? t("thumbnail_alt_text", { title: post.title })
