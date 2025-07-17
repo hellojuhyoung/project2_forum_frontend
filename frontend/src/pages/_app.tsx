@@ -7,7 +7,7 @@ import { store, persistor, RootState } from "@/redux/store";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { setUser, clearUser } from "@/redux/redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { instance } from "@/utils/apis/axios"; // Now importing your custom instance
+import { instance } from "@/utils/apis/axios";
 import Margins from "@/components/Margins/Margins";
 import { ThemeProvider } from "styled-components";
 import { theme } from "@/styles/theme";
@@ -16,7 +16,6 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import { AxiosError } from "axios";
 
-// AppInitializer now receives a prop to indicate when Redux Persist is ready
 function AppInitializer({
   onReady,
   persistorReady,
@@ -27,7 +26,6 @@ function AppInitializer({
   const dispatch = useDispatch();
   const router = useRouter();
 
-  // Get token and user ID directly from Redux store
   const currentTokenFromRedux = useSelector(
     (state: RootState) => state.authentication.token
   );
@@ -45,7 +43,6 @@ function AppInitializer({
   }, [onReady]);
 
   useEffect(() => {
-    // CRITICAL: Only run this effect once Redux Persist has rehydrated and initial check hasn't run
     if (!persistorReady || initialAuthCheckPerformed.current) {
       console.log(
         `AppInitializer useEffect skipped. persistorReady: ${persistorReady}, initialAuthCheckPerformed: ${initialAuthCheckPerformed.current}`
@@ -63,18 +60,25 @@ function AppInitializer({
       loggedInUserIdFromRedux
     );
 
+    // --- IMPORTANT: Define public paths here ---
+    const publicPaths = [
+      "/auth/login",
+      "/users/signup", // Note: Your code uses '/users/signup', ensure this is correct
+      "/auth/forgot/password",
+      "/auth/reset/password", // <--- THIS IS THE CRUCIAL ADDITION!
+      "/", // Assuming your homepage might be public as well
+    ];
+
+    const isPublicPath = publicPaths.includes(router.pathname);
+
     const performAuthCheck = async () => {
-      // Now we solely rely on the token being present in the Redux store after rehydration
       if (currentTokenFromRedux && loggedInUserIdFromRedux) {
         console.log(
           "Token and User ID present in Redux. Attempting profile fetch/verification."
         );
         try {
-          // Using your custom instance. Axios will automatically handle base URL and withCredentials.
-          // Now, 'profileResponse' will be the full Axios response object.
           const profileResponse: any = await instance.get("/auth/profile");
 
-          // Debugging logs (these should now show correct values)
           console.log(
             "Full profileResponse object (custom instance):",
             profileResponse
@@ -92,12 +96,10 @@ function AppInitializer({
             profileResponse.data
           );
 
-          // CORRECTED: Access properties from profileResponse.data (standard Axios behavior)
           const id = profileResponse?.user?.id;
           const username = profileResponse?.user?.username;
           const token = profileResponse?.token;
 
-          // Debug logs for dispatch payload
           console.log("Dispatching setUser with:");
           console.log("  id:", id);
           console.log("  username:", username);
@@ -108,7 +110,6 @@ function AppInitializer({
               : "Token missing (null/undefined)"
           );
 
-          // Re-hydrate Redux state with user data
           dispatch(
             setUser({
               id: id,
@@ -121,7 +122,6 @@ function AppInitializer({
           console.error("Error verifying token or fetching profile:", error);
           const axiosError = error as AxiosError;
 
-          // Handle specific authentication errors (401/403)
           if (
             axiosError.response &&
             (axiosError.response.status === 401 ||
@@ -131,10 +131,9 @@ function AppInitializer({
               "Token invalid/expired during verification (401/403). Clearing user data."
             );
             dispatch(clearUser());
-            // Redirect only if not already on a public page
-            if (
-              !["/auth/login", "/users/signup", "/"].includes(router.pathname)
-            ) {
+            // Only redirect if current path is NOT public
+            if (!isPublicPath) {
+              // <--- Use the isPublicPath variable here
               router.replace("/auth/login");
             }
           } else if (axiosError.request) {
@@ -143,9 +142,8 @@ function AppInitializer({
               axiosError.message
             );
             dispatch(clearUser());
-            if (
-              !["/auth/login", "/users/signup", "/"].includes(router.pathname)
-            ) {
+            if (!isPublicPath) {
+              // <--- Use the isPublicPath variable here
               router.replace("/auth/login?error=network");
             }
           } else {
@@ -154,23 +152,26 @@ function AppInitializer({
               axiosError.message
             );
             dispatch(clearUser());
-            if (
-              !["/auth/login", "/users/signup", "/"].includes(router.pathname)
-            ) {
+            if (!isPublicPath) {
+              // <--- Use the isPublicPath variable here
               router.replace("/auth/login");
             }
           }
           memoizedOnReady();
         }
       } else {
-        console.log("No token found in Redux. User needs to login.");
+        // No token found in Redux. This is the path taken for unauthenticated users.
+        console.log("No token found in Redux.");
         dispatch(clearUser()); // Ensure Redux state is clear
-        // Redirect only if not already on a public page
-        if (!["/auth/login", "/users/signup", "/"].includes(router.pathname)) {
-          console.log(
-            "Redirecting to login page as no authentication state found."
-          );
+
+        // --- CRITICAL: Only redirect if the current path is NOT a public path ---
+        if (!isPublicPath) {
+          console.log("User needs to login. Redirecting to login page.");
           router.replace("/auth/login");
+        } else {
+          console.log(
+            "Current path is public. No redirect needed for unauthenticated user."
+          );
         }
         memoizedOnReady();
       }
@@ -200,7 +201,6 @@ export default function App({ Component, pageProps }: AppProps) {
     setIsAppInitialized(true);
   }, []);
 
-  // Callback from PersistGate when rehydration is complete
   const onBeforeLift = () => {
     console.log("Redux Persist: Rehydration complete.");
     setPersistorReady(true);
@@ -213,7 +213,6 @@ export default function App({ Component, pageProps }: AppProps) {
         persistor={persistor}
         onBeforeLift={onBeforeLift}
       >
-        {/* Pass persistorReady to AppInitializer */}
         <AppInitializer
           onReady={handleAppReady}
           persistorReady={persistorReady}
