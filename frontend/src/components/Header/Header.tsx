@@ -1,3 +1,4 @@
+// frontend/src/components/Header/Header.tsx
 import React, { useEffect, useState } from "react"; // Keep useState for mobile menu
 import clsx from "clsx";
 import {
@@ -33,9 +34,13 @@ import { instance } from "@/utils/apis/axios";
 
 interface HeaderProps {
   isLoggedIn: boolean;
+  refreshProfilePictureKey?: number;
 }
 
-const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
+const Header: React.FC<HeaderProps> = ({
+  isLoggedIn,
+  refreshProfilePictureKey,
+}) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation("Margins.header"); // Initialize useTranslation
@@ -53,7 +58,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
   const BACKEND_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isLoggedIn && id) {
       const fetchProfilePicture = async () => {
         try {
           const response: any = await instance.get(`/users/${id}`);
@@ -70,7 +75,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
       setProfilePicture(null);
       setImageLoadError(false);
     }
-  }, [id, isLoggedIn]);
+  }, [id, isLoggedIn, refreshProfilePictureKey]);
 
   // Handler for image loading errors
   const handleImageError = (

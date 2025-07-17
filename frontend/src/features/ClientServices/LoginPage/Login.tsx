@@ -76,10 +76,7 @@ const LoginPage: React.FC = () => {
 
       notification.error({
         message: t("login_error_message"),
-        description:
-          error.response && error.response && error.response.data.message
-            ? error.response.data.message
-            : t("login_error_description_generic"),
+        description: t("login_error_description_generic"),
         placement: "topRight",
       });
     }
