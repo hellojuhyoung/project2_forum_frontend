@@ -306,11 +306,12 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreviewUrl(reader.result as string);
+        setImagePreviewUrl(reader.result as string); // Set preview URL immediately
       };
       reader.readAsDataURL(file);
     } else {
       // If file selection is cleared, revert to initial image or null
+      // This will ensure the preview updates to reflect either the existing picture or no picture
       setImagePreviewUrl(
         initialUserData?.profilePicture
           ? `${BACKEND_BASE_URL}${initialUserData.profilePicture}`
@@ -322,17 +323,14 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
   // New handler for removing the image preview and signaling a potential backend clear
   const handleRemoveImageClick = () => {
     setSelectedFile(null); // Clear selected file
-    setImagePreviewUrl(null); // Clear preview
+    setImagePreviewUrl(null); // Clear preview immediately
     const fileInput = document.getElementById(
       "profile-picture-input"
     ) as HTMLInputElement;
     if (fileInput) fileInput.value = ""; // Clear file input element to allow re-upload of same file
-    // Calling onProfilePictureChange here is optional. If you want the header to update
-    // immediately even before the user saves the form (showing no image), you can uncomment it.
-    // However, it's generally better to update the header only after a successful save to the backend.
-    // if (onProfilePictureChange) {
-    //   onProfilePictureChange();
-    // }
+    // IMPORTANT: Do NOT call onProfilePictureChange here.
+    // The header refresh should only happen after a successful backend update.
+    // If you call it here, the header might show no image even if the user cancels the form.
   };
 
   // validate username
@@ -474,6 +472,21 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
             username: values.username,
             token: currentToken || "",
           })
+        );
+
+        // Update the initialUserData and imagePreviewUrl based on the response
+        // This is crucial for the internal state to reflect the new image path
+        const updatedUser = response.user; // Assuming your backend returns the updated user object
+        setInitialUserData((prev) => ({
+          ...prev!, // Assumes prev is not null at this point
+          ...updatedUser,
+          profilePicture: updatedUser.profilePicture || null, // Ensure it's null if cleared
+        }));
+
+        setImagePreviewUrl(
+          updatedUser.profilePicture
+            ? `${BACKEND_BASE_URL}${updatedUser.profilePicture}`
+            : null
         );
 
         // Call the passed function to trigger a header refresh after successful update
@@ -746,7 +759,8 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
               <Input />
             </Form.Item>
 
-            <Form.Item>
+            {/* Changed to use the 'form-actions' class for right alignment */}
+            <Form.Item className="form-actions">
               <>
                 <Button
                   name="update-profile-button"
@@ -764,7 +778,7 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
                     onClick={() =>
                       router.push(`/account/profile?userid=${loggedInUserId}`)
                     }
-                    style={{ marginLeft: "10px" }}
+                    // style={{ marginLeft: "10px" }} removed to let gap handle spacing
                   >
                     {t("cancel_button")}
                   </Button>
