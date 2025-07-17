@@ -18,7 +18,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import moment, { Moment } from "moment"; // For DatePicker value handling
 import { setUser } from "@/redux/redux";
-import { getCookie } from "cookies-next";
+import { getCookie } from "cookies-next"; // Although you're using useSelector for token, keeping for consistency if other cookies are used
 import { useTranslation } from "react-i18next";
 
 // Define the shape of your user data for the form
@@ -31,8 +31,8 @@ interface UserProfileFormData {
   phoneNumber: string | null;
   dateOfBirth: string | null;
   occupation: string | null;
-  profilePicture: string | null; // Path of existing picture
-  profilePictureFile: File | null; // For new file upload
+  profilePicture: string | null; // Path of existing picture (from backend)
+  profilePictureFile?: File | null; // For new file upload (optional, not strictly used in state)
 }
 
 // Added prop interface for the component to receive the refresh function
@@ -92,9 +92,10 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  // State to hold the selected profile picture file
+  // State to hold the selected profile picture file, to be sent to backend
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  // State to hold the preview URL for the selected image
+  // State to hold the preview URL for the image shown on *this* page
+  // It will either be the initial image, a new local base64 preview, or the updated image from backend
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
 
   const [isCheckingUsername, setIsCheckingUsername] = useState<boolean>(false);
@@ -117,7 +118,7 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
 
   const [formInitialValues, setFormInitialValues] = useState<any>(null);
 
-  //
+  // Effect for initial authentication checks and redirection
   useEffect(() => {
     if (!currentToken && !isInitialCompletion) {
       console.log(
@@ -149,10 +150,8 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
     initialUserIdFromQuery,
     router,
   ]);
-  //
-  //
-  //
 
+  // Effect for fetching or preparing user profile data on component mount
   useEffect(() => {
     if (!router.isReady) return;
 
@@ -176,8 +175,6 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
         let fetchedUser: UserProfileFormData;
 
         if (isInitialCompletion) {
-          // const currentToken = getCookie("token") as string | undefined;
-
           fetchedUser = {
             id: parseInt(userIdToUse),
             username:
@@ -192,8 +189,9 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
             dateOfBirth: null,
             occupation: null,
             profilePicture: null,
-            profilePictureFile: null,
+            profilePictureFile: null, // No file initially
           };
+          // Dispatch user info to Redux if it's initial completion
           dispatch(
             setUser({
               id: parseInt(userIdToUse),
@@ -202,12 +200,13 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
             })
           );
         } else {
+          // Fetch existing user data
           const response: any = await instance.get<{
             user: UserProfileFormData;
           }>(`/users/${userIdToUse}`);
           fetchedUser = response.user;
+          // If username changed, update Redux
           if (loggedInUsername !== fetchedUser.username) {
-            // const currentToken = getCookie("token") as string | undefined;
             dispatch(
               setUser({
                 id: fetchedUser.id,
@@ -218,6 +217,7 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
           }
         }
 
+        // Prepare data for form initial values and internal state
         const formData: UserProfileFormData = {
           id: fetchedUser.id,
           username: fetchedUser.username || "",
@@ -228,7 +228,7 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
           dateOfBirth: fetchedUser.dateOfBirth || null,
           occupation: fetchedUser.occupation || null,
           profilePicture: fetchedUser.profilePicture || null,
-          profilePictureFile: null,
+          profilePictureFile: null, // Ensure file is null
         };
 
         setInitialUserData(formData);
@@ -239,6 +239,7 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
             : null,
         });
 
+        // Set username validation message if it's an existing user
         if (!isInitialCompletion) {
           setUsernameAvailable(true);
           setUsernameValidationMessage(
@@ -249,11 +250,22 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
           setUsernameValidationMessage(null);
         }
 
+        // --- Initial image setup for the page's preview ---
+        // Display existing profile picture on load
         if (fetchedUser.profilePicture) {
-          setImagePreviewUrl(
-            `${BACKEND_BASE_URL}${fetchedUser.profilePicture}`
+          const fullInitialUrl = `${BACKEND_BASE_URL}${fetchedUser.profilePicture}`;
+          setImagePreviewUrl(fullInitialUrl);
+          console.log(
+            "ProfileUpdatePage (initial load): Setting imagePreviewUrl to",
+            fullInitialUrl
+          );
+        } else {
+          setImagePreviewUrl(null);
+          console.log(
+            "ProfileUpdatePage (initial load): No initial profile picture."
           );
         }
+        // --- End initial image setup ---
       } catch (err: any) {
         console.error("Failed to load/prepare user profile:", err);
         setError(t("failed_to_load_profile_error_update"));
@@ -279,6 +291,7 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
     currentToken,
   ]);
 
+  // Effect for displaying temporary username notification (if applicable)
   useEffect(() => {
     if (
       isInitialCompletion &&
@@ -298,42 +311,48 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
     }
   }, [isInitialCompletion, initialUserData, t]);
 
-  // Handle file selection
+  // Handle file selection - provides immediate local preview on THIS page
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
-    setSelectedFile(file);
+    setSelectedFile(file); // Store the file to be sent to the backend
 
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreviewUrl(reader.result as string); // Set preview URL immediately
+        // Set imagePreviewUrl to the base64 string for *local preview on this page only*
+        setImagePreviewUrl(reader.result as string);
+        console.log(
+          "handleFileChange: Setting *local page preview* imagePreviewUrl to (base64):",
+          reader.result
+        );
       };
       reader.readAsDataURL(file);
     } else {
-      // If file selection is cleared, revert to initial image or null
-      // This will ensure the preview updates to reflect either the existing picture or no picture
-      setImagePreviewUrl(
-        initialUserData?.profilePicture
-          ? `${BACKEND_BASE_URL}${initialUserData.profilePicture}`
-          : null
+      // If file selection is cleared (e.g., user opens dialog, then cancels without choosing)
+      // Revert imagePreviewUrl to the *currently saved* one or null
+      const fallbackUrl = initialUserData?.profilePicture
+        ? `${BACKEND_BASE_URL}${initialUserData.profilePicture}`
+        : null;
+      setImagePreviewUrl(fallbackUrl);
+      console.log(
+        "handleFileChange: File selection cleared. Reverting local page imagePreviewUrl to fallback:",
+        fallbackUrl
       );
     }
   };
 
-  // New handler for removing the image preview and signaling a potential backend clear
+  // Handler for explicitly removing the image (pre-save, signals backend to clear)
   const handleRemoveImageClick = () => {
-    setSelectedFile(null); // Clear selected file
-    setImagePreviewUrl(null); // Clear preview immediately
+    setSelectedFile(null); // Signal no new file to upload
+    setImagePreviewUrl(null); // Clear local page preview immediately to show default
+    console.log("handleRemoveImageClick: Cleared imagePreviewUrl to null.");
     const fileInput = document.getElementById(
       "profile-picture-input"
     ) as HTMLInputElement;
     if (fileInput) fileInput.value = ""; // Clear file input element to allow re-upload of same file
-    // IMPORTANT: Do NOT call onProfilePictureChange here.
-    // The header refresh should only happen after a successful backend update.
-    // If you call it here, the header might show no image even if the user cancels the form.
   };
 
-  // validate username
+  // Function to validate username against backend
   const validateUsername = async (username: string) => {
     // Clear previous validation status when user types or initiates check
     setUsernameAvailable(null);
@@ -428,6 +447,7 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
           if (key === "dateOfBirth" && values[key] instanceof moment) {
             formData.append(key, (values[key] as Moment).format("YYYY-MM-DD"));
           } else if (key !== "profilePictureFile") {
+            // Exclude profilePictureFile as it's handled separately
             if (key === "username") {
               formData.append("username", values.username);
             } else {
@@ -442,6 +462,8 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
         formData.append("profilePicture", selectedFile);
       } else if (imagePreviewUrl === null && initialUserData?.profilePicture) {
         // This condition correctly tells the backend to clear the image
+        // It triggers if imagePreviewUrl is null (meaning user clicked 'Remove')
+        // AND there was an initial profile picture (meaning it needs clearing from DB)
         formData.append("clearProfilePicture", "true");
       }
 
@@ -451,14 +473,13 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${currentToken}`, // Ensure token is sent
           },
           withCredentials: true,
         }
       );
 
       if (response.result) {
-        // const currentToken = getCookie("token") as string | undefined;
-
         notification.success({
           message: t("profile_updated_message"),
           description: t(
@@ -466,35 +487,43 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
           ),
         });
 
+        // Update Redux user state with the latest data from the backend
         dispatch(
-          setUser({
-            id: userIdForUpdate,
-            username: values.username,
-            token: currentToken || "",
-          })
+          setUser({ ...response.user, token: currentToken || "" }) // Preserve token
         );
 
-        // Update the initialUserData and imagePreviewUrl based on the response
-        // This is crucial for the internal state to reflect the new image path
-        const updatedUser = response.user; // Assuming your backend returns the updated user object
+        // Update the local initialUserData with the *saved* data from the response
         setInitialUserData((prev) => ({
           ...prev!, // Assumes prev is not null at this point
-          ...updatedUser,
-          profilePicture: updatedUser.profilePicture || null, // Ensure it's null if cleared
+          ...response.user,
+          profilePicture: response.user.profilePicture || null, // Ensure it's null if cleared
         }));
 
-        setImagePreviewUrl(
-          updatedUser.profilePicture
-            ? `${BACKEND_BASE_URL}${updatedUser.profilePicture}`
-            : null
+        // --- Crucial: Update local page's image preview using the *backend's confirmed URL*
+        // This ensures that after save, the page displays the persistent image URL
+        const newProfilePictureUrl = response.user.profilePicture
+          ? `${BACKEND_BASE_URL}${response.user.profilePicture}`
+          : null;
+        setImagePreviewUrl(newProfilePictureUrl);
+        console.log(
+          "onFinish: Profile updated. Setting page imagePreviewUrl to (from backend):",
+          newProfilePictureUrl
         );
 
-        // Call the passed function to trigger a header refresh after successful update
+        // Reset selectedFile as it's now handled by the backend and initialUserData
+        setSelectedFile(null);
+
+        // --- THIS IS THE KEY FOR HEADER REFRESH ---
+        // Call the prop to notify the parent (Margins) to refresh the header
         if (onProfilePictureChange) {
           onProfilePictureChange();
+          console.log(
+            "onFinish: Triggered onProfilePictureChange for header refresh."
+          );
         }
+        // --- End Header Refresh Key ---
 
-        setUsernameAvailable(true);
+        setUsernameAvailable(true); // After successful update, current username is valid
         setUsernameValidationMessage(
           t(backendMessageMap["This is your current username."])
         );
@@ -506,6 +535,7 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
           router.replace(`/account/profile?userid=${userIdForUpdate}`); // Redirect to profile view page
         }
       } else {
+        // Handle backend error response
         notification.error({
           message: t("update_failed_message"),
           description: t(
@@ -515,6 +545,7 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
         });
       }
     } catch (err: any) {
+      // Handle network or unexpected errors
       console.error("Profile update error:", err);
       const errorMessageKey =
         backendMessageMap[err.response?.message] || "update_unexpected_error";
@@ -527,7 +558,7 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
     }
   };
 
-  // Handle errors or loading states
+  // Handle errors or loading states for the component itself
   if (loading) {
     return (
       <EditProfileStyled>
@@ -602,13 +633,27 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
                 {t("profile_picture_label")}
               </label>
               <div className="profile-picture-upload-section">
-                {imagePreviewUrl && (
+                {/* This section displays the image. It will show:
+                    1. The initial saved image (on page load)
+                    2. A locally selected file (base64) before save
+                    3. The newly saved image (from backend response) after successful save
+                    4. The default avatar if no image is present/selected/saved
+                */}
+                {imagePreviewUrl ? ( // If there's a URL (saved or local preview)
                   <img
                     src={imagePreviewUrl}
                     alt={t("profile_preview_alt_text")}
                     className="profile-preview-image"
                   />
+                ) : (
+                  // If no URL, show the default avatar
+                  <img
+                    src="/images/default-avatar.png" // Path to your default avatar image
+                    alt={t("default_profile_alt_text")}
+                    className="profile-preview-image"
+                  />
                 )}
+
                 <input
                   type="file"
                   accept="image/*"
@@ -759,9 +804,9 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
               <Input />
             </Form.Item>
 
-            {/* Changed to use the 'form-actions' class for right alignment */}
+            {/* Form actions with Ant Design Space for button gap */}
             <Form.Item className="form-actions">
-              <>
+              <Space>
                 <Button
                   name="update-profile-button"
                   type="primary"
@@ -778,12 +823,11 @@ const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
                     onClick={() =>
                       router.push(`/account/profile?userid=${loggedInUserId}`)
                     }
-                    // style={{ marginLeft: "10px" }} removed to let gap handle spacing
                   >
                     {t("cancel_button")}
                   </Button>
                 )}
-              </>
+              </Space>
             </Form.Item>
           </Form>
         </div>
