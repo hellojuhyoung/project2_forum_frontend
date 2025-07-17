@@ -1,4 +1,5 @@
 // frontend/src/features/ClientServices/ResetPasswordPage/ResetPassword.tsx
+
 import { ResetPasswordStyled } from "./styled";
 import clsx from "clsx";
 
@@ -8,8 +9,9 @@ import { instance } from "@/utils/apis/axios";
 import { Form, Formik, Field, FormikHelpers, ErrorMessage } from "formik";
 import { Button, Input, notification } from "antd";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react"; // Add useCallback
 import { useTranslation } from "react-i18next";
+import Link from "next/link";
 
 const backendErrorMessageMap: { [key: string]: string } = {
   "Invalid or expired token.": "token_invalid_or_expired_backend_error",
@@ -18,25 +20,24 @@ const backendErrorMessageMap: { [key: string]: string } = {
     "unexpected_error_backend_reset_password",
 };
 
-// --- Interfaces ---
 interface ResetPasswordValues {
   newPassword: string;
   confirmNewPassword: string;
 }
 
-// --- Initial Values ---
 const initialValues: ResetPasswordValues = {
   newPassword: "",
   confirmNewPassword: "",
 };
 
-const ResetPasswordPage: React.FC = () => {
+const ResetPassword: React.FC = () => {
   const { t } = useTranslation("ClientServices.resetpassword");
   const router = useRouter();
   const [passwordToken, setPasswordToken] = useState<string | null>(null);
+  // Keep loadingToken true initially. Set to false only after token check.
   const [loadingToken, setLoadingToken] = useState(true);
+  const [hasCheckedToken, setHasCheckedToken] = useState(false); // New state variable
 
-  // --- Validation Schema (Yup) ---
   const validationSchema = Yup.object().shape({
     newPassword: Yup.string()
       .min(8, t("new_password_min_length_validation"))
@@ -47,47 +48,57 @@ const ResetPasswordPage: React.FC = () => {
       .required(t("confirm_password_required_validation")),
   });
 
-  // Extract token from URL query parameters when the component mounts
-  useEffect(() => {
+  // Use useCallback to memoize the token check function
+  const checkToken = useCallback(() => {
     // --- START DEBUG CONSOLES ---
-    console.log("ResetPasswordPage useEffect is running.");
-    console.log("router.isReady (before check):", router.isReady);
-    console.log("Initial router.query (before isReady check):", router.query);
+    console.log("checkToken function executing.");
+    console.log("router.isReady:", router.isReady);
+    console.log("Current router.query:", router.query);
     // --- END DEBUG CONSOLES ---
 
     if (router.isReady) {
-      // --- START DEBUG CONSOLES (inside isReady block) ---
-      console.log("Router is ready. Current router.query:", router.query);
-      // --- END DEBUG CONSOLES ---
-
       const { token } = router.query;
 
       // --- START DEBUG CONSOLES ---
-      console.log("Extracted 'token' variable:", token);
-      console.log("Type of 'token':", typeof token);
+      console.log("Extracted 'token' variable in checkToken:", token);
+      console.log("Type of 'token' in checkToken:", typeof token);
       // --- END DEBUG CONSOLES ---
 
       if (typeof token === "string") {
         setPasswordToken(token);
-        console.log("Token successfully set to state:", token); // Debug log
+        console.log("Token successfully set to state in checkToken:", token);
       } else {
         console.log(
-          "Token is NOT a string or is missing. Triggering error/redirect."
-        ); // Debug log
+          "Token is NOT a string or is missing in checkToken. Triggering error/redirect."
+        );
         notification.error({
           message: t("invalid_link_notification_message"),
           description: t("invalid_link_notification_description"),
           placement: "topRight",
         });
-        // You might want to temporarily comment out this line (router.push) for testing
-        // to see the error message on the page instead of an immediate redirect.
+        // This is the line that redirects if token is missing
         router.push("/auth/forgot/password");
       }
-      setLoadingToken(false);
-    } else {
-      console.log("Router not ready yet. Skipping token extraction."); // Debug log
+      setLoadingToken(false); // Done loading regardless of success/failure
+      setHasCheckedToken(true); // Mark that we've performed the check
     }
   }, [router.isReady, router.query, router, t]);
+
+  useEffect(() => {
+    // Only run checkToken if we haven't already and router is ready
+    if (!hasCheckedToken && router.isReady) {
+      checkToken();
+    }
+  }, [router.isReady, hasCheckedToken, checkToken]); // Depend on checkToken, hasCheckedToken, router.isReady
+
+  // Optional: Add another useEffect to handle cases where router.query changes *after* initial ready state
+  // This is less common for direct links but can prevent issues in some navigations.
+  // useEffect(() => {
+  //   if (router.isReady && !hasCheckedToken && router.query.token && typeof router.query.token === 'string') {
+  //     console.log("Router query updated with token after initial check, processing...");
+  //     checkToken();
+  //   }
+  // }, [router.isReady, router.query.token, hasCheckedToken, checkToken]);
 
   const handleSubmit = async (
     values: ResetPasswordValues,
@@ -132,7 +143,7 @@ const ResetPasswordPage: React.FC = () => {
             backendErrorMessageMap[backendErrorMsg] ||
               "password_reset_failed_description_generic"
           )
-        : t("password_reset_failed_description_generic");
+        : t("password_reset_failed_generic");
       notification.error({
         message: t("password_reset_failed_message"),
         description: translatedErrorDescription,
@@ -143,6 +154,7 @@ const ResetPasswordPage: React.FC = () => {
     }
   };
 
+  // Only render the form (or error state) once token check is complete
   if (loadingToken) {
     return (
       <ResetPasswordStyled className={clsx("reset-password-container")}>
@@ -153,7 +165,25 @@ const ResetPasswordPage: React.FC = () => {
     );
   }
 
-  // Render form only if token is available
+  // If loadingToken is false but passwordToken is null, it means the check failed.
+  // We can render an error message here instead of just redirecting.
+  if (!passwordToken && hasCheckedToken) {
+    return (
+      <ResetPasswordStyled className={clsx("reset-password-container")}>
+        <div className="input-container">
+          <h2>{t("reset_password_title")}</h2>
+          <p>{t("invalid_link_notification_description")}</p>
+          <div className="back-to-forgot-link-container">
+            <Link href="/auth/forgot/password" className="auth-utility-link">
+              {t("request_new_link_button")} {/* New translation key */}
+            </Link>
+          </div>
+        </div>
+      </ResetPasswordStyled>
+    );
+  }
+
+  // Render form only if token is available and check is complete
   return (
     <ResetPasswordStyled className={clsx("reset-password-container")}>
       <div className="input-container">
@@ -234,4 +264,4 @@ const ResetPasswordPage: React.FC = () => {
   );
 };
 
-export default ResetPasswordPage;
+export default ResetPassword;
