@@ -1,3 +1,5 @@
+// frontend/src/features/ClientServices/ProfileUpdatePage/ProfileUpdate.tsx
+
 import { EditProfileStyled } from "./styled";
 import clsx from "clsx";
 import { useRouter } from "next/router";
@@ -33,6 +35,11 @@ interface UserProfileFormData {
   profilePictureFile: File | null; // For new file upload
 }
 
+// Added prop interface for the component to receive the refresh function
+interface UpdateProfilePageProps {
+  onProfilePictureChange?: () => void; // Optional function to trigger profile picture refresh in header
+}
+
 const backendMessageMap: { [key: string]: string } = {
   // Username Validation Messages
   "Username cannot be empty.": "username_cannot_be_empty",
@@ -55,7 +62,10 @@ const backendMessageMap: { [key: string]: string } = {
   // Add other specific backend messages you might encounter here
 };
 
-const UpdateProfilePage = () => {
+// Modified component definition to accept props
+const UpdateProfilePage: React.FC<UpdateProfilePageProps> = ({
+  onProfilePictureChange,
+}) => {
   const { t } = useTranslation("ClientServices.profileupdate");
   const router = useRouter();
   const dispatch = useDispatch();
@@ -300,6 +310,7 @@ const UpdateProfilePage = () => {
       };
       reader.readAsDataURL(file);
     } else {
+      // If file selection is cleared, revert to initial image or null
       setImagePreviewUrl(
         initialUserData?.profilePicture
           ? `${BACKEND_BASE_URL}${initialUserData.profilePicture}`
@@ -307,6 +318,23 @@ const UpdateProfilePage = () => {
       );
     }
   };
+
+  // New handler for removing the image preview and signaling a potential backend clear
+  const handleRemoveImageClick = () => {
+    setSelectedFile(null); // Clear selected file
+    setImagePreviewUrl(null); // Clear preview
+    const fileInput = document.getElementById(
+      "profile-picture-input"
+    ) as HTMLInputElement;
+    if (fileInput) fileInput.value = ""; // Clear file input element to allow re-upload of same file
+    // Calling onProfilePictureChange here is optional. If you want the header to update
+    // immediately even before the user saves the form (showing no image), you can uncomment it.
+    // However, it's generally better to update the header only after a successful save to the backend.
+    // if (onProfilePictureChange) {
+    //   onProfilePictureChange();
+    // }
+  };
+
   // validate username
   const validateUsername = async (username: string) => {
     // Clear previous validation status when user types or initiates check
@@ -411,10 +439,11 @@ const UpdateProfilePage = () => {
         }
       }
 
-      // Append the new profile picture file if selected (remains the same)
+      // Append the new profile picture file if selected
       if (selectedFile) {
         formData.append("profilePicture", selectedFile);
       } else if (imagePreviewUrl === null && initialUserData?.profilePicture) {
+        // This condition correctly tells the backend to clear the image
         formData.append("clearProfilePicture", "true");
       }
 
@@ -446,11 +475,10 @@ const UpdateProfilePage = () => {
             token: currentToken || "",
           })
         );
-        // window.location.reload();
-        if (isInitialCompletion) {
-          router.replace("/"); // Redirect to home page
-        } else {
-          router.replace(`/account/profile?userid=${userIdForUpdate}`); // Redirect to profile view page
+
+        // Call the passed function to trigger a header refresh after successful update
+        if (onProfilePictureChange) {
+          onProfilePictureChange();
         }
 
         setUsernameAvailable(true);
@@ -458,10 +486,11 @@ const UpdateProfilePage = () => {
           t(backendMessageMap["This is your current username."])
         );
 
+        // Redirect after successful update
         if (isInitialCompletion) {
-          router.push("/");
+          router.replace("/"); // Redirect to home page
         } else {
-          router.push(`/account/profile?userid=${userIdForUpdate}`);
+          router.replace(`/account/profile?userid=${userIdForUpdate}`); // Redirect to profile view page
         }
       } else {
         notification.error({
@@ -584,14 +613,7 @@ const UpdateProfilePage = () => {
                     name="remove-image-button"
                     type="link"
                     danger
-                    onClick={() => {
-                      setSelectedFile(null);
-                      setImagePreviewUrl(null);
-                      const fileInput = document.getElementById(
-                        "profile-picture-input"
-                      ) as HTMLInputElement;
-                      if (fileInput) fileInput.value = "";
-                    }}
+                    onClick={handleRemoveImageClick} // Use the dedicated handler
                     style={{ marginLeft: "10px" }}
                   >
                     {t("remove_image_button")}
