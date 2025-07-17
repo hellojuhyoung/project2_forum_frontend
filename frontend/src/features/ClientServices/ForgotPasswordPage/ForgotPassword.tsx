@@ -1,3 +1,4 @@
+// frontend/src/features/ClientServices/ForgotPasswordPage/ForgotPassword.tsx
 import { ForgotPasswordStyled } from "./styled";
 
 import React, { useState } from "react";

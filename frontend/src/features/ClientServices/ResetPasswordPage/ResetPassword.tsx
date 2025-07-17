@@ -1,14 +1,14 @@
-// frontend/pages/auth/reset/password.tsx
-import { ResetPasswordStyled } from "./styled"; // We'll create this styled component below
+// frontend/src/features/ClientServices/ResetPasswordPage/ResetPassword.tsx
+import { ResetPasswordStyled } from "./styled";
 import clsx from "clsx";
 
 import * as Yup from "yup";
-import { instance } from "@/utils/apis/axios"; // Assuming this is your Axios instance
+import { instance } from "@/utils/apis/axios";
 
 import { Form, Formik, Field, FormikHelpers, ErrorMessage } from "formik";
-import { Button, Input, notification } from "antd"; // Import necessary Ant Design components
+import { Button, Input, notification } from "antd";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react"; // Import useEffect for token extraction
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 const backendErrorMessageMap: { [key: string]: string } = {
@@ -37,36 +37,57 @@ const ResetPasswordPage: React.FC = () => {
   const [loadingToken, setLoadingToken] = useState(true);
 
   // --- Validation Schema (Yup) ---
-  // new password validation is identical to the signup password format
   const validationSchema = Yup.object().shape({
     newPassword: Yup.string()
       .min(8, t("new_password_min_length_validation"))
       .max(16, t("new_password_max_length_validation"))
       .required(t("new_password_required_validation")),
     confirmNewPassword: Yup.string()
-      .oneOf([Yup.ref("newPassword")], t("confirm_password_match_validation")) // Translate
+      .oneOf([Yup.ref("newPassword")], t("confirm_password_match_validation"))
       .required(t("confirm_password_required_validation")),
   });
 
   // Extract token from URL query parameters when the component mounts
   useEffect(() => {
+    // --- START DEBUG CONSOLES ---
+    console.log("ResetPasswordPage useEffect is running.");
+    console.log("router.isReady (before check):", router.isReady);
+    console.log("Initial router.query (before isReady check):", router.query);
+    // --- END DEBUG CONSOLES ---
+
     if (router.isReady) {
-      // Ensure router is ready before accessing query params
+      // --- START DEBUG CONSOLES (inside isReady block) ---
+      console.log("Router is ready. Current router.query:", router.query);
+      // --- END DEBUG CONSOLES ---
+
       const { token } = router.query;
+
+      // --- START DEBUG CONSOLES ---
+      console.log("Extracted 'token' variable:", token);
+      console.log("Type of 'token':", typeof token);
+      // --- END DEBUG CONSOLES ---
+
       if (typeof token === "string") {
         setPasswordToken(token);
+        console.log("Token successfully set to state:", token); // Debug log
       } else {
-        // Handle case where token is missing or not a string (e.g., redirect or show error)
+        console.log(
+          "Token is NOT a string or is missing. Triggering error/redirect."
+        ); // Debug log
         notification.error({
           message: t("invalid_link_notification_message"),
           description: t("invalid_link_notification_description"),
           placement: "topRight",
         });
+        // You might want to temporarily comment out this line (router.push) for testing
+        // to see the error message on the page instead of an immediate redirect.
         router.push("/auth/forgot/password");
       }
       setLoadingToken(false);
+    } else {
+      console.log("Router not ready yet. Skipping token extraction."); // Debug log
     }
-  }, [router.isReady, router.query, router, t]); // Depend on router.isReady and router.query
+  }, [router.isReady, router.query, router, t]);
 
   const handleSubmit = async (
     values: ResetPasswordValues,
@@ -99,7 +120,7 @@ const ResetPasswordPage: React.FC = () => {
       });
 
       resetForm();
-      router.push("/auth/login"); // Redirect to login page after successful reset
+      router.push("/auth/login");
     } catch (error: any) {
       console.error(
         "error resetting password",
