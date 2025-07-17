@@ -136,6 +136,25 @@ export const DetailFeedStyled = styled.div`
     white-space: pre-wrap; /* Preserve whitespace and line breaks */
     margin-bottom: ${theme.spacing.xl}; /* Increased margin after content */
 
+    img {
+      max-width: 100%; /* Ensure images don't overflow */
+      height: auto; /* Maintain aspect ratio */
+      display: block; /* Prevent extra space below image */
+      margin: ${theme.spacing.md} auto; /* Center images and add vertical spacing */
+      border-radius: ${({ theme }) =>
+        theme.borderRadius.sm}; /* Optional: consistent styling */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Optional: consistent styling */
+    }
+
+    /* For specific large images within content, if needed */
+    /* If you want markdown images to behave like the main-img: */
+    /*
+    img:not([alt*="no image"]) { // Apply only to actual images, not placeholders
+        max-height: 400px;
+        object-fit: cover;
+        // You might need to adjust margin for these
+    }
+
     /* --- Responsive Adjustments for Content --- */
     @media (max-width: 768px) {
       font-size: ${({ theme }) => theme.fontSizes.sm}; /* Smaller font */

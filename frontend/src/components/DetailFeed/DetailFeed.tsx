@@ -172,6 +172,24 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
       : `${API_URL}${mainDisplayImage}` // Otherwise, prepend API_URL (for relative paths)
     : "/no-image.jpg"; // Fallback if no main display image
 
+  let contentForMarkdown = post.content;
+  if (mainDisplayImage) {
+    // Regex to find Markdown image syntax for the specific mainDisplayImage URL
+    // This is crucial: we want to remove the Markdown of *that specific image*
+    // Escape special characters in the URL for regex safety
+    const escapedMainImageUrl = mainDisplayImage.replace(
+      /[.*+?^${}()|[\]\\]/g,
+      "\\$&"
+    );
+    const imageMarkdownRegex = new RegExp(
+      `!\\[.*?\\]\\(${escapedMainImageUrl}\\)`,
+      "g"
+    );
+
+    // Remove the markdown syntax for the main image from the content
+    contentForMarkdown = post.content.replace(imageMarkdownRegex, "");
+  }
+
   // Filter out the main image from the gallery images
   const galleryImages =
     post.images?.filter((img) => img.postImage !== mainDisplayImage) || [];
@@ -218,7 +236,7 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
       {/* Post Content (plain text) */}
       <div className="detail-content">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
-          {post.content}
+          {contentForMarkdown}
         </ReactMarkdown>
       </div>
 
