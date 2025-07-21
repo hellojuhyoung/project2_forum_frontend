@@ -70,6 +70,11 @@ const MainFeed: React.FC<MainFeedProps> = ({
       : `${API_URL}${post.thumbnail}` // Otherwise, prepend API_URL (for relative paths)
     : "/no-image.jpg"; // Fallback if no thumbnail
 
+  console.log(`[MainFeed Debug] Post ID: ${post.id}`);
+  console.log(`[MainFeed Debug] post.thumbnail received:`, post.thumbnail);
+  console.log(`[MainFeed Debug] Calculated API_URL:`, API_URL);
+  console.log(`[MainFeed Debug] Final thumbnailUrl:`, thumbnailUrl);
+
   return (
     <>
       <MainFeedStyled
