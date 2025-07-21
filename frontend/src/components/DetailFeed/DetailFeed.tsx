@@ -156,6 +156,7 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
     });
   };
 
+  // --- START OF MAIN IMAGE & CONTENT LOGIC ---
   let mainImageSrcForDetail: string | null = null;
   let contentForMarkdown: string = post.content;
 
@@ -178,6 +179,11 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
     const imageMarkdownRegex = new RegExp(`!\\[.*?\\]\\(${escapedUrl}\\)`, "g");
     contentForMarkdown = post.content.replace(imageMarkdownRegex, "");
   }
+  // Optional: If no image found in content, you might want a fallback default image here
+  // else {
+  //   mainImageSrcForDetail = "/path/to/default/no-image.jpg";
+  // }
+  // --- END OF MAIN IMAGE & CONTENT LOGIC ---
 
   // Adjust galleryImages logic: Filter out the image used for main display
   const galleryImages =
@@ -222,6 +228,15 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
         </div>
       )}
 
+      {/* !!! CRITICAL ACTION: MANUALLY REMOVE ANY OTHER STRAY <img> TAGS !!!
+          Based on your HTML, there's a standalone <img> tag immediately after the
+          "detail-main-image" div and before "detail-content".
+          You MUST locate this line of JSX in your DetailFeed.tsx (or any parent component
+          that renders post details) and DELETE IT. It's the source of the second pixelated image.
+          It might look something like this:
+          <img src={post.thumbnail ? `${API_URL}${post.thumbnail}` : '/no-image.jpg'} alt="..." />
+      */}
+
       {/* Post Content (Markdown, with the first image REMOVED) */}
       <div className="detail-content">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -255,7 +270,36 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
         </div>
       )}
 
-      {/* ... (like-section, action-buttons, lightbox modal) ... */}
+      {/* Like Section */}
+      <div className="like-section">
+        <button
+          onClick={toggleLike}
+          className={heartClass}
+          disabled={!isLoggedIn}
+        >
+          <span className="heart-icon">{heartIcon}</span>
+          <span className="like-count">{likeCount}</span>
+        </button>
+      </div>
+
+      {/* Action Buttons: EDIT and DELETE (RESTORED HERE!) */}
+      {isAuthor && (
+        <div className="action-buttons">
+          <button onClick={handleEdit} className="edit-btn">
+            {t("edit_button")}
+          </button>
+          <button onClick={handleDelete} className="delete-btn">
+            {t("delete_button")}
+          </button>
+        </div>
+      )}
+
+      {/* Lightbox Modal */}
+      {isLightboxOpen && (
+        <ImageLightboxStyled onClick={closeLightbox}>
+          <img src={lightboxImageSrc} alt="Lightbox image" />
+        </ImageLightboxStyled>
+      )}
     </DetailFeedStyled>
   );
 };
