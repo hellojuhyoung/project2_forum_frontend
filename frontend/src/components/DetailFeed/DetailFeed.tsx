@@ -282,14 +282,13 @@ const DetailFeed: React.FC<DetailFeedProps> = ({ post, currentUsername }) => {
         </button>
       </div>
 
-      {/* Action Buttons: EDIT and DELETE (RESTORED HERE!) */}
       {isAuthor && (
         <div className="action-buttons">
           <button onClick={handleEdit} className="edit-btn">
-            {t("edit_button")}
+            {t("button_edit")}
           </button>
           <button onClick={handleDelete} className="delete-btn">
-            {t("delete_button")}
+            {t("button_delete")}
           </button>
         </div>
       )}
