@@ -40,7 +40,6 @@ const ToastEditor = forwardRef((props: ToastEditorProps, ref) => {
       hideModeSwitch: true,
       height: "400px",
       usageStatistics: false,
-      // --- ADD THIS HOOK ---
       hooks: {
         addImageBlobHook: async (blob: any, callback: any) => {
           try {
@@ -79,7 +78,6 @@ const ToastEditor = forwardRef((props: ToastEditorProps, ref) => {
           }
         },
       },
-      // --- END ADDED HOOK ---
     });
 
     editorInstance.current.on("change", () => {
