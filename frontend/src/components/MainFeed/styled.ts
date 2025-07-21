@@ -1,3 +1,4 @@
+// frontend/src/components/MainFeed/styled.ts
 import { theme } from "@/styles/theme";
 import styled from "styled-components";
 
@@ -82,16 +83,20 @@ export const MainFeedStyled = styled.div<{
   .main-thumbnail {
     width: 100%;
     border-radius: ${({ theme }) => theme.borderRadius.md};
-    overflow: hidden;
+    overflow: hidden; /* Ensures image doesn't overflow container if it's contained */
+    display: flex; /* Helps center the image vertically if needed */
+    justify-content: center;
+    align-items: center;
   }
 
   .main-thumbnail img {
-    object-fit: cover;
+    object-fit: contain; /* Ensures the entire image is visible within the container */
     width: 100%;
-    /* Increased image height to take up more space within the card */
+    /* Keep original height settings; 'contain' will scale within this */
     height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection ? "260px" : "180px"};
     border-radius: ${({ theme }) => theme.borderRadius.sm};
+    object-position: center; /* Ensures the image is centered within the space */
 
     /* --- Responsive Adjustments for Image Height --- */
     @media (max-width: 992px) {

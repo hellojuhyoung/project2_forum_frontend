@@ -1,3 +1,4 @@
+// frontend/src/components/DetailFeed/styled.ts
 import { theme } from "@/styles/theme";
 import styled from "styled-components";
 
