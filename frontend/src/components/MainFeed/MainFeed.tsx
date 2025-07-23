@@ -83,15 +83,17 @@ const MainFeed: React.FC<MainFeedProps> = ({
         $isMostLikedSection={isMostLikedSection}
       >
         <div className="main-thumbnail">
-          <img
-            src={thumbnailUrl}
-            alt={
-              post.thumbnail
-                ? t("thumbnail_alt_text", { title: post.title })
-                : t("no_image_available_alt_text")
-            }
-            className="thumbnail-img"
-          />
+          <div className="main-thumbnail-inner">
+            <img
+              src={thumbnailUrl}
+              alt={
+                post.thumbnail
+                  ? t("thumbnail_alt_text", { title: post.title })
+                  : t("no_image_available_alt_text")
+              }
+              className="thumbnail-img"
+            />
+          </div>
         </div>
         <div className="main-title">{post.title}</div>
 

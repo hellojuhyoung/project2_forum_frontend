@@ -84,56 +84,41 @@ export const MainFeedStyled = styled.div<{
     width: 100%;
     border-radius: ${({ theme }) => theme.borderRadius.md};
     overflow: hidden;
-    /* Removed display: flex, justify-content, align-items as position absolute handles centering */
-    position: relative; /* Essential for positioning the image inside */
+    position: relative; /* Essential for positioning the inner aspect-ratio div */
     /* REINSTATED: Original height logic for the thumbnail container */
     height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection ? "260px" : "180px"};
-    background-color: transparent; /* FIX: Changed to transparent to remove black background */
+    background-color: transparent; /* Ensures no unwanted background */
 
-    /* Removed padding-bottom trick here, as fixed height is reinstated */
-    /* padding-bottom: 56.25%; */
-    /* height: 0; */
+    /* The image itself will now be inside an aspect-ratio div */
+    display: flex; /* Use flex to center the inner aspect-ratio div */
+    justify-content: center;
+    align-items: center;
+  }
 
-    /* --- Responsive Adjustments for Image Height --- */
-    @media (max-width: 992px) {
-      height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
-        $isMostRecentSection || $isMostLikedSection
-          ? "220px"
-          : "160px"}; /* Reduced height for tablets */
-    }
-    @media (max-width: 768px) {
-      height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
-        $isMostRecentSection || $isMostLikedSection
-          ? "190px"
-          : "140px"}; /* Further reduced height for mobiles */
-    }
-    /* UPDATED: Increased image heights for single column mobile view */
+  /* NEW: Inner div to control aspect ratio for the image */
+  .main-thumbnail-inner {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio (9 / 16 * 100%) */
+    background-color: ${({ theme }) =>
+      theme.colors.accentBackground}; /* Subtle background for whitespace */
+    border-radius: ${({ theme }) =>
+      theme.borderRadius.sm}; /* Match image border-radius */
+
     @media (max-width: 576px) {
-      height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
-        $isMostRecentSection || $isMostLikedSection
-          ? "220px" // Larger image for Most Recent/Liked on mobile
-          : "180px"}; // Larger image for Main Feed on mobile
-    }
-    @media (max-width: 480px) {
-      height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
-        $isMostRecentSection || $isMostLikedSection
-          ? "200px" // Adjust for very small screens
-          : "160px"};
-    }
-    @media (max-width: 360px) {
-      height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
-        $isMostRecentSection || $isMostLikedSection
-          ? "180px" // Adjust for very small screens
-          : "140px"};
+      padding-bottom: 75%; /* 4:3 Aspect Ratio for smaller screens */
     }
   }
 
   .main-thumbnail img {
     object-fit: contain; /* Ensures the entire image is visible within the container */
-    /* Removed position: absolute, top, left, width, height as fixed height is reinstated on parent */
-    width: 100%; /* Image fills width of parent */
-    height: 100%; /* Image fills height of parent */
+    position: absolute; /* Position the image to fill the inner aspect-ratio box */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* Fill the aspect-ratio defined by inner parent */
     border-radius: ${({ theme }) => theme.borderRadius.sm};
     object-position: center; /* Ensures the image is centered within the space */
   }
