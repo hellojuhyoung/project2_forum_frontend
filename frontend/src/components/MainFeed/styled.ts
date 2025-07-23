@@ -2,9 +2,6 @@
 import { theme } from "@/styles/theme";
 import styled from "styled-components";
 
-// REMOVED: The redundant FeedContainer component is removed from here.
-// Your existing MainFeedGrid will handle the grid layout.
-
 export const MainFeedStyled = styled.div<{
   $isMostRecentSection?: boolean;
   $isMostLikedSection?: boolean;
@@ -21,7 +18,7 @@ export const MainFeedStyled = styled.div<{
   gap: ${({ theme }) => theme.spacing.sm}; /* Default gap between elements */
 
   /* REMOVED ALL FIXED HEIGHTS from MainFeedStyled - let content dictate height */
-  height: auto;
+  height: auto; /* Default to auto height */
   box-sizing: border-box;
 
   &:hover {
@@ -50,7 +47,11 @@ export const MainFeedStyled = styled.div<{
 
   /* Adjustments for 1-column layout (mobile) */
   @media (max-width: 576px) {
-    /* No max-width or margin auto here, MainFeedGrid handles 1fr width */
+    /* Reintroduce fixed height for 1-column view for consistency */
+    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+      $isMostRecentSection || $isMostLikedSection
+        ? "380px" // Consistent height for Most Recent/Liked on mobile
+        : "300px"}; // Consistent height for Main Feed on mobile
     padding: ${theme.spacing
       .md}; /* More comfortable padding for single column */
     gap: ${theme.spacing.sm};
@@ -58,6 +59,10 @@ export const MainFeedStyled = styled.div<{
 
   /* Adjustments for very small mobile devices */
   @media (max-width: 480px) {
+    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+      $isMostRecentSection || $isMostLikedSection
+        ? "360px" // Adjust for very small screens, maintaining distinction
+        : "280px"}; /* Adjusted for very small screens */
     padding: ${theme.spacing.sm};
   }
 
@@ -190,5 +195,3 @@ export const Section = styled.div`
     margin-bottom: 16px;
   }
 `;
-
-// REMOVED: export default MainFeedStyled;
