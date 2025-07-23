@@ -17,9 +17,9 @@ export const MainFeedStyled = styled.div<{
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.sm}; /* Default gap between elements */
 
-  /* The card height will now be determined by its content, including the aspect-ratio image */
-  /* height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
-    $isMostRecentSection || $isMostLikedSection ? "420px" : "320px"}; */
+  /* REINSTATED: Original fixed height logic for the card container */
+  height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+    $isMostRecentSection || $isMostLikedSection ? "420px" : "320px"};
   box-sizing: border-box; /* Ensures padding and border are included in the element's total height/width */
 
   &:hover {
@@ -31,16 +31,20 @@ export const MainFeedStyled = styled.div<{
   /* For tablets and smaller desktops (e.g., up to 992px wide) */
   @media (max-width: 992px) {
     padding: ${({ theme }) => theme.spacing.sm}; /* Slightly less padding */
-    /* height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
-      $isMostRecentSection || $isMostLikedSection ? "380px" : "300px"}; */
+    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+      $isMostRecentSection || $isMostLikedSection
+        ? "380px"
+        : "300px"}; /* Reduced card height, but still taller for recent/liked */
     gap: ${({ theme }) => theme.spacing.xs}; /* Slightly less gap inside */
   }
 
   /* For larger mobile devices and smaller tablets (e.g., up to 768px wide) */
   @media (max-width: 768px) {
     padding: ${({ theme }) => theme.spacing.xs}; /* Further reduced padding */
-    /* height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
-      $isMostRecentSection || $isMostLikedSection ? "350px" : "280px"}; */
+    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+      $isMostRecentSection || $isMostLikedSection
+        ? "350px"
+        : "280px"}; /* Further reduced card height, maintaining recent/liked difference */
     gap: ${({ theme }) => theme.spacing.xxs}; /* Minimal gap inside */
     border-radius: ${({ theme }) =>
       theme.borderRadius.sm}; /* Slightly smaller border-radius */
@@ -50,10 +54,10 @@ export const MainFeedStyled = styled.div<{
   @media (max-width: 576px) {
     padding: ${theme.spacing.sm}; /* Increased padding for single column view */
     /* Height for single column view - significantly increased for prominence */
-    /* height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection
         ? "380px" // Maintain distinction for Most Recent/Liked
-        : "300px"}; */
+        : "300px"}; // Increased height for main feed cards
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Re-added shadow for single column */
     gap: ${theme.spacing.sm}; /* More gap for better spacing */
   }
@@ -61,19 +65,19 @@ export const MainFeedStyled = styled.div<{
   /* For very small mobile devices (e.g., up to 480px wide) */
   @media (max-width: 480px) {
     padding: ${theme.spacing.xs}; /* Adjusted to theme spacing */
-    /* height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection
         ? "360px" // Adjust for very small screens, maintaining distinction
-        : "280px"}; */
+        : "280px"}; /* Adjusted for very small screens */
     box-shadow: none; /* Optional: remove shadow for a flat mobile feel */
   }
 
   /* For even smaller mobile devices (e.g., up to 360px wide) */
   @media (max-width: 360px) {
-    /* height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
       $isMostRecentSection || $isMostLikedSection
         ? "340px" // Adjust for very small screens
-        : "260px"}; */
+        : "260px"}; /* Adjust for very small screens */
   }
 
   .main-thumbnail {
@@ -82,29 +86,56 @@ export const MainFeedStyled = styled.div<{
     overflow: hidden;
     /* Removed display: flex, justify-content, align-items as position absolute handles centering */
     position: relative; /* Essential for positioning the image inside */
-    padding-bottom: 56.25%; /* 16:9 Aspect Ratio (9 / 16 * 100%) */
-    height: 0; /* Collapses the div's height, letting padding-bottom define it */
-    background-color: ${({ theme }) =>
-      theme.colors
-        .footerBackground}; /* FIX: Changed to existing theme variable */
+    /* REINSTATED: Original height logic for the thumbnail container */
+    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+      $isMostRecentSection || $isMostLikedSection ? "260px" : "180px"};
+    background-color: transparent; /* FIX: Changed to transparent to remove black background */
 
-    /* Responsive adjustments for aspect ratio if needed, though 16:9 is common */
+    /* Removed padding-bottom trick here, as fixed height is reinstated */
+    /* padding-bottom: 56.25%; */
+    /* height: 0; */
+
+    /* --- Responsive Adjustments for Image Height --- */
+    @media (max-width: 992px) {
+      height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+        $isMostRecentSection || $isMostLikedSection
+          ? "220px"
+          : "160px"}; /* Reduced height for tablets */
+    }
+    @media (max-width: 768px) {
+      height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+        $isMostRecentSection || $isMostLikedSection
+          ? "190px"
+          : "140px"}; /* Further reduced height for mobiles */
+    }
+    /* UPDATED: Increased image heights for single column mobile view */
     @media (max-width: 576px) {
-      padding-bottom: 75%; /* 4:3 Aspect Ratio for smaller screens */
+      height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+        $isMostRecentSection || $isMostLikedSection
+          ? "220px" // Larger image for Most Recent/Liked on mobile
+          : "180px"}; // Larger image for Main Feed on mobile
+    }
+    @media (max-width: 480px) {
+      height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+        $isMostRecentSection || $isMostLikedSection
+          ? "200px" // Adjust for very small screens
+          : "160px"};
+    }
+    @media (max-width: 360px) {
+      height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+        $isMostRecentSection || $isMostLikedSection
+          ? "180px" // Adjust for very small screens
+          : "140px"};
     }
   }
 
   .main-thumbnail img {
     object-fit: contain; /* Ensures the entire image is visible within the container */
-    position: absolute; /* Position the image to fill the parent's aspect ratio box */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%; /* Fill the aspect-ratio defined by parent */
+    /* Removed position: absolute, top, left, width, height as fixed height is reinstated on parent */
+    width: 100%; /* Image fills width of parent */
+    height: 100%; /* Image fills height of parent */
     border-radius: ${({ theme }) => theme.borderRadius.sm};
     object-position: center; /* Ensures the image is centered within the space */
-
-    /* Removed all fixed height settings as they are now controlled by the parent's aspect ratio */
   }
 
   .main-title {
