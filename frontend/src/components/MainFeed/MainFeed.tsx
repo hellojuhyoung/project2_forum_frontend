@@ -1,7 +1,7 @@
 // frontend/src/components/MainFeed/MainFeed.tsx
 
 import { useRouter } from "next/router";
-import MainFeedStyled from "./styled";
+import { MainFeedStyled } from "./styled";
 import { useEffect, useState } from "react";
 import { instance } from "@/utils/apis/axios";
 import { useTranslation } from "react-i18next";

@@ -2,6 +2,9 @@
 import { theme } from "@/styles/theme";
 import styled from "styled-components";
 
+// REMOVED: The redundant FeedContainer component is removed from here.
+// Your existing MainFeedGrid will handle the grid layout.
+
 export const MainFeedStyled = styled.div<{
   $isMostRecentSection?: boolean;
   $isMostLikedSection?: boolean;
@@ -17,10 +20,9 @@ export const MainFeedStyled = styled.div<{
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.sm}; /* Default gap between elements */
 
-  /* REINSTATED: Original fixed height logic for the card container */
-  height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
-    $isMostRecentSection || $isMostLikedSection ? "420px" : "320px"};
-  box-sizing: border-box; /* Ensures padding and border are included in the element's total height/width */
+  /* REMOVED ALL FIXED HEIGHTS from MainFeedStyled - let content dictate height */
+  height: auto;
+  box-sizing: border-box;
 
   &:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -28,132 +30,99 @@ export const MainFeedStyled = styled.div<{
 
   /* --- Responsive Adjustments for MainFeedStyled (Card Container) --- */
 
-  /* For tablets and smaller desktops (e.g., up to 992px wide) */
+  /* Default padding for larger screens */
+  @media (max-width: 1400px) {
+    padding: ${({ theme }) => theme.spacing.md};
+    gap: ${({ theme }) => theme.spacing.sm};
+  }
+
+  /* Adjustments for 3-column layout */
+  @media (max-width: 1200px) {
+    padding: ${({ theme }) => theme.spacing.sm};
+    gap: ${({ theme }) => theme.spacing.xs};
+  }
+
+  /* Adjustments for 2-column layout (tablets) */
   @media (max-width: 992px) {
-    padding: ${({ theme }) => theme.spacing.sm}; /* Slightly less padding */
-    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
-      $isMostRecentSection || $isMostLikedSection
-        ? "380px"
-        : "300px"}; /* Reduced card height, but still taller for recent/liked */
-    gap: ${({ theme }) => theme.spacing.xs}; /* Slightly less gap inside */
+    padding: ${({ theme }) => theme.spacing.sm};
+    gap: ${({ theme }) => theme.spacing.xs};
   }
 
-  /* For larger mobile devices and smaller tablets (e.g., up to 768px wide) */
-  @media (max-width: 768px) {
-    padding: ${({ theme }) => theme.spacing.xs}; /* Further reduced padding */
-    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
-      $isMostRecentSection || $isMostLikedSection
-        ? "350px"
-        : "280px"}; /* Further reduced card height, maintaining recent/liked difference */
-    gap: ${({ theme }) => theme.spacing.xxs}; /* Minimal gap inside */
-    border-radius: ${({ theme }) =>
-      theme.borderRadius.sm}; /* Slightly smaller border-radius */
-  }
-
-  /* For small mobile devices (e.g., up to 576px wide, single column for MainFeedGrid) */
+  /* Adjustments for 1-column layout (mobile) */
   @media (max-width: 576px) {
-    padding: ${theme.spacing.sm}; /* Increased padding for single column view */
-    /* Height for single column view - significantly increased for prominence */
-    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
-      $isMostRecentSection || $isMostLikedSection
-        ? "380px" // Maintain distinction for Most Recent/Liked
-        : "300px"}; // Increased height for main feed cards
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Re-added shadow for single column */
-    gap: ${theme.spacing.sm}; /* More gap for better spacing */
+    /* No max-width or margin auto here, MainFeedGrid handles 1fr width */
+    padding: ${theme.spacing
+      .md}; /* More comfortable padding for single column */
+    gap: ${theme.spacing.sm};
   }
 
-  /* For very small mobile devices (e.g., up to 480px wide) */
+  /* Adjustments for very small mobile devices */
   @media (max-width: 480px) {
-    padding: ${theme.spacing.xs}; /* Adjusted to theme spacing */
-    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
-      $isMostRecentSection || $isMostLikedSection
-        ? "360px" // Adjust for very small screens, maintaining distinction
-        : "280px"}; /* Adjusted for very small screens */
-    box-shadow: none; /* Optional: remove shadow for a flat mobile feel */
-  }
-
-  /* For even smaller mobile devices (e.g., up to 360px wide) */
-  @media (max-width: 360px) {
-    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
-      $isMostRecentSection || $isMostLikedSection
-        ? "340px" // Adjust for very small screens
-        : "260px"}; /* Adjust for very small screens */
+    padding: ${theme.spacing.sm};
   }
 
   .main-thumbnail {
     width: 100%;
     border-radius: ${({ theme }) => theme.borderRadius.md};
     overflow: hidden;
-    position: relative; /* Essential for positioning the inner aspect-ratio div */
-    /* REINSTATED: Original height logic for the thumbnail container */
-    height: ${({ $isMostRecentSection, $isMostLikedSection }) =>
-      $isMostRecentSection || $isMostLikedSection ? "260px" : "180px"};
-    background-color: transparent; /* Ensures no unwanted background */
-
-    /* The image itself will now be inside an aspect-ratio div */
-    display: flex; /* Use flex to center the inner aspect-ratio div */
-    justify-content: center;
-    align-items: center;
-  }
-
-  /* NEW: Inner div to control aspect ratio for the image */
-  .main-thumbnail-inner {
     position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 56.25%; /* 16:9 Aspect Ratio (9 / 16 * 100%) */
-    background-color: ${({ theme }) =>
-      theme.colors.accentBackground}; /* Subtle background for whitespace */
-    border-radius: ${({ theme }) =>
-      theme.borderRadius.sm}; /* Match image border-radius */
+    height: 0; /* Collapses height */
 
+    /* Aspect ratio for images based on card type */
+    padding-bottom: ${({ $isMostRecentSection, $isMostLikedSection }) =>
+      $isMostRecentSection || $isMostLikedSection
+        ? "66.66%" /* 3:2 Aspect Ratio for Most Recent/Liked */
+        : "56.25%"}; /* 16:9 Aspect Ratio for Main Feed */
+
+    background-color: ${({ theme }) =>
+      theme.colors
+        .accentBackground}; /* Subtle background for any rare whitespace */
+
+    /* Responsive adjustments for aspect ratio */
     @media (max-width: 576px) {
-      padding-bottom: 75%; /* 4:3 Aspect Ratio for smaller screens */
+      padding-bottom: 60%; /* Slightly taller aspect ratio for mobile images (e.g., 5:3) */
     }
   }
 
   .main-thumbnail img {
-    object-fit: contain; /* Ensures the entire image is visible within the container */
-    position: absolute; /* Position the image to fill the inner aspect-ratio box */
+    object-fit: cover; /* Fills the container, may crop image */
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%; /* Fill the aspect-ratio defined by inner parent */
+    height: 100%;
     border-radius: ${({ theme }) => theme.borderRadius.sm};
-    object-position: center; /* Ensures the image is centered within the space */
+    object-position: center;
   }
 
   .main-title {
-    font-size: ${({ theme }) => theme.fontSizes.md}; /* Default font size */
+    font-size: ${({ theme }) => theme.fontSizes.md};
     font-weight: ${({ theme }) => theme.fontWeights.bold};
     margin: ${({ theme }) => theme.spacing.sm} 0;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Limits text to 2 lines */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.4;
-    height: calc(
-      1.4em * 2
-    ); /* Ensures two lines, adapts if font-size changes */
+    height: calc(1.4em * 2); /* Fixed height for 2 lines */
 
-    /* --- Responsive Adjustments for Title Font Size --- */
+    /* Adjustments for title font size and line clamp */
+    @media (max-width: 1200px) {
+      font-size: ${({ theme }) => theme.fontSizes.sm};
+    }
     @media (max-width: 992px) {
-      font-size: ${({ theme }) => theme.fontSizes.sm}; /* Slightly smaller */
+      font-size: 0.95rem;
+      margin: ${({ theme }) => theme.spacing.xs} 0;
     }
-    @media (max-width: 768px) {
-      font-size: 0.95rem; /* Specific rem value for fine control */
-      margin: ${({ theme }) => theme.spacing.xs} 0; /* Reduced margin */
-    }
-    /* UPDATED: Title font size for single column mobile view */
     @media (max-width: 576px) {
-      font-size: ${theme.fontSizes.md}; /* Keep title readable on mobile */
-      -webkit-line-clamp: 2; /* Ensure 2 lines for consistency */
+      font-size: ${theme.fontSizes
+        .lg}; /* Larger title for mobile readability */
+      -webkit-line-clamp: 3; /* Allow more lines for title on mobile */
       height: auto; /* Let content dictate height, rely on line-clamp for truncation */
     }
     @media (max-width: 480px) {
-      font-size: ${theme.fontSizes
-        .sm}; /* Slightly smaller for very small phones */
+      font-size: ${theme.fontSizes.md};
     }
   }
 
@@ -161,21 +130,18 @@ export const MainFeedStyled = styled.div<{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: ${({ theme }) => theme.fontSizes.sm}; /* Default font size */
+    font-size: ${({ theme }) => theme.fontSizes.sm};
     color: ${({ theme }) => theme.colors.textSecondary};
-    margin-top: auto; /* Pushes content to the bottom of the flex container */
+    margin-top: auto;
 
-    /* --- Responsive Adjustments for Citation/Likes Font Size --- */
     @media (max-width: 768px) {
-      font-size: ${({ theme }) => theme.fontSizes.xs}; /* Smaller */
+      font-size: ${({ theme }) => theme.fontSizes.xs};
     }
-    /* UPDATED: Citation/Likes font size for single column mobile view */
     @media (max-width: 576px) {
-      font-size: ${theme.fontSizes.sm}; /* Larger for readability on mobile */
+      font-size: ${theme.fontSizes.sm};
     }
     @media (max-width: 480px) {
-      font-size: ${theme.fontSizes
-        .xs}; /* Slightly smaller for very small phones */
+      font-size: ${theme.fontSizes.xs};
     }
   }
 
@@ -189,17 +155,15 @@ export const MainFeedStyled = styled.div<{
     gap: ${({ theme }) => theme.spacing.xs};
     color: ${({ theme }) => theme.colors.textSecondary};
 
-    /* Adjust gap for smaller screens if needed */
     @media (max-width: 480px) {
-      gap: ${({ theme }) => theme.spacing.xxs}; /* Smaller gap */
+      gap: ${({ theme }) => theme.spacing.xxs};
     }
   }
 
   .like-display-section .heart-icon {
-    font-size: 0.9rem; /* Default font size */
+    font-size: 0.9rem;
     line-height: 1;
 
-    /* Adjust icon size */
     @media (max-width: 480px) {
       font-size: 0.75rem;
     }
@@ -210,22 +174,21 @@ export const MainFeedStyled = styled.div<{
   }
 `;
 
-export default MainFeedStyled;
-
 export const Section = styled.div`
-  margin-bottom: 48px; /* Default desktop margin */
+  margin-bottom: 48px;
 
-  /* --- Responsive Adjustments for Section margin --- */
   @media (max-width: 992px) {
     margin-bottom: 40px;
   }
   @media (max-width: 768px) {
-    margin-bottom: 32px; /* Reduced margin for tablets */
+    margin-bottom: 32px;
   }
   @media (max-width: 576px) {
-    margin-bottom: 24px; /* Further reduced margin for mobiles */
+    margin-bottom: 24px;
   }
   @media (max-width: 400px) {
-    margin-bottom: 16px; /* Even smaller margin for small mobiles */
+    margin-bottom: 16px;
   }
 `;
+
+// REMOVED: export default MainFeedStyled;
