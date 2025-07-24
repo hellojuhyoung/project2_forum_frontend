@@ -45,23 +45,46 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Usage](#usage)
-  - [Testing](#testing)
 - [Roadmap](#roadmap)
-- [Contributing](#contributing)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
 
 ---
 
-## Overview
+## Overview 🌐
+
+The JL Forum Frontend Application serves as the **intuitive and responsive user interface** for interacting with the JL Forum Backend API. Built with modern React principles and a rich set of libraries, it provides users with a seamless experience for Browse, creating, and engaging with forum content. This application focuses on delivering a dynamic user experience, from secure authentication to interactive content display and management.
 
 ---
 
-## Features
+## Features ✨
 
-<code>❯ REPLACE-ME</code>
+The JL Forum Frontend provides a comprehensive set of features designed to enhance user engagement and content accessibility:
 
----
+- **User Authentication & Authorization**:
+  - Secure user registration and login with local accounts.
+  - Seamless social login integration via Google, Kakao, and Naver.
+  - Protected routes ensuring only authenticated users can access specific content or perform actions.
+- **Dynamic Forum Content Display**:
+  - Browse posts categorized by various topics.
+  - View detailed post content, including associated images.
+  - Interactive liking functionality on posts.
+- **Post and Category Management**:
+  - Create, edit, and delete forum posts.
+  - Upload images directly when creating or updating posts.
+  - Select and manage categories for organized content.
+- **Responsive Design**:
+  - Optimized layout and components for a consistent user experience across various devices (desktops, tablets, mobile phones) using Ant Design and Styled Components.
+- **Internationalization (i18n)**:
+  - Support for multiple languages, allowing users to switch between different linguistic versions of the application interface.
+- **Robust Form Handling**:
+  - Utilizes Formik and Yup for efficient form state management, validation, and error handling for user inputs.
+- **API Communication**:
+  - Seamless interaction with the JL Forum Backend API using Axios for data fetching and submission.
+- **Cloud Integration (AWS Amplify)**:
+  - Leveraging AWS services for robust backend infrastructure for services like authentication and storage.
+- **State Management**:
+  - Efficient global state management for application data using Redux.
 
 ## Project Structure
 
@@ -622,1401 +645,1386 @@
 ### Project Index
 
 <details open>
-	<summary><b><code>/</code></b></summary>
-	<!-- __root__ Submodule -->
-	<details>
-		<summary><b>__root__</b></summary>
-		<blockquote>
-			<div class='directory-path' style='padding: 8px 0; color: #666;'>
-				<code><b>⦿ __root__</b></code>
-			<table style='width: 100%; border-collapse: collapse;'>
-			<thead>
-				<tr style='background-color: #f8f9fa;'>
-					<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-					<th style='text-align: left; padding: 8px;'>Summary</th>
-				</tr>
-			</thead>
-				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/next.config.mjs'>next.config.mjs</a></b></td>
-					<td style='padding: 8px;'>- The <code>next.config.mjs</code> file configures the Next.js application<br>- It enables React Strict Mode and SWC minification for performance optimization<br>- Importantly, it manages environment variables, making <code>NEXT_PUBLIC_API_URL</code> available client-side, and provisions for routing API requests (currently commented out) to a backend URL defined by <code>NEXT_PUBLIC_BACKEND_URL</code><br>- This setup facilitates a streamlined development and deployment process.</td>
-				</tr>
-				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/declaration.d.ts'>declaration.d.ts</a></b></td>
-					<td style='padding: 8px;'>- The <code>declaration.d.ts</code> file facilitates the use of the <code>@toast-ui/editor</code> library within the project<br>- It acts as a type definition, enabling TypeScripts type checking and autocompletion features for the editor librarys API<br>- This ensures type safety and improves developer experience when integrating the rich text editor into the application<br>- The file contributes to a robust and maintainable codebase by providing type information for external dependencies.</td>
-				</tr>
-				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/next-env.d.ts'>next-env.d.ts</a></b></td>
-					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-				</tr>
-				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/package-lock.json'>package-lock.json</a></b></td>
-					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-				</tr>
-				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/package.json'>package.json</a></b></td>
-					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-				</tr>
-				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/tsconfig.json'>tsconfig.json</a></b></td>
-					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-				</tr>
-				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/eslint.config.mjs'>eslint.config.mjs</a></b></td>
-					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-				</tr>
-				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/postman.txt'>postman.txt</a></b></td>
-					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-				</tr>
-			</table>
-		</blockquote>
-	</details>
+    <summary><b><code>/</code></b></summary>
+    <details>
+        <summary><b>__root__</b></summary>
+        <blockquote>
+            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                <code><b>⦿ __root__</b></code>
+            <table style='width: 100%; border-collapse: collapse;'>
+            <thead>
+                <tr style='background-color: #f8f9fa;'>
+                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                </tr>
+            </thead>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='/next.config.mjs'>next.config.mjs</a></b></td>
+                    <td style='padding: 8px;'>- The <code>next.config.mjs</code> file configures the Next.js application<br>- It enables React Strict Mode and SWC minification for performance optimization<br>- Importantly, it manages environment variables, making <code>NEXT_PUBLIC_API_URL</code> available client-side, and provisions for routing API requests (currently commented out) to a backend URL defined by <code>NEXT_PUBLIC_BACKEND_URL</code><br>- This setup facilitates a streamlined development and deployment process.</td>
+                </tr>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='/declaration.d.ts'>declaration.d.ts</a></b></td>
+                    <td style='padding: 8px;'>- The <code>declaration.d.ts</code> file facilitates the use of the <code>@toast-ui/editor</code> library within the project<br>- It acts as a type definition, enabling TypeScripts type checking and autocompletion features for the editor librarys API<br>- This ensures type safety and improves developer experience when integrating the rich text editor into the application<br>- The file contributes to a robust and maintainable codebase by providing type information for external dependencies.</td>
+                </tr>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='/next-env.d.ts'>next-env.d.ts</a></b></td>
+                    <td style='padding: 8px;'>This file is automatically generated by Next.js and ensures that **TypeScript recognizes Next.js-specific types** ⚛️. It provides type definitions for environment variables and other Next.js global types, essential for proper type checking throughout the project.</td>
+                </tr>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='/package-lock.json'>package-lock.json</a></b></td>
+                    <td style='padding: 8px;'>This file is automatically generated by `npm` and records the **exact version and dependency tree** 🌳 of all installed packages. It ensures consistent builds across different environments by locking down the versions of direct and transitive dependencies.</td>
+                </tr>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='/package.json'>package.json</a></b></td>
+                    <td style='padding: 8px;'>This file defines the **project's metadata, scripts, and dependencies** 📦. It includes information like the project name, version, and lists all required packages (dependencies) and development-only packages (devDependencies), as well as runnable scripts (e.g., `start`, `dev`, `build`).</td>
+                </tr>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='/tsconfig.json'>tsconfig.json</a></b></td>
+                    <td style='padding: 8px;'>This file contains the **TypeScript compiler configuration** ⚙️ for the project. It defines how TypeScript files are compiled, including options for target ECMAScript version, module resolution, JSX support, and strictness rules, ensuring proper type checking and compilation for the Next.js application.</td>
+                </tr>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='/eslint.config.mjs'>eslint.config.mjs</a></b></td>
+                    <td style='padding: 8px;'>This file configures **ESLint for code linting** 🧹. It defines rules for code style, potential errors, and best practices, helping to maintain code quality and consistency across the frontend project. Being an `.mjs` file, it signifies an ES module configuration.</td>
+                </tr>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='/postman.txt'>postman.txt</a></b></td>
+                    <td style='padding: 8px;'>This file likely contains **Postman collection IDs or API endpoint details** 🔗. While typically associated with backend API testing, it might store references to collections used for frontend development to interact with the backend API, facilitating testing and development workflows.</td>
+                </tr>
+            </table>
+        </blockquote>
+    </details>
 	<!-- amplify Submodule -->
 	<details>
-		<summary><b>amplify</b></summary>
-		<blockquote>
-			<div class='directory-path' style='padding: 8px 0; color: #666;'>
-				<code><b>⦿ amplify</b></code>
-			<table style='width: 100%; border-collapse: collapse;'>
-			<thead>
-				<tr style='background-color: #f8f9fa;'>
-					<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-					<th style='text-align: left; padding: 8px;'>Summary</th>
-				</tr>
-			</thead>
-				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/amplify/cli.json'>cli.json</a></b></td>
-					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-				</tr>
-				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/amplify/team-provider-info.json'>team-provider-info.json</a></b></td>
-					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-				</tr>
-			</table>
+        <summary><b>amplify</b></summary>
+        <blockquote>
+            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                <code><b>⦿ amplify</b></code>
+            <table style='width: 100%; border-collapse: collapse;'>
+            <thead>
+                <tr style='background-color: #f8f9fa;'>
+                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                </tr>
+            </thead>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='/amplify/cli.json'>cli.json</a></b></td>
+                    <td style='padding: 8px;'>This file stores **configuration details for the AWS Amplify CLI** 🛠️ specific to this project. It includes settings such as the default editor, environment names, and other CLI-related preferences, guiding how the Amplify CLI interacts with your project setup.</td>
+                </tr>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='/amplify/team-provider-info.json'>team-provider-info.json</a></b></td>
+                    <td style='padding: 8px;'>This file contains **environment-specific AWS resource information** ☁️ for the Amplify project. It's generated and updated by the Amplify CLI and holds details about the AWS regions, IAM roles, and cloud formation stack names for each deployed environment (e.g., `dev`, `prod`), enabling team members to work on the same backend.</td>
+                </tr>
+            </table>
 			<!-- .config Submodule -->
 			<details>
-				<summary><b>.config</b></summary>
-				<blockquote>
-					<div class='directory-path' style='padding: 8px 0; color: #666;'>
-						<code><b>⦿ amplify..config</b></code>
-					<table style='width: 100%; border-collapse: collapse;'>
-					<thead>
-						<tr style='background-color: #f8f9fa;'>
-							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-							<th style='text-align: left; padding: 8px;'>Summary</th>
-						</tr>
-					</thead>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/amplify/.config/project-config.json'>project-config.json</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/amplify/.config/local-aws-info.json'>local-aws-info.json</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/amplify/.config/local-env-info.json'>local-env-info.json</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-					</table>
-				</blockquote>
-			</details>
+                <summary><b>.config</b></summary>
+                <blockquote>
+                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                        <code><b>⦿ amplify/.config</b></code>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                    <thead>
+                        <tr style='background-color: #f8f9fa;'>
+                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                        </tr>
+                    </thead>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/amplify/.config/project-config.json'>project-config.json</a></b></td>
+                            <td style='padding: 8px;'>This file stores **Amplify project-level configurations** ⚙️, including details about the frontend framework used, JavaScript configurations, and specifies the providers (e.g., `awscloudformation`) for your Amplify backend, ensuring the CLI configures resources correctly.</td>
+                        </tr>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/amplify/.config/local-aws-info.json'>local-aws-info.json</a></b></td>
+                            <td style='padding: 8px;'>This file holds **local AWS account information** 🔑 and user credentials (e.g., AWS profile name) used by the Amplify CLI for interacting with AWS services in your local development environment. It links your local setup to your AWS account.</td>
+                        </tr>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/amplify/.config/local-env-info.json'>local-env-info.json</a></b></td>
+                            <td style='padding: 8px;'>This file contains **local environment-specific details** 🏠 for your Amplify project, such as the current Amplify environment name (`dev`, `staging`, `etc.`), whether a sandbox is active, and the last used AWS profile. It helps the CLI manage local and cloud environment states.</td>
+                        </tr>
+                    </table>
+                </blockquote>
+            </details>
 			<!-- #current-cloud-backend Submodule -->
 			<details>
-				<summary><b>#current-cloud-backend</b></summary>
-				<blockquote>
-					<div class='directory-path' style='padding: 8px 0; color: #666;'>
-						<code><b>⦿ amplify.#current-cloud-backend</b></code>
-					<table style='width: 100%; border-collapse: collapse;'>
-					<thead>
-						<tr style='background-color: #f8f9fa;'>
-							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-							<th style='text-align: left; padding: 8px;'>Summary</th>
-						</tr>
-					</thead>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/amplify/#current-cloud-backend/backend-config.json'>backend-config.json</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/amplify/#current-cloud-backend/tags.json'>tags.json</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/amplify/#current-cloud-backend/amplify-meta.json'>amplify-meta.json</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-					</table>
-				</blockquote>
-			</details>
+                <summary><b>#current-cloud-backend</b></summary>
+                <blockquote>
+                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                        <code><b>⦿ amplify/#current-cloud-backend</b></code>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                    <thead>
+                        <tr style='background-color: #f8f9fa;'>
+                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                        </tr>
+                    </thead>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/amplify/#current-cloud-backend/backend-config.json'>backend-config.json</a></b></td>
+                            <td style='padding: 8px;'>This file defines the **configuration of your Amplify backend categories** 🏗️ (e.g., authentication, API, storage, functions). It outlines the services provisioned for your project and their high-level settings, reflecting the structure of your cloud backend.</td>
+                        </tr>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/amplify/#current-cloud-backend/tags.json'>tags.json</a></b></td>
+                            <td style='padding: 8px;'>This file contains **AWS resource tags** 🏷️ associated with your Amplify project. Tags are key-value pairs that help you manage, identify, organize, search for, and filter resources, and can be used for cost allocation and access control.</td>
+                        </tr>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/amplify/#current-cloud-backend/amplify-meta.json'>amplify-meta.json</a></b></td>
+                            <td style='padding: 8px;'>This file holds **metadata about your deployed Amplify resources** 📊. It's a comprehensive record of all backend categories (e.g., Auth, API, Hosting) provisioned in the cloud, including their CloudFormation stack names, service configurations, and resource identifiers like ARN/region.</td>
+                        </tr>
+                    </table>
+                </blockquote>
+            </details>
 			<!-- backend Submodule -->
-			<details>
-				<summary><b>backend</b></summary>
-				<blockquote>
-					<div class='directory-path' style='padding: 8px 0; color: #666;'>
-						<code><b>⦿ amplify.backend</b></code>
-					<table style='width: 100%; border-collapse: collapse;'>
-					<thead>
-						<tr style='background-color: #f8f9fa;'>
-							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-							<th style='text-align: left; padding: 8px;'>Summary</th>
-						</tr>
-					</thead>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/amplify/backend/backend-config.json'>backend-config.json</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/amplify/backend/tags.json'>tags.json</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/amplify/backend/amplify-meta.json'>amplify-meta.json</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-					</table>
+		<details>
+                <summary><b>backend</b></summary>
+                <blockquote>
+                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                        <code><b>⦿ amplify/backend</b></code>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                    <thead>
+                        <tr style='background-color: #f8f9fa;'>
+                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                        </tr>
+                    </thead>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/amplify/backend/backend-config.json'>backend-config.json</a></b></td>
+                            <td style='padding: 8px;'>This file defines the **configuration of your Amplify backend categories** 🏗️ (e.g., authentication, API, storage, functions). It outlines the services provisioned for your project and their high-level settings, reflecting the structure of your cloud backend.</td>
+                        </tr>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/amplify/backend/tags.json'>tags.json</a></b></td>
+                            <td style='padding: 8px;'>This file contains **AWS resource tags** 🏷️ associated with your Amplify project. Tags are key-value pairs that help you manage, identify, organize, search for, and filter resources, and can be used for cost allocation and access control.</td>
+                        </tr>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/amplify/backend/amplify-meta.json'>amplify-meta.json</a></b></td>
+                            <td style='padding: 8px;'>This file holds **metadata about your deployed Amplify resources** 📊. It's a comprehensive record of all backend categories (e.g., Auth, API, Hosting) provisioned in the cloud, including their CloudFormation stack names, service configurations, and resource identifiers like ARN/region.</td>
+                        </tr>
+                    </table>
 					<!-- types Submodule -->
 					<details>
-						<summary><b>types</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ amplify.backend.types</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/amplify/backend/types/amplify-dependent-resources-ref.d.ts'>amplify-dependent-resources-ref.d.ts</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-						</blockquote>
-					</details>
-				</blockquote>
-			</details>
+                        <summary><b>types</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ amplify.backend.types</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/amplify/backend/types/amplify-dependent-resources-ref.d.ts'>amplify-dependent-resources-ref.d.ts</a></b></td>
+                                    <td style='padding: 8px;'>This **TypeScript declaration file** (`.d.ts`) is generated by AWS Amplify ⚙️. It provides type definitions for the resources deployed via Amplify (e.g., authentication, API endpoints), allowing your frontend code to interact with these backend services in a type-safe manner and enabling auto-completion.</td>
+                                </tr>
+                            </table>
+                        </blockquote>
+                    </details>
+                </blockquote>
+            </details>
 			<!-- hooks Submodule -->
 			<details>
-				<summary><b>hooks</b></summary>
-				<blockquote>
-					<div class='directory-path' style='padding: 8px 0; color: #666;'>
-						<code><b>⦿ amplify.hooks</b></code>
-					<table style='width: 100%; border-collapse: collapse;'>
-					<thead>
-						<tr style='background-color: #f8f9fa;'>
-							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-							<th style='text-align: left; padding: 8px;'>Summary</th>
-						</tr>
-					</thead>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/amplify/hooks/post-push.sh.sample'>post-push.sh.sample</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/amplify/hooks/pre-push.js.sample'>pre-push.js.sample</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-					</table>
-				</blockquote>
-			</details>
-		</blockquote>
-	</details>
+                <summary><b>hooks</b></summary>
+                <blockquote>
+                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                        <code><b>⦿ amplify.hooks</b></code>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                    <thead>
+                        <tr style='background-color: #f8f9fa;'>
+                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                        </tr>
+                    </thead>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/amplify/hooks/post-push.sh.sample'>post-push.sh.sample</a></b></td>
+                            <td style='padding: 8px;'>This is a **sample shell script** 🐚 designed to be executed by the Amplify CLI *after* an `amplify push` operation. Developers can customize this hook to run automated tasks like updating environment variables, deploying to a specific hosting, or triggering other CI/CD pipelines once the cloud resources are updated.</td>
+                        </tr>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/amplify/hooks/pre-push.js.sample'>pre-push.js.sample</a></b></td>
+                            <td style='padding: 8px;'>This is a **sample JavaScript script** 📜 designed to be executed by the Amplify CLI *before* an `amplify push` operation. It allows developers to perform checks, validations, or other preparatory steps (e.g., linting, testing, code generation) to ensure the project is ready for deployment to the cloud.</td>
+                        </tr>
+                    </table>
+                </blockquote>
+            </details>
+        </blockquote>
+    </details>
 	<!-- public Submodule -->
 	<details>
-		<summary><b>public</b></summary>
-		<blockquote>
-			<div class='directory-path' style='padding: 8px 0; color: #666;'>
-				<code><b>⦿ public</b></code>
-			<!-- locales Submodule -->
-			<details>
-				<summary><b>locales</b></summary>
-				<blockquote>
-					<div class='directory-path' style='padding: 8px 0; color: #666;'>
-						<code><b>⦿ public.locales</b></code>
-					<!-- ko Submodule -->
-					<details>
-						<summary><b>ko</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ public.locales.ko</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/public/locales/ko/common.json'>common.json</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/public/locales/ko/mainfeed.json'>mainfeed.json</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/public/locales/ko/editpost.json'>editpost.json</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/public/locales/ko/home.json'>home.json</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/public/locales/ko/createpost.json'>createpost.json</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/public/locales/ko/detailfeed.json'>detailfeed.json</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-							<!-- Margins Submodule -->
-							<details>
-								<summary><b>Margins</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ public.locales.ko.Margins</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/ko/Margins/header.json'>header.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/ko/Margins/footer.json'>footer.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
+        <summary><b>public</b></summary>
+        <blockquote>
+            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                <code><b>⦿ public</b></code>
+            <details>
+                <summary><b>locales</b></summary>
+                <blockquote>
+                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                        <code><b>⦿ public.locales</b></code>
+                    <details>
+                        <summary><b>ko</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ public.locales.ko</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/public/locales/ko/common.json'>common.json</a></b></td>
+                                    <td style='padding: 8px;'>Contains **common UI translation strings** 💬 for the Korean language, used across various parts of the application such as generic buttons, error messages, and shared labels.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/public/locales/ko/mainfeed.json'>mainfeed.json</a></b></td>
+                                    <td style='padding: 8px;'>Provides **Korean translation keys and values** 📝 specific to the main forum feed page, including text for post listings, category filters, and feed navigation elements.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/public/locales/ko/editpost.json'>editpost.json</a></b></td>
+                                    <td style='padding: 8px;'>Holds **Korean translation strings** ✏️ for the "Edit Post" functionality, covering form fields, action buttons, and validation messages for modifying existing forum posts.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/public/locales/ko/home.json'>home.json</a></b></td>
+                                    <td style='padding: 8px;'>Contains **Korean translation content** 🏠 for the homepage of the application, including welcome messages, introductory texts, and any specific elements displayed on the landing page.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/public/locales/ko/createpost.json'>createpost.json</a></b></td>
+                                    <td style='padding: 8px;'>Provides **Korean translation keys** ✨ for the "Create Post" interface, encompassing text for new post forms, image upload prompts, and submission controls.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/public/locales/ko/detailfeed.json'>detailfeed.json</a></b></td>
+                                    <td style='padding: 8px;'>Holds **Korean translation strings** 📖 for the detailed post view, including text for comments, post content, author information, and related interactions on a single post's page.</td>
+                                </tr>
+                            </table>
+                            <details>
+                                <summary><b>Margins</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ public.locales.ko.Margins</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/ko/Margins/header.json'>header.json</a></b></td>
+                                            <td style='padding: 8px;'>Contains **Korean translation keys** ⬆️ for text content displayed within the header component, ensuring elements like navigation links, titles, and user icons are correctly localized.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/ko/Margins/footer.json'>footer.json</a></b></td>
+                                            <td style='padding: 8px;'>Provides **Korean translation keys** ⬇️ for text content found in the footer component, such as copyright notices, contact information, or other bottom-page links.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
 							<!-- ClientServices Submodule -->
-							<details>
-								<summary><b>ClientServices</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ public.locales.ko.ClientServices</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/ko/ClientServices/profileupdate.json'>profileupdate.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/ko/ClientServices/signup.json'>signup.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/ko/ClientServices/forgotusername.json'>forgotusername.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/ko/ClientServices/login.json'>login.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/ko/ClientServices/resetpassword.json'>resetpassword.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/ko/ClientServices/forgotpassword.json'>forgotpassword.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/ko/ClientServices/profile.json'>profile.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
-						</blockquote>
-					</details>
+						<details>
+                                <summary><b>ClientServices</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ public.locales.ko.ClientServices</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/ko/ClientServices/profileupdate.json'>profileupdate.json</a></b></td>
+                                            <td style='padding: 8px;'>Contains **Korean translation strings** 👤 for the user profile update page, including form fields, success/error messages, and confirmation prompts for modifying user details.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/ko/ClientServices/signup.json'>signup.json</a></b></td>
+                                            <td style='padding: 8px;'>Provides **Korean translation keys** ✍️ for the user registration (sign-up) flow, covering fields like username, email, password, and related validation or success messages.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/ko/ClientServices/forgotusername.json'>forgotusername.json</a></b></td>
+                                            <td style='padding: 8px;'>Holds **Korean translation strings** 🤔 for the "Forgot Username" recovery process, including prompts for email input, instructional messages, and confirmation texts.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/ko/ClientServices/login.json'>login.json</a></b></td>
+                                            <td style='padding: 8px;'>Contains **Korean translation keys** 🚪 for the user login interface, covering fields for credentials, login buttons, and messages related to successful or failed login attempts.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/ko/ClientServices/resetpassword.json'>resetpassword.json</a></b></td>
+                                            <td style='padding: 8px;'>Provides **Korean translation strings** 🔒 for the "Reset Password" functionality, including fields for new passwords, confirmation, and status messages during the password reset process.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/ko/ClientServices/forgotpassword.json'>forgotpassword.json</a></b></td>
+                                            <td style='padding: 8px;'>Holds **Korean translation keys** ❓ for the "Forgot Password" recovery flow, covering prompts for email, instructions for password reset, and confirmation messages.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/ko/ClientServices/profile.json'>profile.json</a></b></td>
+                                            <td style='padding: 8px;'>Contains **Korean translation strings** 📊 for the user profile viewing page, encompassing display text for user information, statistics, and navigation within the profile section.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
+                        </blockquote>
+                    </details>
 					<!-- en Submodule -->
-					<details>
-						<summary><b>en</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ public.locales.en</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/public/locales/en/common.json'>common.json</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/public/locales/en/mainfeed.json'>mainfeed.json</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/public/locales/en/editpost.json'>editpost.json</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/public/locales/en/home.json'>home.json</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/public/locales/en/createpost.json'>createpost.json</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/public/locales/en/detailfeed.json'>detailfeed.json</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-							<!-- Margins Submodule -->
-							<details>
-								<summary><b>Margins</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ public.locales.en.Margins</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/en/Margins/header.json'>header.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/en/Margins/footer.json'>footer.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
-							<!-- ClientServices Submodule -->
-							<details>
-								<summary><b>ClientServices</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ public.locales.en.ClientServices</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/en/ClientServices/profileupdate.json'>profileupdate.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/en/ClientServices/signup.json'>signup.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/en/ClientServices/forgotusername.json'>forgotusername.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/en/ClientServices/login.json'>login.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/en/ClientServices/resetpassword.json'>resetpassword.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/en/ClientServices/forgotpassword.json'>forgotpassword.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/public/locales/en/ClientServices/profile.json'>profile.json</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
-						</blockquote>
-					</details>
+<details>
+                        <summary><b>en</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ public.locales.en</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/public/locales/en/common.json'>common.json</a></b></td>
+                                    <td style='padding: 8px;'>Contains **common UI translation strings** 💬 for the English language, used across various parts of the application such as generic buttons, error messages, and shared labels.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/public/locales/en/mainfeed.json'>mainfeed.json</a></b></td>
+                                    <td style='padding: 8px;'>Provides **English translation keys and values** 📝 specific to the main forum feed page, including text for post listings, category filters, and feed navigation elements.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/public/locales/en/editpost.json'>editpost.json</a></b></td>
+                                    <td style='padding: 8px;'>Holds **English translation strings** ✏️ for the "Edit Post" functionality, covering form fields, action buttons, and validation messages for modifying existing forum posts.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/public/locales/en/home.json'>home.json</a></b></td>
+                                    <td style='padding: 8px;'>Contains **English translation content** 🏠 for the homepage of the application, including welcome messages, introductory texts, and any specific elements displayed on the landing page.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/public/locales/en/createpost.json'>createpost.json</a></b></td>
+                                    <td style='padding: 8px;'>Provides **English translation keys** ✨ for the "Create Post" interface, encompassing text for new post forms, image upload prompts, and submission controls.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/public/locales/en/detailfeed.json'>detailfeed.json</a></b></td>
+                                    <td style='padding: 8px;'>Holds **English translation strings** 📖 for the detailed post view, including text for comments, post content, author information, and related interactions on a single post's page.</td>
+                                </tr>
+                            </table>
+                            <details>
+                                <summary><b>Margins</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ public.locales.en.Margins</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/en/Margins/header.json'>header.json</a></b></td>
+                                            <td style='padding: 8px;'>Contains **English translation keys** ⬆️ for text content displayed within the header component, ensuring elements like navigation links, titles, and user icons are correctly localized.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/en/Margins/footer.json'>footer.json</a></b></td>
+                                            <td style='padding: 8px;'>Provides **English translation keys** ⬇️ for text content found in the footer component, such as copyright notices, contact information, or other bottom-page links.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
+                            <details>
+                                <summary><b>ClientServices</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ public.locales.en.ClientServices</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/en/ClientServices/profileupdate.json'>profileupdate.json</a></b></td>
+                                            <td style='padding: 8px;'>Contains **English translation strings** 👤 for the user profile update page, including form fields, success/error messages, and confirmation prompts for modifying user details.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/en/ClientServices/signup.json'>signup.json</a></b></td>
+                                            <td style='padding: 8px;'>Provides **English translation keys** ✍️ for the user registration (sign-up) flow, covering fields like username, email, password, and related validation or success messages.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/en/ClientServices/forgotusername.json'>forgotusername.json</a></b></td>
+                                            <td style='padding: 8px;'>Holds **English translation strings** 🤔 for the "Forgot Username" recovery process, including prompts for email input, instructional messages, and confirmation texts.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/en/ClientServices/login.json'>login.json</a></b></td>
+                                            <td style='padding: 8px;'>Contains **English translation keys** 🚪 for the user login interface, covering fields for credentials, login buttons, and messages related to successful or failed login attempts.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/en/ClientServices/resetpassword.json'>resetpassword.json</a></b></td>
+                                            <td style='padding: 8px;'>Provides **English translation strings** 🔒 for the "Reset Password" functionality, including fields for new passwords, confirmation, and status messages during the password reset process.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/en/ClientServices/forgotpassword.json'>forgotpassword.json</a></b></td>
+                                            <td style='padding: 8px;'>Holds **English translation keys** ❓ for the "Forgot Password" recovery flow, covering prompts for email, instructions for password reset, and confirmation messages.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/public/locales/en/ClientServices/profile.json'>profile.json</a></b></td>
+                                            <td style='padding: 8px;'>Contains **English translation strings** 📊 for the user profile viewing page, encompassing display text for user information, statistics, and navigation within the profile section.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
+                        </blockquote>
+                    </details>
 				</blockquote>
 			</details>
 		</blockquote>
 	</details>
 	<!-- src Submodule -->
 	<details>
-		<summary><b>src</b></summary>
-		<blockquote>
-			<div class='directory-path' style='padding: 8px 0; color: #666;'>
-				<code><b>⦿ src</b></code>
-			<table style='width: 100%; border-collapse: collapse;'>
-			<thead>
-				<tr style='background-color: #f8f9fa;'>
-					<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-					<th style='text-align: left; padding: 8px;'>Summary</th>
-				</tr>
-			</thead>
-				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/src/aws-exports.js'>aws-exports.js</a></b></td>
-					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-				</tr>
-				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/src/i18n.ts'>i18n.ts</a></b></td>
-					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-				</tr>
-				<tr style='border-bottom: 1px solid #eee;'>
-					<td style='padding: 8px;'><b><a href='/src/amplifyconfiguration.json'>amplifyconfiguration.json</a></b></td>
-					<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-				</tr>
-			</table>
+        <summary><b>src</b></summary>
+        <blockquote>
+            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                <code><b>⦿ src</b></code>
+            <table style='width: 100%; border-collapse: collapse;'>
+            <thead>
+                <tr style='background-color: #f8f9fa;'>
+                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                </tr>
+            </thead>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='/src/aws-exports.js'>aws-exports.js</a></b></td>
+                    <td style='padding: 8px;'>This file is **auto-generated by the AWS Amplify CLI** ⚙️ and contains the configuration necessary for your frontend application to interact with your provisioned AWS backend resources, such as authentication, API endpoints, and storage buckets.</td>
+                </tr>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='/src/i18n.ts'>i18n.ts</a></b></td>
+                    <td style='padding: 8px;'>This file contains the **configuration for the `i18next` library** 🌍, setting up internationalization for the application. It defines the available languages (Korean and English), fallback languages, and how translation files are loaded and managed.</td>
+                </tr>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='/src/amplifyconfiguration.json'>amplifyconfiguration.json</a></b></td>
+                    <td style='padding: 8px;'>This JSON file is another **Amplify-generated configuration** 📊, providing detailed settings for the Amplify client libraries. It complements `aws-exports.js` and is used to initialize the Amplify client, ensuring proper connectivity and setup with your cloud resources.</td>
+                </tr>
+            </table>
 			<!-- config Submodule -->
-			<details>
-				<summary><b>config</b></summary>
-				<blockquote>
-					<div class='directory-path' style='padding: 8px 0; color: #666;'>
-						<code><b>⦿ src.config</b></code>
-					<table style='width: 100%; border-collapse: collapse;'>
-					<thead>
-						<tr style='background-color: #f8f9fa;'>
-							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-							<th style='text-align: left; padding: 8px;'>Summary</th>
-						</tr>
-					</thead>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/src/config/i18nNamespaces.ts'>i18nNamespaces.ts</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-					</table>
-				</blockquote>
-			</details>
+ <details>
+                <summary><b>config</b></summary>
+                <blockquote>
+                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                        <code><b>⦿ src.config</b></code>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                    <thead>
+                        <tr style='background-color: #f8f9fa;'>
+                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                        </tr>
+                    </thead>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/src/config/i18nNamespaces.ts'>i18nNamespaces.ts</a></b></td>
+                            <td style='padding: 8px;'>This TypeScript file defines the **namespaces for the i18n translation files** 🏷️. It lists the categories (like `common`, `mainfeed`, `ClientServices`, `Margins`) under which translation strings are organized, allowing `i18next` to efficiently load and manage localized content across the application.</td>
+                        </tr>
+                    </table>
+                </blockquote>
+            </details>
 			<!-- features Submodule -->
-			<details>
-				<summary><b>features</b></summary>
-				<blockquote>
-					<div class='directory-path' style='padding: 8px 0; color: #666;'>
-						<code><b>⦿ src.features</b></code>
-					<!-- EditPostPage Submodule -->
-					<details>
-						<summary><b>EditPostPage</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.features.EditPostPage</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/features/EditPostPage/EditPost.tsx'>EditPost.tsx</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-						</blockquote>
-					</details>
+		<details>
+                <summary><b>features</b></summary>
+                <blockquote>
+                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                        <code><b>⦿ src.features</b></code>
+                    <details>
+                        <summary><b>EditPostPage</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.features.EditPostPage</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/features/EditPostPage/EditPost.tsx'>EditPost.tsx</a></b></td>
+                                    <td style='padding: 8px;'>This React TypeScript component is the **main view/logic for the "Edit Post" page** ✏️. It handles fetching an existing post's data, rendering the form (likely using Ant Design and Formik), managing user input, and submitting updated post information to the backend API.</td>
+                                </tr>
+                            </table>
+                        </blockquote>
+                    </details>
 					<!-- UserPostsPage Submodule -->
-					<details>
-						<summary><b>UserPostsPage</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.features.UserPostsPage</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/features/UserPostsPage/UserPosts.tsx'>UserPosts.tsx</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/features/UserPostsPage/styled.ts'>styled.ts</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-						</blockquote>
-					</details>
+				<details>
+                        <summary><b>UserPostsPage</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.features.UserPostsPage</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/features/UserPostsPage/UserPosts.tsx'>UserPosts.tsx</a></b></td>
+                                    <td style='padding: 8px;'>This React TypeScript component is the **main view/logic for displaying a user's posts** 👤. It fetches and renders a collection of posts authored by a specific user, providing an interface to view their contributions to the forum.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/features/UserPostsPage/styled.ts'>styled.ts</a></b></td>
+                                    <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 💅 specifically for the `UserPostsPage`. It centralizes the component-scoped styles, ensuring a clean separation of concerns and maintainability for the user's posts display.</td>
+                                </tr>
+                            </table>
+                        </blockquote>
+                    </details>
 					<!-- MainPage Submodule -->
-					<details>
-						<summary><b>MainPage</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.features.MainPage</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/features/MainPage/index.tsx'>index.tsx</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/features/MainPage/styled.ts'>styled.ts</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-						</blockquote>
-					</details>
+				<details>
+                        <summary><b>MainPage</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.features.MainPage</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/features/MainPage/index.tsx'>index.tsx</a></b></td>
+                                    <td style='padding: 8px;'>This React TypeScript component serves as the **main entry point or view for the application's primary feed or homepage** 🏠. It orchestrates the display of forum posts, categories, and potentially user interactions on the central feed.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/features/MainPage/styled.ts'>styled.ts</a></b></td>
+                                    <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 🎨 specific to the `MainPage`. It encapsulates the visual styling for the main application view, ensuring its design is consistent and modular.</td>
+                                </tr>
+                            </table>
+                        </blockquote>
+                    </details>
 					<!-- CreatePostPage Submodule -->
-					<details>
-						<summary><b>CreatePostPage</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.features.CreatePostPage</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/features/CreatePostPage/styled.ts'>styled.ts</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/features/CreatePostPage/CreatePost.tsx'>CreatePost.tsx</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-						</blockquote>
-					</details>
+				<details>
+                        <summary><b>CreatePostPage</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.features.CreatePostPage</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/features/CreatePostPage/styled.ts'>styled.ts</a></b></td>
+                                    <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 🎨 for the `CreatePostPage`. It manages the visual presentation and layout of the post creation form and related elements.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/features/CreatePostPage/CreatePost.tsx'>CreatePost.tsx</a></b></td>
+                                    <td style='padding: 8px;'>This React TypeScript component is the **primary view/logic for creating new forum posts** ✨. It renders the form for users to input content, select categories, upload images, and submit their new posts to the backend.</td>
+                                </tr>
+                            </table>
+                        </blockquote>
+                    </details>
 					<!-- ClientServices Submodule -->
-					<details>
-						<summary><b>ClientServices</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.features.ClientServices</b></code>
-							<!-- LoginPage Submodule -->
-							<details>
-								<summary><b>LoginPage</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ src.features.ClientServices.LoginPage</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/features/ClientServices/LoginPage/styled.ts'>styled.ts</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/features/ClientServices/LoginPage/Login.tsx'>Login.tsx</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/features/ClientServices/LoginPage/SocialLoginButtons.tsx'>SocialLoginButtons.tsx</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/features/ClientServices/LoginPage/SocialButtons.styled.ts'>SocialButtons.styled.ts</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
+				<details>
+                        <summary><b>ClientServices</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.features.ClientServices</b></code>
+                            <details>
+                                <summary><b>LoginPage</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ src.features.ClientServices.LoginPage</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/features/ClientServices/LoginPage/styled.ts'>styled.ts</a></b></td>
+                                            <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 🎨 specific to the `LoginPage`, managing the layout and visual styling of the login form and its elements.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/features/ClientServices/LoginPage/Login.tsx'>Login.tsx</a></b></td>
+                                            <td style='padding: 8px;'>This React TypeScript component is the **main view and logic for the user login page** 🚪. It renders the login form, handles user input, manages authentication state, and dispatches login requests to the backend API.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/features/ClientServices/LoginPage/SocialLoginButtons.tsx'>SocialLoginButtons.tsx</a></b></td>
+                                            <td style='padding: 8px;'>This React TypeScript component renders the **buttons for various social login providers** (e.g., Google, Kakao, Naver) 🌐. It handles the initiation of the social authentication flow, integrating with services like AWS Amplify for federation.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/features/ClientServices/LoginPage/SocialButtons.styled.ts'>SocialButtons.styled.ts</a></b></td>
+                                            <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 💅 specifically for the social login buttons. It provides the visual styling to ensure consistent branding and appearance for the social login options.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
 							<!-- ProfileUpdatePage Submodule -->
 							<details>
-								<summary><b>ProfileUpdatePage</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ src.features.ClientServices.ProfileUpdatePage</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/features/ClientServices/ProfileUpdatePage/ProfileUpdate.tsx'>ProfileUpdate.tsx</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/features/ClientServices/ProfileUpdatePage/styled.ts'>styled.ts</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
+                                <summary><b>ProfileUpdatePage</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ src.features.ClientServices.ProfileUpdatePage</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/features/ClientServices/ProfileUpdatePage/ProfileUpdate.tsx'>ProfileUpdate.tsx</a></b></td>
+                                            <td style='padding: 8px;'>This React TypeScript component is the **main view and logic for the user profile update page** 📝. It provides a form for users to modify their personal details, handles input validation, and dispatches updates to the backend API.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/features/ClientServices/ProfileUpdatePage/styled.ts'>styled.ts</a></b></td>
+                                            <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 🎨 for the `ProfileUpdatePage`. It centralizes the styling for the profile update form and related UI elements.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
 							<!-- ForgotUsernamePage Submodule -->
 							<details>
-								<summary><b>ForgotUsernamePage</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ src.features.ClientServices.ForgotUsernamePage</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/features/ClientServices/ForgotUsernamePage/ForgotUsername.tsx'>ForgotUsername.tsx</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/features/ClientServices/ForgotUsernamePage/styled.ts'>styled.ts</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
+                                <summary><b>ForgotUsernamePage</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ src.features.ClientServices.ForgotUsernamePage</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/features/ClientServices/ForgotUsernamePage/ForgotUsername.tsx'>ForgotUsername.tsx</a></b></td>
+                                            <td style='padding: 8px;'>This React TypeScript component is the **main view and logic for the "Forgot Username" page** 💡. It provides an interface for users to submit information (e.g., email) to retrieve their forgotten username, interacting with the authentication service.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/features/ClientServices/ForgotUsernamePage/styled.ts'>styled.ts</a></b></td>
+                                            <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 🎨 for the `ForgotUsernamePage`. It defines the visual styling and layout for the username recovery form and related elements.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
 							<!-- ForgotPasswordPage Submodule -->
 							<details>
-								<summary><b>ForgotPasswordPage</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ src.features.ClientServices.ForgotPasswordPage</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/features/ClientServices/ForgotPasswordPage/styled.ts'>styled.ts</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/features/ClientServices/ForgotPasswordPage/ForgotPassword.tsx'>ForgotPassword.tsx</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
+                                <summary><b>ForgotPasswordPage</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ src.features.ClientServices.ForgotPasswordPage</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/features/ClientServices/ForgotPasswordPage/styled.ts'>styled.ts</a></b></td>
+                                            <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 🎨 for the `ForgotPasswordPage`. It defines the visual styling and layout for the password recovery form and related UI elements.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/features/ClientServices/ForgotPasswordPage/ForgotPassword.tsx'>ForgotPassword.tsx</a></b></td>
+                                            <td style='padding: 8px;'>This React TypeScript component is the **main view and logic for the "Forgot Password" page** ❓. It handles user input for email submission to initiate password reset, interacting with the authentication service.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
 							<!-- ResetPasswordPage Submodule -->
-							<details>
-								<summary><b>ResetPasswordPage</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ src.features.ClientServices.ResetPasswordPage</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/features/ClientServices/ResetPasswordPage/styled.ts'>styled.ts</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/features/ClientServices/ResetPasswordPage/ResetPassword.tsx'>ResetPassword.tsx</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
+						<details>
+                                <summary><b>ResetPasswordPage</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ src.features.ClientServices.ResetPasswordPage</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/features/ClientServices/ResetPasswordPage/styled.ts'>styled.ts</a></b></td>
+                                            <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 🎨 for the `ResetPasswordPage`. It controls the visual styling and layout of the password reset form.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/features/ClientServices/ResetPasswordPage/ResetPassword.tsx'>ResetPassword.tsx</a></b></td>
+                                            <td style='padding: 8px;'>This React TypeScript component is the **main view and logic for the "Reset Password" page** 🔑. It provides a form for users to enter and confirm their new password, typically after receiving a reset code or link.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
 							<!-- SignupPage Submodule -->
-							<details>
-								<summary><b>SignupPage</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ src.features.ClientServices.SignupPage</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/features/ClientServices/SignupPage/styled.ts'>styled.ts</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/features/ClientServices/SignupPage/Signup.tsx'>Signup.tsx</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
+						<details>
+                                <summary><b>SignupPage</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ src.features.ClientServices.SignupPage</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/features/ClientServices/SignupPage/styled.ts'>styled.ts</a></b></td>
+                                            <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 🎨 for the `SignupPage`. It defines the visual styling and layout for the user registration form and related UI elements.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/features/ClientServices/SignupPage/Signup.tsx'>Signup.tsx</a></b></td>
+                                            <td style='padding: 8px;'>This React TypeScript component is the **main view and logic for the user registration (sign-up) page** ✍️. It renders the registration form, handles user input, validates data (likely with Formik/Yup), and dispatches new user creation requests.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
 							<!-- ProfilePage Submodule -->
 							<details>
-								<summary><b>ProfilePage</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ src.features.ClientServices.ProfilePage</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/features/ClientServices/ProfilePage/styled.ts'>styled.ts</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/features/ClientServices/ProfilePage/Profile.tsx'>Profile.tsx</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
-						</blockquote>
-					</details>
+                                <summary><b>ProfilePage</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ src.features.ClientServices.ProfilePage</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/features/ClientServices/ProfilePage/styled.ts'>styled.ts</a></b></td>
+                                            <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 🎨 for the `ProfilePage`. It manages the visual styling and layout of the user's profile display.</td>
+                                        </tr>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/features/ClientServices/ProfilePage/Profile.tsx'>Profile.tsx</a></b></td>
+                                            <td style='padding: 8px;'>This React TypeScript component is the **main view for displaying a user's profile information** 📊. It fetches and presents details such as username, email, and potentially other user-specific data from the backend.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
+                        </blockquote>
+                    </details>
 					<!-- DetailPostPage Submodule -->
 					<details>
-						<summary><b>DetailPostPage</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.features.DetailPostPage</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/features/DetailPostPage/styled.ts'>styled.ts</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/features/DetailPostPage/DetailPost.tsx'>DetailPost.tsx</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-						</blockquote>
-					</details>
-				</blockquote>
-			</details>
+                        <summary><b>DetailPostPage</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.features.DetailPostPage</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/features/DetailPostPage/styled.ts'>styled.ts</a></b></td>
+                                    <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 🎨 for the `DetailPostPage`. It defines the visual styling and layout for the individual post view.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/features/DetailPostPage/DetailPost.tsx'>DetailPost.tsx</a></b></td>
+                                    <td style='padding: 8px;'>This React TypeScript component is the **main view and logic for displaying a single, detailed forum post** 📖. It fetches the full content of a post, handles displaying likes, and enables basic actions such as editing and deleting the post (if authorized). It supports image uploads within posts.</td>
+                                </tr>
+                            </table>
+                        </blockquote>
+                    </details>
+                </blockquote>
+            </details>
 			<!-- utils Submodule -->
-			<details>
-				<summary><b>utils</b></summary>
-				<blockquote>
-					<div class='directory-path' style='padding: 8px 0; color: #666;'>
-						<code><b>⦿ src.utils</b></code>
-					<!-- @types Submodule -->
-					<details>
-						<summary><b>@types</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.utils.@types</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/utils/@types/shared.ts'>shared.ts</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-						</blockquote>
-					</details>
+	<details>
+                <summary><b>utils</b></summary>
+                <blockquote>
+                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                        <code><b>⦿ src.utils</b></code>
+                    <details>
+                        <summary><b>@types</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.utils.@types</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/utils/@types/shared.ts'>shared.ts</a></b></td>
+                                    <td style='padding: 8px;'>This TypeScript file defines **shared type declarations and interfaces** 🤝 that are used across various components and modules within the application. It promotes type safety and consistency by centralizing common data structures, ensuring clear contracts between different parts of the codebase.</td>
+                                </tr>
+                            </table>
+                        </blockquote>
+                    </details>
 					<!-- apis Submodule -->
-					<details>
-						<summary><b>apis</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.utils.apis</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/utils/apis/axios.ts'>axios.ts</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-						</blockquote>
-					</details>
+			<details>
+                        <summary><b>apis</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.utils.apis</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/utils/apis/axios.ts'>axios.ts</a></b></td>
+                                    <td style='padding: 8px;'>This TypeScript file configures and exports an **Axios HTTP client instance** 🌐. It serves as the central point for making API requests throughout the application, potentially including default settings, request/response interceptors for error handling, authentication tokens, or base URL configurations.</td>
+                                </tr>
+                            </table>
+                        </blockquote>
+                    </details>
 					<!-- ToastEditor Submodule -->
-					<details>
-						<summary><b>ToastEditor</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.utils.ToastEditor</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/utils/ToastEditor/EditorContent.tsx'>EditorContent.tsx</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-						</blockquote>
-					</details>
-				</blockquote>
-			</details>
+			<details>
+                        <summary><b>ToastEditor</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.utils.ToastEditor</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/utils/ToastEditor/EditorContent.tsx'>EditorContent.tsx</a></b></td>
+                                    <td style='padding: 8px;'>This React TypeScript component is a **wrapper for the `@toast-ui/editor` rich text editor** 📝. It's responsible for rendering the editor interface, managing its content, and potentially handling image uploads or other editor-specific functionalities for creating and editing forum posts.</td>
+                                </tr>
+                            </table>
+                        </blockquote>
+                    </details>
+                </blockquote>
+            </details>
 			<!-- styles Submodule -->
 			<details>
-				<summary><b>styles</b></summary>
-				<blockquote>
-					<div class='directory-path' style='padding: 8px 0; color: #666;'>
-						<code><b>⦿ src.styles</b></code>
-					<table style='width: 100%; border-collapse: collapse;'>
-					<thead>
-						<tr style='background-color: #f8f9fa;'>
-							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-							<th style='text-align: left; padding: 8px;'>Summary</th>
-						</tr>
-					</thead>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/src/styles/styled.d.ts'>styled.d.ts</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/src/styles/theme.ts'>theme.ts</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/src/styles/globals.css'>globals.css</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/src/styles/Home.module.css'>Home.module.css</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-					</table>
-				</blockquote>
-			</details>
+                <summary><b>styles</b></summary>
+                <blockquote>
+                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                        <code><b>⦿ src.styles</b></code>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                    <thead>
+                        <tr style='background-color: #f8f9fa;'>
+                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                        </tr>
+                    </thead>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/src/styles/styled.d.ts'>styled.d.ts</a></b></td>
+                            <td style='padding: 8px;'>This **TypeScript declaration file** is used by `styled-components` 💅 to extend its default theme interface. It ensures that custom theme properties defined in `theme.ts` are type-safe and provide auto-completion benefits throughout the application when using styled components.</td>
+                        </tr>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/src/styles/theme.ts'>theme.ts</a></b></td>
+                            <td style='padding: 8px;'>This TypeScript file defines the **application's design theme object** 🎨. It centralizes design tokens such as color palettes, typography, spacing, breakpoints, and other stylistic variables, allowing for consistent theming and easy modification of the application's visual identity via `styled-components`.</td>
+                        </tr>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/src/styles/globals.css'>globals.css</a></b></td>
+                            <td style='padding: 8px;'>This CSS file contains **global styles** 🌍 that apply to the entire application. It typically includes CSS resets, base typography, universal utility classes, or styles for HTML elements that are not handled by component-specific styling or libraries.</td>
+                        </tr>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/src/styles/Home.module.css'>Home.module.css</a></b></td>
+                            <td style='padding: 8px;'>This is a **CSS Module file** 📦 specifically for the `Home` component or page. It provides locally-scoped CSS rules, meaning the styles defined here are unique to the `Home` component and won't unintentionally affect other parts of the application, preventing style collisions.</td>
+                        </tr>
+                    </table>
+                </blockquote>
+            </details>
 			<!-- components Submodule -->
 			<details>
-				<summary><b>components</b></summary>
-				<blockquote>
-					<div class='directory-path' style='padding: 8px 0; color: #666;'>
-						<code><b>⦿ src.components</b></code>
-					<!-- Footer Submodule -->
-					<details>
-						<summary><b>Footer</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.components.Footer</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/components/Footer/styled.ts'>styled.ts</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/components/Footer/Footer.tsx'>Footer.tsx</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-						</blockquote>
-					</details>
+                <summary><b>components</b></summary>
+                <blockquote>
+                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                        <code><b>⦿ src.components</b></code>
+                    <details>
+                        <summary><b>Footer</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.components.Footer</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/components/Footer/styled.ts'>styled.ts</a></b></td>
+                                    <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 🎨 specifically for the `Footer` component. It encapsulates the visual styling, ensuring a clean separation of concerns for the application's footer section.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/components/Footer/Footer.tsx'>Footer.tsx</a></b></td>
+                                    <td style='padding: 8px;'>This React TypeScript component renders the **application's footer section** ⬇️. It typically includes copyright information, quick links, or other static content displayed consistently at the bottom of most pages.</td>
+                                </tr>
+                            </table>
+                        </blockquote>
+                    </details>
 					<!-- Swiper Submodule -->
 					<details>
-						<summary><b>Swiper</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.components.Swiper</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/components/Swiper/Swiper.tsx'>Swiper.tsx</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/components/Swiper/styled.ts'>styled.ts</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-						</blockquote>
-					</details>
+                        <summary><b>Swiper</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.components.Swiper</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/components/Swiper/Swiper.tsx'>Swiper.tsx</a></b></td>
+                                    <td style='padding: 8px;'>This React TypeScript component implements a **carousel or slider functionality** ↔️, likely leveraging a library like Swiper.js. It's used for displaying a series of images (e.g., associated with a post) or other content in an interactive, navigable format.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/components/Swiper/styled.ts'>styled.ts</a></b></td>
+                                    <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 🎨 specific to the `Swiper` component. It encapsulates the visual styling for the carousel elements, ensuring its appearance is consistent with the application's design system.</td>
+                                </tr>
+                            </table>
+                        </blockquote>
+                    </details>
 					<!-- DetailFeed Submodule -->
-					<details>
-						<summary><b>DetailFeed</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.components.DetailFeed</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/components/DetailFeed/styled.ts'>styled.ts</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/components/DetailFeed/DetailFeed.tsx'>DetailFeed.tsx</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-						</blockquote>
-					</details>
+				 <details>
+                        <summary><b>DetailFeed</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.components.DetailFeed</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/components/DetailFeed/styled.ts'>styled.ts</a></b></td>
+                                    <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 🎨 for the `DetailFeed` component. It encapsulates the visual styling for the detailed view of individual forum posts, ensuring a consistent look and feel.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/components/DetailFeed/DetailFeed.tsx'>DetailFeed.tsx</a></b></td>
+                                    <td style='padding: 8px;'>This React TypeScript component is responsible for rendering the **detailed display of a single forum post** 📖. It presents the post's content, associated images (via a Swiper component), and handles the display of likes. It's the core component for viewing an individual post.</td>
+                                </tr>
+                            </table>
+                        </blockquote>
+                    </details>
 					<!-- Margins Submodule -->
 					<details>
-						<summary><b>Margins</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.components.Margins</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/components/Margins/styled.ts'>styled.ts</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/components/Margins/Margins.tsx'>Margins.tsx</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-						</blockquote>
-					</details>
+                        <summary><b>Margins</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.components.Margins</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/components/Margins/styled.ts'>styled.ts</a></b></td>
+                                    <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 🎨 for the `Margins` component. It's used to define and apply consistent spacing or padding around content sections, ensuring uniform layout and visual separation throughout the application.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/components/Margins/Margins.tsx'>Margins.tsx</a></b></td>
+                                    <td style='padding: 8px;'>This React TypeScript component is a **reusable container or layout wrapper** ↔️. Its primary purpose is to apply consistent margins or padding to its child components, helping to create structured and visually balanced layouts across different pages and sections of the application.</td>
+                                </tr>
+                            </table>
+                        </blockquote>
+                    </details>
 					<!-- MainFeed Submodule -->
-					<details>
-						<summary><b>MainFeed</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.components.MainFeed</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/components/MainFeed/styled.ts'>styled.ts</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/components/MainFeed/MainFeed.tsx'>MainFeed.tsx</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-						</blockquote>
-					</details>
+				 <details>
+                        <summary><b>MainFeed</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.components.MainFeed</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/components/MainFeed/styled.ts'>styled.ts</a></b></td>
+                                    <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 🎨 for the `MainFeed` component. It encapsulates the visual styling and layout for the primary forum feed display.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/components/MainFeed/MainFeed.tsx'>MainFeed.tsx</a></b></td>
+                                    <td style='padding: 8px;'>This React TypeScript component is responsible for rendering the **main forum feed** 📰. It fetches and displays a list of posts, providing the core content view for users Browse the application's primary stream of information.</td>
+                                </tr>
+                            </table>
+                        </blockquote>
+                    </details>
 					<!-- Header Submodule -->
-					<details>
-						<summary><b>Header</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.components.Header</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/components/Header/styled.ts'>styled.ts</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/components/Header/Header.tsx'>Header.tsx</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-						</blockquote>
-					</details>
+				<details>
+                        <summary><b>Header</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.components.Header</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/components/Header/styled.ts'>styled.ts</a></b></td>
+                                    <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 🎨 specifically for the `Header` component. It encapsulates the visual styling, ensuring a consistent and well-designed top navigation bar for the application.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/components/Header/Header.tsx'>Header.tsx</a></b></td>
+                                    <td style='padding: 8px;'>This React TypeScript component renders the **application's header section** ⬆️. It typically includes the application logo, navigation links, and potentially user-specific elements like profile icons or login/logout buttons, providing consistent top-level navigation.</td>
+                                </tr>
+                            </table>
+                        </blockquote>
+                    </details>
 					<!-- Editor Submodule -->
-					<details>
-						<summary><b>Editor</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.components.Editor</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/components/Editor/ToastEditor.tsx'>ToastEditor.tsx</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/components/Editor/styled.ts'>styled.ts</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-						</blockquote>
-					</details>
-				</blockquote>
-			</details>
+				<details>
+                        <summary><b>Editor</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.components.Editor</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/components/Editor/ToastEditor.tsx'>ToastEditor.tsx</a></b></td>
+                                    <td style='padding: 8px;'>This React TypeScript component is a **reusable wrapper for the Toast UI Editor** ✍️, specifically designed for use within various parts of the application where rich text input is required. It encapsulates the editor's functionality, making it easy to integrate for creating or editing post content.</td>
+                                </tr>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/components/Editor/styled.ts'>styled.ts</a></b></td>
+                                    <td style='padding: 8px;'>This TypeScript file contains the **Styled Components definitions** 🎨 specific to the `Editor` component. It controls the visual styling and layout of the Toast UI Editor instance used throughout the application.</td>
+                                </tr>
+                            </table>
+                        </blockquote>
+                    </details>
+                </blockquote>
+            </details>
 			<!-- pages Submodule -->
-			<details>
-				<summary><b>pages</b></summary>
-				<blockquote>
-					<div class='directory-path' style='padding: 8px 0; color: #666;'>
-						<code><b>⦿ src.pages</b></code>
-					<table style='width: 100%; border-collapse: collapse;'>
-					<thead>
-						<tr style='background-color: #f8f9fa;'>
-							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-							<th style='text-align: left; padding: 8px;'>Summary</th>
-						</tr>
-					</thead>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/src/pages/index.tsx'>index.tsx</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/src/pages/_document.tsx'>_document.tsx</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/src/pages/_app.tsx'>_app.tsx</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-					</table>
+		<details>
+                <summary><b>pages</b></summary>
+                <blockquote>
+                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                        <code><b>⦿ src.pages</b></code>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                    <thead>
+                        <tr style='background-color: #f8f9fa;'>
+                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                        </tr>
+                    </thead>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/src/pages/index.tsx'>index.tsx</a></b></td>
+                            <td style='padding: 8px;'>This is the **main entry point for your application's homepage** 🏠. As the default root page for Next.js, it typically renders the `MainPage` feature, providing the initial view of the forum's content feed to users.</td>
+                        </tr>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/src/pages/_document.tsx'>_document.tsx</a></b></td>
+                            <td style='padding: 8px;'>This **Next.js custom document file** 📄 is used to augment your application's `<html>` and `<body>` tags. It allows for server-side rendering customization, such as injecting meta tags, linking external stylesheets, or handling server-only side effects like `styled-components` server-side rendering.</td>
+                        </tr>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/src/pages/_app.tsx'>_app.tsx</a></b></td>
+                            <td style='padding: 8px;'>This **Next.js custom App component** 🚀 is the top-level component that wraps all your application's pages. It's used to initialize pages, apply global styles, inject providers (e.g., for state management, authentication, or internationalization), and maintain layout between page changes.</td>
+                        </tr>
+                    </table>
 					<!-- posts Submodule -->
-					<details>
-						<summary><b>posts</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.pages.posts</b></code>
-							<!-- user Submodule -->
-							<details>
-								<summary><b>user</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ src.pages.posts.user</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/pages/posts/user/index.tsx'>index.tsx</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
+				<details>
+                        <summary><b>posts</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.pages.posts</b></code>
+                            <details>
+                                <summary><b>user</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ src.pages.posts.user</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/pages/posts/user/index.tsx'>index.tsx</a></b></td>
+                                            <td style='padding: 8px;'>This **Next.js page component** 📄 defines the route for displaying a specific user's posts. It acts as the entry point for the `/posts/user` route, rendering the `UserPostsPage` feature component to present content created by an individual user.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
 							<!-- edit Submodule -->
 							<details>
-								<summary><b>edit</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ src.pages.posts.edit</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/pages/posts/edit/index.tsx'>index.tsx</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
+                                <summary><b>edit</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ src.pages.posts.edit</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/pages/posts/edit/index.tsx'>index.tsx</a></b></td>
+                                            <td style='padding: 8px;'>This **Next.js page component** 📄 defines the route for the post editing interface. It serves as the entry point for users to modify an existing post, typically rendering the `EditPostPage` feature component and handling the initial data fetching for the post to be edited.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
 							<!-- detail Submodule -->
-							<details>
-								<summary><b>detail</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ src.pages.posts.detail</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/pages/posts/detail/index.tsx'>index.tsx</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
+						<details>
+                                <summary><b>detail</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ src.pages.posts.detail</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/pages/posts/detail/index.tsx'>index.tsx</a></b></td>
+                                            <td style='padding: 8px;'>This **Next.js page component** 📄 defines the route for viewing a detailed single forum post. It acts as the entry point for a specific post's unique URL, rendering the `DetailPostPage` feature component to display the post's full content, associated images, and like functionality.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
 							<!-- create Submodule -->
 							<details>
-								<summary><b>create</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ src.pages.posts.create</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/pages/posts/create/index.tsx'>index.tsx</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
-						</blockquote>
-					</details>
+                                <summary><b>create</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ src.pages.posts.create</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/pages/posts/create/index.tsx'>index.tsx</a></b></td>
+                                            <td style='padding: 8px;'>This **Next.js page component** 📄 defines the route for creating new forum posts. It acts as the entry point for users to compose and submit new content, rendering the `CreatePostPage` feature component to provide the post creation form and logic.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
+                        </blockquote>
+                    </details>
 					<!-- auth Submodule -->
 					<details>
-						<summary><b>auth</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.pages.auth</b></code>
-							<!-- signup Submodule -->
-							<details>
-								<summary><b>signup</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ src.pages.auth.signup</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/pages/auth/signup/index.tsx'>index.tsx</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
+                        <summary><b>auth</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.pages.auth</b></code>
+                            <details>
+                                <summary><b>signup</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ src.pages.auth.signup</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/pages/auth/signup/index.tsx'>index.tsx</a></b></td>
+                                            <td style='padding: 8px;'>This **Next.js page component** 📄 defines the route for user registration. It serves as the entry point for the `/auth/signup` route, rendering the `SignupPage` feature component to provide the user registration form and manage the sign-up process.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
 							<!-- reset Submodule -->
-							<details>
-								<summary><b>reset</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ src.pages.auth.reset</b></code>
-									<!-- password Submodule -->
-									<details>
-										<summary><b>password</b></summary>
-										<blockquote>
-											<div class='directory-path' style='padding: 8px 0; color: #666;'>
-												<code><b>⦿ src.pages.auth.reset.password</b></code>
-											<table style='width: 100%; border-collapse: collapse;'>
-											<thead>
-												<tr style='background-color: #f8f9fa;'>
-													<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-													<th style='text-align: left; padding: 8px;'>Summary</th>
-												</tr>
-											</thead>
-												<tr style='border-bottom: 1px solid #eee;'>
-													<td style='padding: 8px;'><b><a href='/src/pages/auth/reset/password/index.tsx'>index.tsx</a></b></td>
-													<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-												</tr>
-											</table>
-										</blockquote>
-									</details>
-								</blockquote>
-							</details>
+						<details>
+                                <summary><b>reset</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ src.pages.auth.reset</b></code>
+                                    <details>
+                                        <summary><b>password</b></summary>
+                                        <blockquote>
+                                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                                <code><b>⦿ src.pages.auth.reset.password</b></code>
+                                            <table style='width: 100%; border-collapse: collapse;'>
+                                            <thead>
+                                                <tr style='background-color: #f8f9fa;'>
+                                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                                </tr>
+                                            </thead>
+                                                <tr style='border-bottom: 1px solid #eee;'>
+                                                    <td style='padding: 8px;'><b><a href='/src/pages/auth/reset/password/index.tsx'>index.tsx</a></b></td>
+                                                    <td style='padding: 8px;'>This **Next.js page component** 📄 defines the route for resetting a user's password after they've initiated a password recovery. It serves as the entry point for `/auth/reset/password`, rendering the `ResetPasswordPage` feature component to allow users to set a new password.</td>
+                                                </tr>
+                                            </table>
+                                        </blockquote>
+                                    </details>
+                                </blockquote>
+                            </details>
 							<!-- forgot Submodule -->
-							<details>
-								<summary><b>forgot</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ src.pages.auth.forgot</b></code>
-									<!-- password Submodule -->
-									<details>
-										<summary><b>password</b></summary>
-										<blockquote>
-											<div class='directory-path' style='padding: 8px 0; color: #666;'>
-												<code><b>⦿ src.pages.auth.forgot.password</b></code>
-											<table style='width: 100%; border-collapse: collapse;'>
-											<thead>
-												<tr style='background-color: #f8f9fa;'>
-													<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-													<th style='text-align: left; padding: 8px;'>Summary</th>
-												</tr>
-											</thead>
-												<tr style='border-bottom: 1px solid #eee;'>
-													<td style='padding: 8px;'><b><a href='/src/pages/auth/forgot/password/index.tsx'>index.tsx</a></b></td>
-													<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-												</tr>
-											</table>
-										</blockquote>
-									</details>
+						<details>
+                                <summary><b>forgot</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ src.pages.auth.forgot</b></code>
+                                    <details>
+                                        <summary><b>password</b></summary>
+                                        <blockquote>
+                                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                                <code><b>⦿ src.pages.auth.forgot.password</b></code>
+                                            <table style='width: 100%; border-collapse: collapse;'>
+                                            <thead>
+                                                <tr style='background-color: #f8f9fa;'>
+                                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                                </tr>
+                                            </thead>
+                                                <tr style='border-bottom: 1px solid #eee;'>
+                                                    <td style='padding: 8px;'><b><a href='/src/pages/auth/forgot/password/index.tsx'>index.tsx</a></b></td>
+                                                    <td style='padding: 8px;'>This **Next.js page component** 📄 defines the route for initiating the password recovery process. It acts as the entry point for `/auth/forgot/password`, rendering the `ForgotPasswordPage` feature component to allow users to request a password reset for their account.</td>
+                                                </tr>
+                                            </table>
+                                        </blockquote>
+                                    </details>
 									<!-- username Submodule -->
-									<details>
-										<summary><b>username</b></summary>
-										<blockquote>
-											<div class='directory-path' style='padding: 8px 0; color: #666;'>
-												<code><b>⦿ src.pages.auth.forgot.username</b></code>
-											<table style='width: 100%; border-collapse: collapse;'>
-											<thead>
-												<tr style='background-color: #f8f9fa;'>
-													<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-													<th style='text-align: left; padding: 8px;'>Summary</th>
-												</tr>
-											</thead>
-												<tr style='border-bottom: 1px solid #eee;'>
-													<td style='padding: 8px;'><b><a href='/src/pages/auth/forgot/username/index.tsx'>index.tsx</a></b></td>
-													<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-												</tr>
-											</table>
-										</blockquote>
-									</details>
-								</blockquote>
-							</details>
+								<details>
+                                        <summary><b>username</b></summary>
+                                        <blockquote>
+                                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                                <code><b>⦿ src.pages.auth.forgot.username</b></code>
+                                            <table style='width: 100%; border-collapse: collapse;'>
+                                            <thead>
+                                                <tr style='background-color: #f8f9fa;'>
+                                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                                </tr>
+                                            </thead>
+                                                <tr style='border-bottom: 1px solid #eee;'>
+                                                    <td style='padding: 8px;'><b><a href='/src/pages/auth/forgot/username/index.tsx'>index.tsx</a></b></td>
+                                                    <td style='padding: 8px;'>This **Next.js page component** 📄 defines the route for recovering a forgotten username. It acts as the entry point for `/auth/forgot/username`, rendering the `ForgotUsernamePage` feature component to allow users to retrieve their username.</td>
+                                                </tr>
+                                            </table>
+                                        </blockquote>
+                                    </details>
+                                </blockquote>
+                            </details>
 							<!-- login Submodule -->
 							<details>
-								<summary><b>login</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ src.pages.auth.login</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/pages/auth/login/index.tsx'>index.tsx</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
-						</blockquote>
-					</details>
+                                <summary><b>login</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ src.pages.auth.login</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/pages/auth/login/index.tsx'>index.tsx</a></b></td>
+                                            <td style='padding: 8px;'>This **Next.js page component** 📄 defines the route for user login. It serves as the entry point for the `/auth/login` route, rendering the `LoginPage` feature component to provide the login form and handle user authentication, including social login options.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
+                        </blockquote>
+                    </details>
 					<!-- api Submodule -->
-					<details>
-						<summary><b>api</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.pages.api</b></code>
-							<table style='width: 100%; border-collapse: collapse;'>
-							<thead>
-								<tr style='background-color: #f8f9fa;'>
-									<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-									<th style='text-align: left; padding: 8px;'>Summary</th>
-								</tr>
-							</thead>
-								<tr style='border-bottom: 1px solid #eee;'>
-									<td style='padding: 8px;'><b><a href='/src/pages/api/hello.ts'>hello.ts</a></b></td>
-									<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-								</tr>
-							</table>
-						</blockquote>
-					</details>
+				<details>
+                        <summary><b>api</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.pages.api</b></code>
+                            <table style='width: 100%; border-collapse: collapse;'>
+                            <thead>
+                                <tr style='background-color: #f8f9fa;'>
+                                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                                </tr>
+                            </thead>
+                                <tr style='border-bottom: 1px solid #eee;'>
+                                    <td style='padding: 8px;'><b><a href='/src/pages/api/hello.ts'>hello.ts</a></b></td>
+                                    <td style='padding: 8px;'>This **Next.js API route** ⚙️ (`/pages/api/hello.ts`) serves as a basic example endpoint. It typically handles a simple HTTP request (e.g., a GET request) and returns a JSON response, demonstrating the core functionality of serverless API routes within a Next.js application.</td>
+                                </tr>
+                            </table>
+                        </blockquote>
+                    </details>
 					<!-- account Submodule -->
 					<details>
-						<summary><b>account</b></summary>
-						<blockquote>
-							<div class='directory-path' style='padding: 8px 0; color: #666;'>
-								<code><b>⦿ src.pages.account</b></code>
-							<!-- update Submodule -->
-							<details>
-								<summary><b>update</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ src.pages.account.update</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/pages/account/update/index.tsx'>index.tsx</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
+                        <summary><b>account</b></summary>
+                        <blockquote>
+                            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                <code><b>⦿ src.pages.account</b></code>
+                            <details>
+                                <summary><b>update</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ src.pages.account.update</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/pages/account/update/index.tsx'>index.tsx</a></b></td>
+                                            <td style='padding: 8px;'>This **Next.js page component** 📄 defines the route for updating a user's account profile. It serves as the entry point for `/account/update`, rendering the `ProfileUpdatePage` feature component to allow users to modify their personal information.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
 							<!-- profile Submodule -->
 							<details>
-								<summary><b>profile</b></summary>
-								<blockquote>
-									<div class='directory-path' style='padding: 8px 0; color: #666;'>
-										<code><b>⦿ src.pages.account.profile</b></code>
-									<table style='width: 100%; border-collapse: collapse;'>
-									<thead>
-										<tr style='background-color: #f8f9fa;'>
-											<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-											<th style='text-align: left; padding: 8px;'>Summary</th>
-										</tr>
-									</thead>
-										<tr style='border-bottom: 1px solid #eee;'>
-											<td style='padding: 8px;'><b><a href='/src/pages/account/profile/index.tsx'>index.tsx</a></b></td>
-											<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-										</tr>
-									</table>
-								</blockquote>
-							</details>
-						</blockquote>
-					</details>
-				</blockquote>
-			</details>
+                                <summary><b>profile</b></summary>
+                                <blockquote>
+                                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                                        <code><b>⦿ src.pages.account.profile</b></code>
+                                    <table style='width: 100%; border-collapse: collapse;'>
+                                    <thead>
+                                        <tr style='background-color: #f8f9fa;'>
+                                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                                        </tr>
+                                    </thead>
+                                        <tr style='border-bottom: 1px solid #eee;'>
+                                            <td style='padding: 8px;'><b><a href='/src/pages/account/profile/index.tsx'>index.tsx</a></b></td>
+                                            <td style='padding: 8px;'>This **Next.js page component** 📄 defines the route for viewing a user's profile. It serves as the entry point for `/account/profile`, rendering the `ProfilePage` feature component to display the authenticated user's personal details and settings.</td>
+                                        </tr>
+                                    </table>
+                                </blockquote>
+                            </details>
+                        </blockquote>
+                    </details>
+                </blockquote>
+            </details>
 			<!-- redux Submodule -->
-			<details>
-				<summary><b>redux</b></summary>
-				<blockquote>
-					<div class='directory-path' style='padding: 8px 0; color: #666;'>
-						<code><b>⦿ src.redux</b></code>
-					<table style='width: 100%; border-collapse: collapse;'>
-					<thead>
-						<tr style='background-color: #f8f9fa;'>
-							<th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
-							<th style='text-align: left; padding: 8px;'>Summary</th>
-						</tr>
-					</thead>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/src/redux/redux.ts'>redux.ts</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-						<tr style='border-bottom: 1px solid #eee;'>
-							<td style='padding: 8px;'><b><a href='/src/redux/store.ts'>store.ts</a></b></td>
-							<td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
-						</tr>
-					</table>
-				</blockquote>
-			</details>
+		<details>
+                <summary><b>redux</b></summary>
+                <blockquote>
+                    <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                        <code><b>⦿ src.redux</b></code>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                    <thead>
+                        <tr style='background-color: #f8f9fa;'>
+                            <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                            <th style='text-align: left; padding: 8px;'>Summary</th>
+                        </tr>
+                    </thead>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/src/redux/redux.ts'>redux.ts</a></b></td>
+                            <td style='padding: 8px;'>This TypeScript file likely serves as the **central hub for Redux actions, reducers, and selectors** 📦 related to various features. It aggregates and re-exports components of your Redux state management, streamlining imports and providing a consolidated view of the application's state logic.</td>
+                        </tr>
+                        <tr style='border-bottom: 1px solid #eee;'>
+                            <td style='padding: 8px;'><b><a href='/src/redux/store.ts'>store.ts</a></b></td>
+                            <td style='padding: 8px;'>This TypeScript file configures and exports the **Redux store instance** 🧠. It typically combines all reducers, applies middleware (like `redux-thunk` or `redux-saga` for asynchronous operations), and sets up Redux DevTools for easier debugging of the application's global state.</td>
+                        </tr>
+                    </table>
+                </blockquote>
+            </details>
 		</blockquote>
 	</details>
 </details>
@@ -2034,30 +2042,25 @@ This project requires the following dependencies:
 
 ### Installation
 
-Build from the source and intsall dependencies:
+Build from the source and install dependencies:
 
-1. **Clone the repository:**
+1.  **Clone the repository:**
 
-   ```sh
-   ❯ git clone ../
-   ```
+    ```sh
+    ❯ git clone [https://github.com/hellojuhyoung/project2_forum_frontend.git](https://github.com/hellojuhyoung/project2_forum_frontend.git)
+    ```
 
-2. **Navigate to the project directory:**
+2.  **Navigate into the project directory:**
 
-   ```sh
-   ❯ cd
-   ```
+    The main application's `package.json` and configuration files are located in a nested folder.
 
-3. **Install the dependencies:**
+    ```sh
+    ❯ cd project2_forum_frontend/frontend
+    ```
 
-<!-- SHIELDS BADGE CURRENTLY DISABLED -->
+3.  **Install JavaScript dependencies:**
 
-    <!-- [![npm][npm-shield]][npm-link] -->
-    <!-- REFERENCE LINKS -->
-    <!-- [npm-shield]: https://img.shields.io/badge/npm-CB3837.svg?style={badge_style}&logo=npm&logoColor=white -->
-    <!-- [npm-link]: https://www.npmjs.com/ -->
-
-    **Using [npm](https://www.npmjs.com/):**
+    This command will download and install all required packages and development tools listed in `package.json` for your Next.js application.
 
     ```sh
     ❯ npm install
@@ -2073,78 +2076,38 @@ Run the project with:
 npm start
 ```
 
-### Testing
+---
 
-uses the {**test_framework**} test framework. Run the test suite with:
-
-**Using [npm](https://www.npmjs.com/):**
-
-```sh
-npm test
-```
+- [x] **Core Features Implementation**: <strike>User authentication, post management (create, view, edit, delete), image uploads, basic liking, and responsive design.</strike>
+- [ ] **Complete Transactional Capabilities**: Finalize and integrate the in-progress transactional features within the application.
+- [ ] **Advanced Internationalization**: Expand language support beyond current implementations, adding more locales and advanced content localization.
+- [ ] **Search Functionality**: Implement robust search capabilities for posts and users.
 
 ---
 
-## Roadmap
+## License 📄
 
-- [x] **`Task 1`**: <strike>Implement feature one.</strike>
-- [ ] **`Task 2`**: Implement feature two.
-- [ ] **`Task 3`**: Implement feature three.
+The JL Forum Frontend is protected under an **open-source license**. For more details, please refer to the [LICENSE](LICENSE) file in the root of this repository.
 
 ---
 
-## Contributing
+## Acknowledgments 🙏
 
-- **💬 [Join the Discussions](https://LOCAL///discussions)**: Share your insights, provide feedback, or ask questions.
-- **🐛 [Report Issues](https://LOCAL///issues)**: Submit bugs found or log feature requests for the `` project.
-- **💡 [Submit Pull Requests](https://LOCAL///blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
+This project was made possible with the support and contributions of various tools, libraries, and resources. We extend our gratitude to:
 
-<details closed>
-<summary>Contributing Guidelines</summary>
-
-1. **Fork the Repository**: Start by forking the project repository to your LOCAL account.
-2. **Clone Locally**: Clone the forked repository to your local machine using a git client.
-   ```sh
-   git clone .
-   ```
-3. **Create a New Branch**: Always work on a new branch, giving it a descriptive name.
-   ```sh
-   git checkout -b new-feature-x
-   ```
-4. **Make Your Changes**: Develop and test your changes locally.
-5. **Commit Your Changes**: Commit with a clear message describing your updates.
-   ```sh
-   git commit -m 'Implemented new feature x.'
-   ```
-6. **Push to LOCAL**: Push the changes to your forked repository.
-   ```sh
-   git push origin new-feature-x
-   ```
-7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations.
-8. **Review**: Once your PR is reviewed and approved, it will be merged into the main branch. Congratulations on your contribution!
-</details>
-
-<details closed>
-<summary>Contributor Graph</summary>
-<br>
-<p align="left">
-   <a href="https://LOCAL{///}graphs/contributors">
-      <img src="https://contrib.rocks/image?repo=/">
-   </a>
-</p>
-</details>
-
----
-
-## License
-
-is protected under the [LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
-
----
-
-## Acknowledgments
-
-- Credit `contributors`, `inspiration`, `references`, etc.
+- **React**: For the powerful JavaScript library for building user interfaces.
+- **Next.js**: For the React framework for production.
+- **Redux Toolkit**: For efficient and scalable state management.
+- **Styled Components**: For powerful visual styling in React applications.
+- **Ant Design**: For the enterprise-class UI design language and React UI library.
+- **Axios**: For the promise-based HTTP client for making API requests.
+- **Formik & Yup**: For robust form building and validation.
+- **Toast UI Editor**: For the rich text editing capabilities.
+- **Swiper**: For the modern touch slider.
+- **AWS Amplify**: For cloud integration and simplified backend interactions.
+- **i18next & React-i18next**: For internationalization capabilities.
+- **Open-Source Community**: For the vast array of libraries and tools that empower developers worldwide.
+- And all individuals and resources that inspired and supported the development of the JL Forum Frontend.
 
 <div align="right">
 
@@ -2155,3 +2118,7 @@ is protected under the [LICENSE](https://choosealicense.com/licenses) License. F
 [back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
 
 ---
+
+```
+
+```
