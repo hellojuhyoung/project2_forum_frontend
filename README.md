@@ -1,16 +1,10 @@
-<div id="top">
-
-<!-- HEADER STYLE: CLASSIC -->
 <div align="center">
 
-<img src="readmeai/assets/logos/purple.svg" width="30%" style="position: relative; top: 0; right: 0;" alt="Project Logo"/>
+<img src="./forum_logo4.png" width="15%" alt="JL Forum Frontend Logo"/>
 
-# <code>❯ REPLACE-ME</code>
+# <code>❯ JL Forum Frontend Application</code> 💬
 
-<em></em>
-
-<!-- BADGES -->
-<!-- local repository, no metadata badges. -->
+<em>A responsive and interactive web application for the **JL Forum**, built with modern web technologies.</em>
 
 <em>Built with the tools and technologies:</em>
 
@@ -18,17 +12,22 @@
 <img src="https://img.shields.io/badge/npm-CB3837.svg?style=default&logo=npm&logoColor=white" alt="npm">
 <img src="https://img.shields.io/badge/.ENV-ECD53F.svg?style=default&logo=dotenv&logoColor=black" alt=".ENV">
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=default&logo=JavaScript&logoColor=black" alt="JavaScript">
-<img src="https://img.shields.io/badge/i18next-26A69A.svg?style=default&logo=i18next&logoColor=white" alt="i18next">
-<img src="https://img.shields.io/badge/React-61DAFB.svg?style=default&logo=React&logoColor=black" alt="React">
 <img src="https://img.shields.io/badge/TypeScript-3178C6.svg?style=default&logo=TypeScript&logoColor=white" alt="TypeScript">
 <br>
-<img src="https://img.shields.io/badge/Formik-2563EB.svg?style=default&logo=Formik&logoColor=white" alt="Formik">
-<img src="https://img.shields.io/badge/ESLint-4B32C3.svg?style=default&logo=ESLint&logoColor=white" alt="ESLint">
-<img src="https://img.shields.io/badge/Swiper-6332F6.svg?style=default&logo=Swiper&logoColor=white" alt="Swiper">
-<img src="https://img.shields.io/badge/Axios-5A29E4.svg?style=default&logo=Axios&logoColor=white" alt="Axios">
+<img src="https://img.shields.io/badge/React-61DAFB.svg?style=default&logo=React&logoColor=black" alt="React">
+<img src="https://img.shields.io/badge/React_Router-CA4245.svg?style=default&logo=react-router&logoColor=white" alt="React Router">
 <img src="https://img.shields.io/badge/Redux-764ABC.svg?style=default&logo=Redux&logoColor=white" alt="Redux">
+<img src="https://img.shields.io/badge/i18next-26A69A.svg?style=default&logo=i18next&logoColor=white" alt="i18next">
+<img src="https://img.shields.io/badge/Formik-2563EB.svg?style=default&logo=Formik&logoColor=white" alt="Formik">
+<img src="https://img.shields.io/badge/Ant_Design-0170FE.svg?style=default&logo=ant-design&logoColor=white" alt="Ant Design">
+<img src="https://img.shields.io/badge/Yup-7901EE.svg?style=default&logo=yup&logoColor=white" alt="Yup">
+<br>
+<img src="https://img.shields.io/badge/Axios-5A29E4.svg?style=default&logo=Axios&logoColor=white" alt="Axios">
 <img src="https://img.shields.io/badge/CSS-663399.svg?style=default&logo=CSS&logoColor=white" alt="CSS">
 <img src="https://img.shields.io/badge/styledcomponents-DB7093.svg?style=default&logo=styled-components&logoColor=white" alt="styledcomponents">
+<img src="https://img.shields.io/badge/Swiper-6332F6.svg?style=default&logo=Swiper&logoColor=white" alt="Swiper">
+<img src="https://img.shields.io/badge/ESLint-4B32C3.svg?style=default&logo=ESLint&logoColor=white" alt="ESLint">
+<img src="https://img.shields.io/badge/AWS_Amplify-FF9900.svg?style=default&logo=aws-amplify&logoColor=white" alt="AWS Amplify">
 
 </div>
 <br>
@@ -41,12 +40,12 @@
 - [Overview](#overview)
 - [Features](#features)
 - [Project Structure](#project-structure)
-    - [Project Index](#project-index)
+  - [Project Index](#project-index)
 - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
-    - [Usage](#usage)
-    - [Testing](#testing)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Testing](#testing)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)
@@ -55,8 +54,6 @@
 ---
 
 ## Overview
-
-
 
 ---
 
@@ -2037,48 +2034,51 @@ This project requires the following dependencies:
 
 ### Installation
 
-Build  from the source and intsall dependencies:
+Build from the source and intsall dependencies:
 
 1. **Clone the repository:**
 
-    ```sh
-    ❯ git clone ../
-    ```
+   ```sh
+   ❯ git clone ../
+   ```
 
 2. **Navigate to the project directory:**
 
-    ```sh
-    ❯ cd 
-    ```
+   ```sh
+   ❯ cd
+   ```
 
 3. **Install the dependencies:**
 
 <!-- SHIELDS BADGE CURRENTLY DISABLED -->
-	<!-- [![npm][npm-shield]][npm-link] -->
-	<!-- REFERENCE LINKS -->
-	<!-- [npm-shield]: https://img.shields.io/badge/npm-CB3837.svg?style={badge_style}&logo=npm&logoColor=white -->
-	<!-- [npm-link]: https://www.npmjs.com/ -->
 
-	**Using [npm](https://www.npmjs.com/):**
+    <!-- [![npm][npm-shield]][npm-link] -->
+    <!-- REFERENCE LINKS -->
+    <!-- [npm-shield]: https://img.shields.io/badge/npm-CB3837.svg?style={badge_style}&logo=npm&logoColor=white -->
+    <!-- [npm-link]: https://www.npmjs.com/ -->
 
-	```sh
-	❯ npm install
-	```
+    **Using [npm](https://www.npmjs.com/):**
+
+    ```sh
+    ❯ npm install
+    ```
 
 ### Usage
 
 Run the project with:
 
 **Using [npm](https://www.npmjs.com/):**
+
 ```sh
 npm start
 ```
 
 ### Testing
 
- uses the {__test_framework__} test framework. Run the test suite with:
+uses the {**test_framework**} test framework. Run the test suite with:
 
 **Using [npm](https://www.npmjs.com/):**
+
 ```sh
 npm test
 ```
@@ -2087,7 +2087,7 @@ npm test
 
 ## Roadmap
 
-- [X] **`Task 1`**: <strike>Implement feature one.</strike>
+- [x] **`Task 1`**: <strike>Implement feature one.</strike>
 - [ ] **`Task 2`**: Implement feature two.
 - [ ] **`Task 3`**: Implement feature three.
 
@@ -2138,7 +2138,7 @@ npm test
 
 ## License
 
- is protected under the [LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
+is protected under the [LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
 
 ---
 
@@ -2152,8 +2152,6 @@ npm test
 
 </div>
 
-
 [back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
-
 
 ---
