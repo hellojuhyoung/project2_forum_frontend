@@ -95,19 +95,19 @@ This section provides a visual overview of the application's key features and la
 ### Homepage - Main Sections
 
 - **Header and Most Recent Section:**
-  ![Homepage Header and Most Recent Section](frontend/src/assets/screenshots/Homepage_Main Feed/mainpage1.png "Depicts the main page header and the 'Most Recent' content section.")
+  ![Homepage Header and Most Recent Section](frontend/src/assets/screenshots/Homepage_MainFeed/mainpage1.png "Depicts the main page header and the 'Most Recent' content section.")
 
 - **Most Liked Section:**
-  ![Homepage Most Liked Section](frontend/src/assets/screenshots/Homepage_Main Feed/mainpage2.png "Shows the 'Most Liked' content section on the homepage.")
+  ![Homepage Most Liked Section](frontend/src/assets/screenshots/Homepage_MainFeed/mainpage2.png "Shows the 'Most Liked' content section on the homepage.")
 
 - **Main Feed Section:**
-  ![Homepage Main Feed Section](frontend/src/assets/screenshots/Homepage_Main Feed/mainpage3.png "Illustrates the primary 'Main Feed' grid layout.")
+  ![Homepage Main Feed Section](frontend/src/assets/screenshots/Homepage_MainFeed/mainpage3.png "Illustrates the primary 'Main Feed' grid layout.")
 
 - **Pagination and Footer:**
-  ![Homepage Pagination and Footer](frontend/src/assets/screenshots/Homepage_Main Feed/mainpage4.png "Displays the pagination feature and the application's footer.")
+  ![Homepage Pagination and Footer](frontend/src/assets/screenshots/Homepage_MainFeed/mainpage4.png "Displays the pagination feature and the application's footer.")
 
 - **Logged-in Header:**
-  ![Logged-in Homepage Header](frontend/src/assets/screenshots/Homepage_Main Feed/mainpage5.png "View of the main page header when a user is logged in, showing profile picture and navigation options.")
+  ![Logged-in Homepage Header](frontend/src/assets/screenshots/Homepage_MainFeed/mainpage5.png "View of the main page header when a user is logged in, showing profile picture and navigation options.")
 
 ---
 
