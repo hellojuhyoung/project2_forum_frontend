@@ -1,3 +1,4 @@
+// frontend/src/features/MainPage/styled.ts
 import styled from "styled-components";
 import { theme } from "@/styles/theme";
 
@@ -81,6 +82,8 @@ export const MainFeedGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: ${theme.spacing.md}; /* Consistent gap */
+  grid-auto-rows: 1fr;
+  align-items: stretch;
 
   @media (max-width: 1400px) {
     grid-template-columns: repeat(

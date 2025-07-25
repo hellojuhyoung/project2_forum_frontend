@@ -7,12 +7,4 @@ export const UserPostsStyled = styled.div`
     flex-direction: column;
     justify-content: space-evenly;
   }
-
-  .user-posts {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    grid-auto-rows: 1fr;
-    align-items: stretch;
-  }
 `;

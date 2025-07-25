@@ -5,6 +5,7 @@ import { instance } from "@/utils/apis/axios";
 import { useEffect, useState } from "react";
 import MainFeed from "@/components/MainFeed/MainFeed";
 import clsx from "clsx";
+import { MainFeedGrid } from "../MainPage/styled";
 
 const UserPostsPage = () => {
   const router = useRouter();
@@ -31,9 +32,11 @@ const UserPostsPage = () => {
     <>
       <UserPostsStyled className={clsx("users-posts-container")}>
         <div className="user-posts">
-          {posts.map((post: any, index: number) => {
-            return <MainFeed key={index} post={post} />;
-          })}
+          <MainFeedGrid>
+            {posts.map((post: any, index: number) => {
+              return <MainFeed key={index} post={post} />;
+            })}
+          </MainFeedGrid>
         </div>
       </UserPostsStyled>
     </>
