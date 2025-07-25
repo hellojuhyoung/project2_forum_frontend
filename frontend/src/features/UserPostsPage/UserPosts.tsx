@@ -1,3 +1,4 @@
+// frontend/src/features/UserPostsPage/UserPosts.tsx
 import { useRouter } from "next/router";
 import { UserPostsStyled } from "./styled";
 import { instance } from "@/utils/apis/axios";
