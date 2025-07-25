@@ -15,9 +15,10 @@ export const MainFeedStyled = styled.div<{
   transition: box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.sm}; /* Default gap between elements */
+  gap: ${({ theme }) => theme.spacing.md}; /* Default gap between elements */
+  min-height: 380px;
+  justify-content: space-between;
 
-  /* REMOVED ALL FIXED HEIGHTS from MainFeedStyled - let content dictate height */
   height: auto; /* Default to auto height */
   box-sizing: border-box;
 
