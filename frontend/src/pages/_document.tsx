@@ -1,3 +1,5 @@
+// frontend/src/pages/_document.tsx
+
 // using styled-components in next.js and by default 'next' supports SSR (server-side rendering)
 // when the server renders the component, it generates a different CSS classname
 // than when the component is rendered on the client side
