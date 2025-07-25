@@ -109,6 +109,28 @@ This section provides a visual overview of the application's key features and la
 - **Logged-in Header:**
   ![Logged-in Homepage Header](frontend/src/assets/screenshots/Homepage_MainFeed/mainpage5.png "View of the main page header when a user is logged in, showing profile picture and navigation options.")
 
+  ### User Authentication
+
+This section provides screenshots of the application's user authentication and account recovery flows.
+
+- **Main Login Page:**
+  ![Main Login Page](frontend/src/assets/screenshots/Login_SignupPage/login1.png "The primary login interface with username, password, and social login options.")
+
+- **Google Login Integration:**
+  ![Google Login Flow](frontend/src/assets/screenshots/Login_SignupPage/login_google.png "Screenshot showing the Google account selection during the login process.")
+
+- **Kakao Login Integration:**
+  ![Kakao Login Flow](frontend/src/assets/screenshots/Login_SignupPage/login_kakao.png "Screenshot of the Kakao login interface, demonstrating social login integration.")
+
+- **User Sign Up Page:**
+  ![User Sign Up Form](frontend/src/assets/screenshots/Login_SignupPage/signup1.png "The registration form for new users, including various profile details.")
+
+- **Forgot Username Page:**
+  ![Forgot Username Recovery](frontend/src/assets/screenshots/Login_SignupPage/forgot_username1.png "Page allowing users to recover their username by providing their registered email address.")
+
+- **Forgot Password Page:**
+  ![Forgot Password Recovery](frontend/src/assets/screenshots/Login_SignupPage/forgot_password1.png "Interface for users to reset their password via an email-sent link.")
+
 ---
 
 ## Project Structure
