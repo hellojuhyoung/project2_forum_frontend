@@ -139,30 +139,30 @@ This section illustrates the functionality for creating and editing posts within
   ![Create New Post Form](frontend/src/assets/screenshots/Create_EditPostPage/create_post.png "An empty form for users to create and submit a new post, including title, category, and content fields.")
 
 - **Edit Post Page (Image Included):**
-  ![Edit Post with Image](frontend/src/assets/screenshots/Create_EditPostPage/post_edit1.jpg "The post editing interface showing an existing post with an image and text content, allowing modifications.")
+  ![Edit Post with Image](frontend/src/assets/screenshots/Create_EditPostPage/post_edit1.png "The post editing interface showing an existing post with an image and text content, allowing modifications.")
 
 - **Edit Post Page (Text Content):**
-  ![Edit Post Text Content](frontend/src/assets/screenshots/Create_EditPostPage/post_edit2.jpg "A detailed view of the post editing interface, focusing on the text content editor and category selection.")
+  ![Edit Post Text Content](frontend/src/assets/screenshots/Create_EditPostPage/post_edit2.png "A detailed view of the post editing interface, focusing on the text content editor and category selection.")
 
 ### Post Detail View
 
 This section showcases how individual posts are displayed, including content and user interaction options.
 
 - **Post Detail Page (Full View):**
-  ![Post Detail Page Full View](frontend/src/assets/screenshots/PostDetailView/post_detail1.jpg "The full view of a single post, displaying its title, category, content, and header navigation for logged-in users.")
+  ![Post Detail Page Full View](frontend/src/assets/screenshots/PostDetailView/post_detail1.png "The full view of a single post, displaying its title, category, content, and header navigation for logged-in users.")
 
 - **Post Detail Page (Edit/Delete Options):**
-  ![Post Detail Page Edit Delete Options](frontend/src/assets/screenshots/PostDetailView/post_detail2.jpg "A closer look at the bottom section of a post detail page, showing the 'Edit' and 'Delete' buttons for authorized users.")
+  ![Post Detail Page Edit Delete Options](frontend/src/assets/screenshots/PostDetailView/post_detail2.png "A closer look at the bottom section of a post detail page, showing the 'Edit' and 'Delete' buttons for authorized users.")
 
 ### User Profile and Settings
 
 This section details the user's profile view and the options available for editing personal information.
 
 - **User Profile View:**
-  ![User Profile View](frontend/src/assets/screenshots/UserProfilePage/user_profile1.jpg "A public or private view of a user's profile, displaying their username, email, and other details.")
+  ![User Profile View](frontend/src/assets/screenshots/UserProfilePage/user_profile1.png "A public or private view of a user's profile, displaying their username, email, and other details.")
 
 - **Edit Profile Page (Top Section):**
-  ![Edit Profile Top Section](frontend/src/assets/screenshots/UserProfilePage/edit_profile1.jpg "The top portion of the profile editing page, including the profile picture upload and initial user details.")
+  ![Edit Profile Top Section](frontend/src/assets/screenshots/UserProfilePage/edit_profile1.png "The top portion of the profile editing page, including the profile picture upload and initial user details.")
 
 - **Edit Profile Page (Bottom Section):**
   ![Edit Profile Bottom Section](frontend/src/assets/screenshots/UserProfilePage/edit_profile2.png "The lower part of the profile editing form, showing additional fields for personal information and the update button.")
