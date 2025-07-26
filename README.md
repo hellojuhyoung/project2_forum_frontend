@@ -131,6 +131,55 @@ This section provides screenshots of the application's user authentication and a
 - **Forgot Password Page:**
   ![Forgot Password Recovery](frontend/src/assets/screenshots/Login_SignupPage/forgot_password1.png "Interface for users to reset their password via an email-sent link.")
 
+  ### Content Creation and Management
+
+This section illustrates the functionality for creating and editing posts within the application.
+
+- **Create New Post Page:**
+  ![Create New Post Form](frontend/src/assets/screenshots/Create_EditPostPage/create_post.png "An empty form for users to create and submit a new post, including title, category, and content fields.")
+
+- **Edit Post Page (Image Included):**
+  ![Edit Post with Image](frontend/src/assets/screenshots/Create_EditPostPage/post_edit1.jpg "The post editing interface showing an existing post with an image and text content, allowing modifications.")
+
+- **Edit Post Page (Text Content):**
+  ![Edit Post Text Content](frontend/src/assets/screenshots/Create_EditPostPage/post_edit2.jpg "A detailed view of the post editing interface, focusing on the text content editor and category selection.")
+
+### Post Detail View
+
+This section showcases how individual posts are displayed, including content and user interaction options.
+
+- **Post Detail Page (Full View):**
+  ![Post Detail Page Full View](frontend/src/assets/screenshots/PostDetailView/post_detail1.jpg "The full view of a single post, displaying its title, category, content, and header navigation for logged-in users.")
+
+- **Post Detail Page (Edit/Delete Options):**
+  ![Post Detail Page Edit Delete Options](frontend/src/assets/screenshots/PostDetailView/post_detail2.jpg "A closer look at the bottom section of a post detail page, showing the 'Edit' and 'Delete' buttons for authorized users.")
+
+### User Profile and Settings
+
+This section details the user's profile view and the options available for editing personal information.
+
+- **User Profile View:**
+  ![User Profile View](frontend/src/assets/screenshots/UserProfilePage/user_profile1.jpg "A public or private view of a user's profile, displaying their username, email, and other details.")
+
+- **Edit Profile Page (Top Section):**
+  ![Edit Profile Top Section](frontend/src/assets/screenshots/UserProfilePage/edit_profile1.jpg "The top portion of the profile editing page, including the profile picture upload and initial user details.")
+
+- **Edit Profile Page (Bottom Section):**
+  ![Edit Profile Bottom Section](frontend/src/assets/screenshots/UserProfilePage/edit_profile2.png "The lower part of the profile editing form, showing additional fields for personal information and the update button.")
+
+### Responsive Design
+
+The application is built with a responsive design approach, ensuring an optimal viewing and interaction experience across a variety of devices and screen sizes. The layout dynamically adjusts to provide seamless usability, whether on desktop, tablet, or mobile.
+
+- **Main Feed - Desktop to Tablet View (GIF):**
+  ![Main Feed Responsive Transition 1](frontend/src/assets/screenshots/ResponsiveViews/responsive_view1.gif "Demonstrates how the main feed adjusts its layout from a wider desktop view to a narrower tablet-sized viewport.")
+
+- **Individual Post View - Responsive Adjustment (GIF):**
+  ![Individual Post Responsive Transition](frontend/src/assets/screenshots/ResponsiveViews/responsive_view2.gif "Shows an individual post's layout adapting as the screen size is reduced, maintaining readability.")
+
+- **Main Feed - Layout Re-arrangement (GIF):**
+  ![Main Feed Responsive Transition 2](frontend/src/assets/screenshots/ResponsiveViews/responsive_view3.gif "Illustrates the main content grid re-arranging and stacking elements as the screen size changes.")
+
 ---
 
 ## Project Structure
